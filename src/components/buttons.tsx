@@ -33,6 +33,7 @@ export const Button = ({
     },
     text: {
       color,
+      fontFamily: 'Poppins-Medium'
     },
   });
   return (

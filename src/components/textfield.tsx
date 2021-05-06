@@ -25,20 +25,31 @@ export const TextField = ({
       borderColor: errorMessage ? red : grey,
       marginBottom,
       marginTop,
-      color: errorMessage ? red : black
+      color: errorMessage ? red : black,
+      fontFamily: 'Poppins-Medium',
     },
   });
   return (
     <View>
       {errorMessage ? (
         <View>
-        <TextInput
-          style={styles.textInput}
-          secureTextEntry={password ? true : false}
-          placeholder={placeholder}
-          placeholderTextColor={grey}
-        />
-        <Text style={{color: red, fontSize:10, lineHeight: 18, marginTop:6, marginLeft:30}}>Invalid credentials</Text>
+          <TextInput
+            style={styles.textInput}
+            secureTextEntry={password ? true : false}
+            placeholder={placeholder}
+            placeholderTextColor={grey}
+          />
+          <Text
+            style={{
+              color: red,
+              fontSize: 10,
+              lineHeight: 18,
+              marginTop: 6,
+              marginLeft: 30,
+              fontFamily: 'Poppins-Medium',
+            }}>
+            Invalid credentials
+          </Text>
         </View>
       ) : (
         <TextInput
