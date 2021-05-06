@@ -1,12 +1,14 @@
 import React from 'react';
-import {StyleSheet, View, Text, Image} from 'react-native';
+import {StyleSheet, View, Text, Image, Touchable} from 'react-native';
 import {white, orange, black} from '../../styles/colors';
 import {Button} from '../../components/buttons';
 import {TextField} from '../../components/textfield';
 import logo from '../../assets/images/logo.png';
-import {ScrollView} from 'react-native-gesture-handler';
+import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
+import {useNavigation} from '@react-navigation/core';
 
 const SignIn = () => {
+  const {navigate} = useNavigation();
   return (
     <View style={styles.container}>
       <View>
@@ -18,15 +20,17 @@ const SignIn = () => {
           </Text>
           <TextField placeholder="Email" marginTop={51} />
           <TextField placeholder="Password" password marginTop={31} />
-          <Text
-            style={{
-              color: orange,
-              marginLeft: 20,
-              marginTop: 18,
-              fontFamily: 'Poppins-Regular',
-            }}>
-            Forgot password?
-          </Text>
+          <TouchableOpacity>
+            <Text
+              style={{
+                color: orange,
+                marginLeft: 20,
+                marginTop: 18,
+                fontFamily: 'Poppins-Regular',
+              }}>
+              Forgot password?
+            </Text>
+          </TouchableOpacity>
           <Button
             title="Sign In"
             buttonProperty={{color: white, backgroundColor: orange}}
@@ -39,12 +43,16 @@ const SignIn = () => {
             buttonProperty={{color: black, backgroundColor: white}}
             marginBottom={50}
           />
-          <View style={{alignItems: 'center'}}>
-            <Text style={{fontSize: 16}}>
-              Don’t have an account?
-              <Text style={{color: orange}}> Sign up</Text>
+          <TouchableOpacity
+            style={{alignItems: 'center'}}
+            onPress={() => navigate('SignUp')}>
+            <Text style={{fontSize: 16, fontFamily: 'Poppins-Regular'}}>
+              {`Don’t have an account? `}
+              <Text style={{color: orange, fontFamily: 'Poppins-Regular'}}>
+                Sign up
+              </Text>
             </Text>
-          </View>
+          </TouchableOpacity>
         </ScrollView>
       </View>
     </View>
