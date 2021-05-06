@@ -1,64 +1,85 @@
-import React from 'react';
-import {StyleSheet, Text, TextInput, View} from 'react-native';
+import React, {useState} from 'react';
+import {
+  StyleSheet,
+  Text,
+  TextStyle,
+  ViewStyle,
+  TextInput,
+  View,
+  KeyboardTypeOptions,
+} from 'react-native';
 import {grey, red, black} from '../styles/colors';
+import {TextStyle as MyTextStyle} from '../styles/textStyle';
+import Feather from 'react-native-vector-icons/Feather';
 
-interface TextFieldProps {
+interface ITextFieldProps {
   password?: boolean;
   placeholder: string;
-  marginTop?: number;
-  marginBottom?: number;
+  containerStyle?: ViewStyle;
   errorMessage?: boolean;
+  keyboardType?:KeyboardTypeOptions
 }
+interface IStyles {
+  textInputContainer: ViewStyle;
+  textInput: TextStyle;
+}
+const styles = StyleSheet.create<IStyles>({
+  textInputContainer: {
+    height: 50,
+    borderRadius: 25,
+    paddingHorizontal: 25,
+    borderWidth: 1,
+    marginBottom: 16,
+  },
+  textInput: {
+    ...MyTextStyle.regular,
+    flex: 1,
+  },
+});
+
 export const TextField = ({
   password,
   placeholder,
-  marginBottom,
-  marginTop,
+  containerStyle,
   errorMessage,
-}: TextFieldProps) => {
-  const styles = StyleSheet.create({
-    textInput: {
-      height: 50,
-      borderRadius: 25,
-      paddingLeft: 29,
-      borderWidth: 1,
-      borderColor: errorMessage ? red : grey,
-      marginBottom,
-      marginTop,
-      color: errorMessage ? red : black,
-      fontFamily: 'Poppins-Medium',
-    },
-  });
+  keyboardType
+}: ITextFieldProps) => {
+  const [show, setShow] = useState<boolean>(false);
+  let colorStyle = errorMessage
+    ? {borderColor: red, color: red}
+    : {borderColor: grey, color: black};
   return (
-    <View>
-      {errorMessage ? (
-        <View>
-          <TextInput
-            style={styles.textInput}
-            secureTextEntry={password ? true : false}
-            placeholder={placeholder}
-            placeholderTextColor={grey}
-          />
-          <Text
-            style={{
-              color: red,
-              fontSize: 10,
-              lineHeight: 18,
-              marginTop: 6,
-              marginLeft: 30,
-              fontFamily: 'Poppins-Medium',
-            }}>
-            Invalid credentials
-          </Text>
-        </View>
-      ) : (
+    <View style={[styles.textInputContainer, colorStyle, containerStyle]}>
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
         <TextInput
-          style={styles.textInput}
-          secureTextEntry={password ? true : false}
+          style={[styles.textInput, colorStyle]}
+          secureTextEntry={password && !show ? true : false}
           placeholder={placeholder}
           placeholderTextColor={grey}
+          keyboardType={keyboardType}
         />
-      )}
+        {password && (
+          <Feather
+            name={show ? 'eye' : 'eye-off'}
+            color={black}
+            size={22}
+            onPress={() => setShow(!show)}
+          />
+        )}
+      </View>
+      {errorMessage ? (
+        <Text
+          style={{
+            color: red,
+            fontSize: 10,
+            lineHeight: 18,
+            marginTop: 6,
+            marginLeft: 30,
+            fontFamily: 'Poppins-Medium',
+          }}>
+          {errorMessage}
+        </Text>
+      ) : null}
     </View>
   );
 };
