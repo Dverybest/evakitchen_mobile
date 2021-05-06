@@ -34,9 +34,9 @@ const SignUp = () => {
             style={{alignItems: 'center'}}
             onPress={() => navigate('SignIn')}>
             <Text style={TextStyle.regular}>
-              {`Don’t have an account? `}
+              {`Already have an account? `}
               <Text style={[TextStyle.regular,{color: orange}]}>
-                Sign up
+                Sign In
               </Text>
             </Text>
           </TouchableOpacity>
