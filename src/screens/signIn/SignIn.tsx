@@ -26,8 +26,10 @@ const SignIn = () => {
           buttonProperty={{color: black, backgroundColor: white}}
           marginBottom={101}
         />
-        <View>
-          <Text>Don’t have an account? Sign up</Text>
+        <View style={{alignItems: 'center'}}>
+          <Text style={{fontSize: 16}}>
+            Don’t have an account?<Text style={{color: orange}}> Sign up</Text>
+          </Text>
         </View>
       </View>
     </View>
