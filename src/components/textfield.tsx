@@ -1,5 +1,6 @@
 import React from 'react'
 import {StyleSheet, TextInput, View} from 'react-native';
+import {grey} from '../styles/colors'
 
 interface TextFieldProps {
   password?: boolean;
@@ -30,7 +31,7 @@ export const TextField = ({
         style={styles.textInput}
         secureTextEntry={password ? true : false}
         placeholder={placeholder}
-        placeholderTextColor="#E5E5E5"
+        placeholderTextColor={grey}
       />
     </View>
   );
