@@ -15,7 +15,7 @@ const SignUp = () => {
       <Text style={TextStyle.semiBold}>Create your account</Text>
       <ScrollView showsVerticalScrollIndicator={false}>
       <Text style={TextStyle.medium}>
-        Please log in to continue from where you stopped
+      Please sign up to start using the application
       </Text>
       <TextField placeholder="Fullname" containerStyle={{marginTop: 50}} />
       <TextField keyboardType={'email-address'} placeholder="Email"  />
