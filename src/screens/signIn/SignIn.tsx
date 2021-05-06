@@ -1,11 +1,11 @@
 import React from 'react';
-import {StyleSheet, View, Text, Image, Touchable} from 'react-native';
+import {StyleSheet, View, Text, Image, ScrollView, TouchableOpacity} from 'react-native';
 import {white, orange, black} from '../../styles/colors';
-import {Button} from '../../components/buttons';
+import {ButtonPrimary,ButtonWhite} from '../../components/buttons';
 import {TextField} from '../../components/textfield';
 import logo from '../../assets/images/logo.png';
-import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/core';
+import { TextStyle } from '../../styles/textStyle';
 
 const SignIn = () => {
   const {navigate} = useNavigation();
@@ -14,41 +14,37 @@ const SignIn = () => {
       <View>
         <Image source={logo} style={styles.image} />
         <Text style={styles.header}>Welcome back</Text>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <Text style={styles.headerTitle}>
             Please log in to continue from where you stopped
           </Text>
-          <TextField placeholder="Email" marginTop={51} />
-          <TextField placeholder="Password" password marginTop={31} />
+          <TextField placeholder="Email" containerStyle={{marginTop:50}} />
+          <TextField placeholder="Password"  password={true} />
           <TouchableOpacity>
             <Text
               style={{
                 color: orange,
                 marginLeft: 20,
-                marginTop: 18,
-                fontFamily: 'Poppins-Regular',
+                ...TextStyle.regular,
               }}>
               Forgot password?
             </Text>
           </TouchableOpacity>
-          <Button
-            title="Sign In"
-            buttonProperty={{color: white, backgroundColor: orange}}
-            marginBottom={31}
-            marginTop={20}
+          <ButtonPrimary
+            text="Sign In"
+            containerStyle={{marginBottom:31,marginTop:20}}
             onPress={() => console.log('Hiii')}
           />
-          <Button
-            title="Sign In with Google"
-            buttonProperty={{color: black, backgroundColor: white}}
-            marginBottom={50}
+          <ButtonWhite
+            text="Sign In with Google"
+            containerStyle={{marginBottom:50}}
           />
           <TouchableOpacity
             style={{alignItems: 'center'}}
             onPress={() => navigate('SignUp')}>
-            <Text style={{fontSize: 16, fontFamily: 'Poppins-Regular'}}>
+            <Text style={TextStyle.regular}>
               {`Don’t have an account? `}
-              <Text style={{color: orange, fontFamily: 'Poppins-Regular'}}>
+              <Text style={[TextStyle.regular,{color: orange}]}>
                 Sign up
               </Text>
             </Text>
@@ -66,18 +62,12 @@ const styles = StyleSheet.create({
     backgroundColor: white,
   },
   header: {
-    color: '#000000',
-    fontSize: 28,
-    lineHeight: 42,
+    ...TextStyle.semiBold,
     marginBottom: 20,
-    fontFamily: 'Poppins-SemiBold',
   },
   headerTitle: {
-    color: '#000000',
-    fontSize: 16,
-    lineHeight: 24,
+    ...TextStyle.medium,
     width: 281,
-    fontFamily: 'Poppins-Medium',
   },
   image: {
     height: 48,
