@@ -10,7 +10,7 @@ import {
   View,
 } from 'react-native';
 import SplashScreen from './src/screens/getStarted/SplashScreen';
-import {white} from './src/styles/colors';
+import {orange, white} from './src/styles/colors';
 import AuthStack from './src/navigation/authStack';
 const Stack = createStackNavigator();
 const App = () => {
@@ -19,8 +19,8 @@ const App = () => {
   return (
     <SafeAreaView style={styles.Container}>
       <StatusBar
-        backgroundColor={white}
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+        backgroundColor={orange}
+        barStyle={'light-content' }
       />
       <NavigationContainer>
         <Stack.Navigator
