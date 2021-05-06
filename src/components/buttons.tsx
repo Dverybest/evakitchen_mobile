@@ -4,6 +4,7 @@ interface ButtonProps {
   title: string;
   marginBottom?: number;
   marginTop?: number;
+  onPress?: ()=> void;
   buttonProperty: {
     color: string;
     backgroundColor: string;
@@ -14,6 +15,7 @@ export const Button = ({
   buttonProperty: {backgroundColor, color},
   marginBottom,
   marginTop,
+  onPress
 }: ButtonProps) => {
   const orange = '#FF8D23';
   const styles = StyleSheet.create({
@@ -36,7 +38,7 @@ export const Button = ({
   return (
     <TouchableOpacity
       style={styles.button}
-      onPress={() => console.log('Hello')}>
+      onPress={onPress}>
       <Text style={styles.text}>{title}</Text>
     </TouchableOpacity>
   );
