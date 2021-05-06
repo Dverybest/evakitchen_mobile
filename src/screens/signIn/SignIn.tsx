@@ -18,7 +18,7 @@ const SignIn = () => {
           <Text style={styles.headerTitle}>
             Please log in to continue from where you stopped
           </Text>
-          <TextField placeholder="Email" containerStyle={{marginTop:50}} />
+          <TextField keyboardType={'email-address'} placeholder="Email" containerStyle={{marginTop:50}} />
           <TextField placeholder="Password"  password={true} />
           <TouchableOpacity>
             <Text
