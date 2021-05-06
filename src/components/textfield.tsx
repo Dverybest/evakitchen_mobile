@@ -26,7 +26,7 @@ interface IStyles {
 const styles = StyleSheet.create<IStyles>({
   textInputContainer: {
     height: 50,
-    borderRadius: 25,
+    borderRadius: 4,
     paddingHorizontal: 25,
     borderWidth: 1,
     marginBottom: 16,
