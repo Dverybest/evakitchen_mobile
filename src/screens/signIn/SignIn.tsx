@@ -12,14 +12,15 @@ const SignIn = () => {
         <Text style={styles.headerTitle}>
           Please log in to continue from where you stopped
         </Text>
-        <TextField placeholder="Email" marginBottom={31} marginTop={51} />
-        <TextField placeholder="Password" password marginBottom={18} />
-        <Text style={{color: orange, marginLeft: 20}}>Forgot password?</Text>
+        <TextField placeholder="Email"  marginTop={51} errorMessage />
+        <TextField placeholder="Password" password marginTop={31} errorMessage />
+        <Text style={{color: orange, marginLeft: 20, marginTop: 18}}>Forgot password?</Text>
         <Button
           title="Sign In"
           buttonProperty={{color: white, backgroundColor: orange}}
           marginBottom={31}
           marginTop={20}
+          onPress={() => console.log("Hiii")}
         />
         <Button
           title="Sign In with Google"
