@@ -34,10 +34,22 @@ const Success = ({visible, setVisibility, text}: SuccessProps) => {
       <View style={styles.container}>
         <View style={styles.card}>
           <Image source={success} style={styles.image} />
-          <Text style={{marginTop: 27, ...TextStyle.semiBold, color: green}}>
+          <Text
+            style={{
+              marginTop: 27,
+              ...TextStyle.semiBold,
+              color: green,
+              fontSize: 18,
+            }}>
             Successful
           </Text>
-          <Text style={{...TextStyle.regular, marginTop: 35, marginBottom: 89}}>
+          <Text
+            style={{
+              ...TextStyle.regular,
+              marginTop: 35,
+              marginBottom: 89,
+              fontSize: 16,
+            }}>
             {text}
           </Text>
         </View>
