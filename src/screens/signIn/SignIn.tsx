@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, View, Text, Image, ScrollView, TouchableOpacity} from 'react-native';
-import {white, orange, black} from '../../styles/colors';
-import {ButtonPrimary,ButtonWhite} from '../../components/buttons';
+import {white, orange} from '../../styles/colors';
+import {ButtonGoogle, ButtonPrimary} from '../../components/buttons';
 import {TextField} from '../../components/textfield';
 import logo from '../../assets/images/logo.png';
 import {useNavigation} from '@react-navigation/core';
@@ -35,7 +35,7 @@ const SignIn = () => {
             containerStyle={{marginBottom:31,marginTop:20}}
             onPress={() => console.log('Hiii')}
           />
-          <ButtonWhite
+          <ButtonGoogle
             text="Sign In with Google"
             containerStyle={{marginBottom:50}}
           />
