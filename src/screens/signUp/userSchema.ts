@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 
 export const userSchema = yup.object().shape({
-  fullname: yup
+  full_name: yup
     .string()
     .required('Full legal name is required')
     .test('test first & last name', 'Enter both first and last name', value => {
@@ -17,7 +17,7 @@ export const userSchema = yup.object().shape({
     .required('Password is required')
     .test(
       'test password',
-      'error',
+      'Invalid password',
       value =>
         /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z0-9])(?!.*\s).{8,}$/.test(
           value ?? '',
