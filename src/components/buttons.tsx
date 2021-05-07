@@ -13,8 +13,9 @@ import {TextStyle as MyTextStyle} from '../styles/textStyle';
 import googleIcon from '../assets/images/google.png'
 interface IButtonProps {
   text: string;
-  containerStyle: ViewStyle;
-  onPress?: () => void;
+  containerStyle:ViewStyle,
+  onPress?: ()=> void;
+  textStyle?:TextStyle
 }
 interface IStyles {
   button: ViewStyle;
@@ -53,20 +54,29 @@ export const ButtonPrimary = ({
   text,
   containerStyle,
   onPress,
+  textStyle
 }: IButtonProps) => {
   return (
-    <TouchableOpacity style={[styles.button, containerStyle]} onPress={onPress}>
-      <Text style={styles.text}>{text}</Text>
+    <TouchableOpacity
+      style={[styles.button,containerStyle]}
+      onPress={onPress}>
+      <Text style={[styles.text,textStyle]}>{text}</Text>
     </TouchableOpacity>
   );
 };
 
-export const ButtonWhite = ({text, containerStyle, onPress}: IButtonProps) => {
+export const ButtonWhite = ({
+  text,
+  containerStyle,
+  onPress,
+  textStyle
+}: IButtonProps) => {
+  
   return (
     <TouchableOpacity
       style={[styles.button, containerStyle, styles.buttonWhite]}
       onPress={onPress}>
-      <Text style={[styles.text, {color: black}]}>{text}</Text>
+      <Text style={[styles.text,{color:black},textStyle]}>{text}</Text>
     </TouchableOpacity>
   );
 };

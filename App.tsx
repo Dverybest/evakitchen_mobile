@@ -11,6 +11,7 @@ import {
 import SplashScreen from './src/screens/getStarted/SplashScreen';
 import {orange} from './src/styles/colors';
 import AuthStack from './src/navigation/authStack';
+import DashboardStack from './src/navigation/dashboard';
 const Stack = createStackNavigator();
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -26,6 +27,7 @@ const App = () => {
           screenOptions={{
             headerShown: false,
           }}>
+          <Stack.Screen name="Dashboard" component={DashboardStack} />
           <Stack.Screen name="Auth" component={AuthStack} />
         </Stack.Navigator>
       </NavigationContainer>
