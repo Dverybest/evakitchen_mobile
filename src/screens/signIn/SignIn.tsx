@@ -58,7 +58,9 @@ const SignIn = () => {
                     onChangeText={props.handleChange('email')}
                   />
                   <TextField
-                    errorMessage={props.touched.password && props.errors.password}
+                    errorMessage={
+                      props.touched.password && props.errors.password
+                    }
                     placeholder="Password"
                     password={true}
                     value={props.values.password}
