@@ -6,6 +6,7 @@ interface IButtonProps {
   text: string;
   containerStyle:ViewStyle,
   onPress?: ()=> void;
+  textStyle?:TextStyle
 }
 interface IStyles{
   button:ViewStyle,
@@ -37,14 +38,15 @@ const styles = StyleSheet.create<IStyles>({
 export const ButtonPrimary = ({
   text,
   containerStyle,
-  onPress
+  onPress,
+  textStyle
 }: IButtonProps) => {
   
   return (
     <TouchableOpacity
       style={[styles.button,containerStyle]}
       onPress={onPress}>
-      <Text style={styles.text}>{text}</Text>
+      <Text style={[styles.text,textStyle]}>{text}</Text>
     </TouchableOpacity>
   );
 };
@@ -52,14 +54,15 @@ export const ButtonPrimary = ({
 export const ButtonWhite = ({
   text,
   containerStyle,
-  onPress
+  onPress,
+  textStyle
 }: IButtonProps) => {
   
   return (
     <TouchableOpacity
       style={[styles.button,containerStyle,styles.buttonWhite]}
       onPress={onPress}>
-      <Text style={[styles.text,{color:black}]}>{text}</Text>
+      <Text style={[styles.text,{color:black},textStyle]}>{text}</Text>
     </TouchableOpacity>
   );
 };
