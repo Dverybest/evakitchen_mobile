@@ -7,10 +7,9 @@ import {
   StatusBar,
   StyleSheet,
   useColorScheme,
-  View,
 } from 'react-native';
 import SplashScreen from './src/screens/getStarted/SplashScreen';
-import {orange, white} from './src/styles/colors';
+import {orange} from './src/styles/colors';
 import AuthStack from './src/navigation/authStack';
 import DashboardStack from './src/navigation/dashboard';
 const Stack = createStackNavigator();

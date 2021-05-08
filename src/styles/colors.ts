@@ -6,3 +6,4 @@ export const orange300 = '#FF8D2330';
 export const grey = '#979797';
 export const grey100 = '#E5E5E5';
 export const red = '#FF3D00';
+export const green = '#4CAF50';

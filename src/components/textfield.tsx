@@ -16,8 +16,10 @@ interface ITextFieldProps {
   password?: boolean;
   placeholder: string;
   containerStyle?: ViewStyle;
-  errorMessage?: boolean;
-  keyboardType?:KeyboardTypeOptions
+  errorMessage?: string | boolean;
+  keyboardType?: KeyboardTypeOptions;
+  onChangeText?: (text: string) => void;
+  value?: string;
 }
 interface IStyles {
   textInputContainer: ViewStyle;
@@ -29,7 +31,6 @@ const styles = StyleSheet.create<IStyles>({
     borderRadius: 4,
     paddingHorizontal: 25,
     borderWidth: 1,
-    marginBottom: 16,
   },
   textInput: {
     ...MyTextStyle.regular,
@@ -42,40 +43,51 @@ export const TextField = ({
   placeholder,
   containerStyle,
   errorMessage,
-  keyboardType
+  keyboardType,
+  value,
+  onChangeText,
 }: ITextFieldProps) => {
   const [show, setShow] = useState<boolean>(false);
   let colorStyle = errorMessage
-    ? {borderColor: red, color: red}
+    ? {borderColor: red, color: black}
     : {borderColor: grey, color: black};
   return (
-    <View style={[styles.textInputContainer, colorStyle, containerStyle]}>
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <TextInput
-          style={[styles.textInput, colorStyle]}
-          secureTextEntry={password && !show ? true : false}
-          placeholder={placeholder}
-          placeholderTextColor={grey}
-          keyboardType={keyboardType}
-        />
-        {password && (
-          <Feather
-            name={show ? 'eye' : 'eye-off'}
-            color={black}
-            size={22}
-            onPress={() => setShow(!show)}
+    <View>
+      <View
+        style={[
+          styles.textInputContainer,
+          colorStyle,
+          containerStyle,
+          errorMessage ? {marginBottom: 6} : {marginBottom: 16},
+        ]}>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <TextInput
+            style={[styles.textInput, colorStyle]}
+            secureTextEntry={password && !show ? true : false}
+            placeholder={placeholder}
+            placeholderTextColor={grey}
+            value={value}
+            keyboardType={keyboardType}
+            onChangeText={onChangeText}
           />
-        )}
+          {password && (
+            <Feather
+              name={show ? 'eye' : 'eye-off'}
+              color={black}
+              size={22}
+              onPress={() => setShow(!show)}
+            />
+          )}
+        </View>
       </View>
       {errorMessage ? (
         <Text
           style={{
+            ...MyTextStyle.regular,
+            lineHeight: 18,
+            marginBottom: 15,
             color: red,
             fontSize: 10,
-            lineHeight: 18,
-            marginTop: 6,
-            marginLeft: 30,
-            fontFamily: 'Poppins-Medium',
           }}>
           {errorMessage}
         </Text>
