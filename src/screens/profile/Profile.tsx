@@ -1,6 +1,6 @@
 import React from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
-import {black, grey, orange, white} from '../../styles/colors';
+import {black, grey, orange, orange300, white} from '../../styles/colors';
 import {TextStyle} from '../../styles/textStyle';
 import profile from '../../assets/images/profile.png';
 import Feather from 'react-native-vector-icons/Feather';
@@ -13,6 +13,17 @@ const Profile = () => {
       <Text style={{...TextStyle.semiBold, marginBottom: 32}}>Profile</Text>
       <View style={{alignItems: 'center', marginBottom: 32}}>
         <View style={styles.profileImageContainer}>
+          {/* <View
+            style={{
+              backgroundColor: orange300,
+              height: 156,
+              width: 156,
+              borderRadius: 78,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Text style={{...TextStyle.semiBold, fontSize: 40, color: white}}>CB</Text>
+          </View> */}
           <Image source={profile} style={styles.image} />
           <View style={styles.cameraBox}>
             <TouchableOpacity>
