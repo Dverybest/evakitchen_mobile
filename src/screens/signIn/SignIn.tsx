@@ -28,8 +28,7 @@ const SignIn = () => {
       email: string;
     }>,
   ) => {
-    actions.setFieldError('password', 'Hiii');
-    actions.setFieldError('email', 'Hiii');
+    navigate('Dashboard')
   };
   return (
     <View style={styles.container}>
@@ -69,7 +68,6 @@ const SignIn = () => {
                     <Text
                       style={{
                         color: orange,
-                        marginLeft: 20,
                         ...TextStyle.regular,
                       }}>
                       Forgot password?

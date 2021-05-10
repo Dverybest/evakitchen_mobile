@@ -23,6 +23,7 @@ import img4 from '../../assets/images/img4.jpg';
 import img8 from '../../assets/images/img7.jpg';
 import img7 from '../../assets/images/img7.jpg';
 import img6 from '../../assets/images/img6.jpg';
+import FoodListView from './compontent/FoodListView';
 
 const HomeScreen = () => {
   const [searchText, setSearchText] = useState<string>('');
@@ -105,7 +106,7 @@ const HomeScreen = () => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View>
           <FlatList
-            contentContainerStyle={{marginTop: 50}}
+            contentContainerStyle={{marginVertical: 20}}
             data={categories}
             horizontal={true}
             showsHorizontalScrollIndicator={false}
@@ -122,7 +123,6 @@ const HomeScreen = () => {
               justifyContent: 'space-between',
               alignItems: 'center',
               marginBottom: 21,
-              marginTop: 30,
             }}>
             <Text style={[TextStyle.medium, {fontSize: 18}]}>Popular Food</Text>
             <ButtonWhite
@@ -136,45 +136,9 @@ const HomeScreen = () => {
             showsHorizontalScrollIndicator={false}
             horizontal={true}
             keyExtractor={(item, index) => `popular${index}`}
-            renderItem={({item, index}) => {
-              return (
-                <TouchableOpacity
-                  style={{
-                    marginRight: 13,
-                    height: 166,
-                    borderRadius: 8,
-                    width: 151,
-                  }}
-                  key={index}>
-                  <Image
-                    style={{
-                      height: 166,
-                      width: 151,
-                      resizeMode: 'cover',
-                      borderRadius: 8,
-                    }}
-                    source={item.img}
-                  />
-                  <View
-                    style={{
-                      height: 166,
-                      borderRadius: 8,
-                      width: 151,
-                      paddingHorizontal:10,
-                      justifyContent:'flex-end',
-                      backgroundColor: black300,
-                      position: 'absolute',
-                      paddingBottom:22
-                    }}>
-                        <Text numberOfLines={1} style={[TextStyle.medium,{color:white}]}>{item.title}</Text>
-                        <Text numberOfLines={2}  style={[TextStyle.regular,{color:white,fontSize:8}]}>{item.description}</Text>
-                        <View>
-                            <Text style={[TextStyle.regular,{color:white,fontSize:12}]}>{`₦${item.price}`}</Text>
-                        </View>
-                    </View>
-                </TouchableOpacity>
-              );
-            }}
+            renderItem={({item, index}) => (
+              <FoodListView item={item} index={index} />
+            )}
           />
         </View>
         <View>
@@ -200,36 +164,9 @@ const HomeScreen = () => {
             showsHorizontalScrollIndicator={false}
             horizontal={true}
             keyExtractor={(item, index) => `special${index}`}
-            renderItem={({item, index}) => {
-              return (
-                <TouchableOpacity
-                  style={{
-                    marginRight: 13,
-                    height: 166,
-                    borderRadius: 8,
-                    width: 151,
-                  }}
-                  key={index}>
-                  <Image
-                    style={{
-                      height: 166,
-                      width: 151,
-                      resizeMode: 'cover',
-                      borderRadius: 8,
-                    }}
-                    source={item.img}
-                  />
-                  <View
-                    style={{
-                      height: 166,
-                      borderRadius: 8,
-                      width: 151,
-                      backgroundColor: black300,
-                      position: 'absolute',
-                    }}></View>
-                </TouchableOpacity>
-              );
-            }}
+            renderItem={({item, index}) => (
+              <FoodListView item={item} index={index} />
+            )}
           />
         </View>
       </ScrollView>
