@@ -30,7 +30,6 @@ const SignIn = () => {
   ) => {
     actions.setFieldError('password', 'Hiii');
     actions.setFieldError('email', 'Hiii');
-    console.log(values);
   };
   return (
     <View style={styles.container}>
