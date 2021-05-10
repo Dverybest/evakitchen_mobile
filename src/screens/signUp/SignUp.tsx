@@ -30,9 +30,10 @@ const SignUp = () => {
       email: string;
     }>,
   ) => {
-    actions.setFieldError('password', 'Hiii');
-    actions.setFieldError('email', 'Hiii');
+    // actions.setFieldError('password', 'Hiii');
+    // actions.setFieldError('email', 'Hiii');
     console.log(values);
+    navigate('Dashboard')
   };
   return (
     <View style={styles.container}>
