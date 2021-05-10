@@ -1,11 +1,12 @@
 import React from 'react';
 import {Image, Modal, StyleSheet, Text, View} from 'react-native';
 import CardStyle from '../styles/cardStyle';
-import {red, white} from '../styles/colors';
+import {black, red, white} from '../styles/colors';
 import maintenance from '../assets/images/maintenance.png';
 import internetError from '../assets/images/internetError.png';
 import {TextStyle} from '../styles/textStyle';
 import {ButtonPrimary} from './buttons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 interface NetworkError {
   visible: boolean;
@@ -15,8 +16,8 @@ interface NetworkError {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 25,
     flex: 1,
+    paddingHorizontal: 25,
     justifyContent: 'center',
   },
   card: {
@@ -34,6 +35,15 @@ const styles = StyleSheet.create({
 const NetworkError = ({visible, setVisibility, errorType}: NetworkError) => {
   return (
     <Modal visible={visible}>
+      <View
+        style={{paddingHorizontal: 25, alignItems: 'flex-end', marginTop: 18}}>
+        <AntDesign
+          name="closesquareo"
+          color={black}
+          size={24}
+          onPress={() => setVisibility(false)}
+        />
+      </View>
       <View style={styles.container}>
         <View style={styles.card}>
           <Image
@@ -70,11 +80,7 @@ const NetworkError = ({visible, setVisibility, errorType}: NetworkError) => {
               : null}
           </Text>
         </View>
-        <ButtonPrimary
-          text="Try again"
-          containerStyle={{marginTop: 70}}
-          onPress={() => setVisibility(false)}
-        />
+        <ButtonPrimary text="Try again" containerStyle={{marginTop: 70}} />
       </View>
     </Modal>
   );
