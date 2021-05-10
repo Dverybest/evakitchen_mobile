@@ -29,7 +29,7 @@ const styles = StyleSheet.create<IStyles>({
   textInputContainer: {
     height: 50,
     borderRadius: 4,
-    paddingHorizontal: 25,
+    paddingHorizontal: 15,
     borderWidth: 1,
   },
   textInput: {
