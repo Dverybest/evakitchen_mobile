@@ -6,8 +6,10 @@ import profile from '../../assets/images/profile.png';
 import Feather from 'react-native-vector-icons/Feather';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {useNavigation} from '@react-navigation/core';
 
 const Profile = () => {
+  const {navigate} = useNavigation();
   return (
     <View style={styles.container}>
       <Text style={{...TextStyle.semiBold, marginBottom: 32}}>Profile</Text>
@@ -37,7 +39,9 @@ const Profile = () => {
         <Text style={{...TextStyle.regular}}>Edit profile</Text>
         <SimpleLineIcons name="arrow-right" color={black} size={13} />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.optionContainer}>
+      <TouchableOpacity
+        style={styles.optionContainer}
+        onPress={() => navigate('MyOrders')}>
         <Text style={{...TextStyle.regular}}>My orders</Text>
         <SimpleLineIcons name="arrow-right" color={black} size={13} />
       </TouchableOpacity>

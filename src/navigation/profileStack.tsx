@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import Profile from '../screens/profile/Profile';
+import MyOrders from '../screens/profile/MyOrders';
 const Stack = createStackNavigator();
 
 const ProfileStack = () => {
@@ -10,6 +11,7 @@ const ProfileStack = () => {
         headerShown: false,
       }}>
       <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen name="MyOrders" component={MyOrders} />
     </Stack.Navigator>
   );
 };
