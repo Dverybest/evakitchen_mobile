@@ -8,8 +8,8 @@ import { black } from '../styles/colors';
 interface IHeader{
 title:string;
 showGoBack:boolean;
-containerStyle:ViewStyle;
-customGoBackhandler:()=>void
+containerStyle?:ViewStyle;
+customGoBackhandler?:()=>void
 }
 
 export const Header = ({
