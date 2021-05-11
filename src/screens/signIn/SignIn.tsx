@@ -28,9 +28,6 @@ const SignIn = () => {
       email: string;
     }>,
   ) => {
-    // actions.setFieldError('password', 'Hiii');
-    // actions.setFieldError('email', 'Hiii');
-    console.log(values);
     navigate('Dashboard')
   };
   return (

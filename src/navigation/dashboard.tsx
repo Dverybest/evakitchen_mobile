@@ -1,10 +1,10 @@
 import React from 'react';
-import {Text, View} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {grey, orange} from '../styles/colors';
 import HomeScreen from '../screens/home/HomeScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import ProfileStack from './profileStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -33,7 +33,7 @@ const DashboardStack = () => {
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Favourite" component={HomeScreen} />
       <Tab.Screen name="Cart" component={HomeScreen} />
-      <Tab.Screen name="Profile" component={HomeScreen} />
+      <Tab.Screen name="Profile" component={ProfileStack} />
     </Tab.Navigator>
   );
 };

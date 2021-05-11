@@ -27,8 +27,8 @@ const App = () => {
           screenOptions={{
             headerShown: false,
           }}>
-          <Stack.Screen name="Auth" component={AuthStack} />
           <Stack.Screen name="Dashboard" component={DashboardStack} />
+          <Stack.Screen name="Auth" component={AuthStack} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaView>

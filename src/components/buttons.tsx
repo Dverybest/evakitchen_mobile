@@ -76,7 +76,7 @@ export const ButtonWhite = ({
     <TouchableOpacity
       style={[styles.button, containerStyle, styles.buttonWhite]}
       onPress={onPress}>
-      <Text style={[styles.text,{color:black},textStyle]}>{text}</Text>
+      <Text style={[styles.text,{color:orange},textStyle]}>{text}</Text>
     </TouchableOpacity>
   );
 };
