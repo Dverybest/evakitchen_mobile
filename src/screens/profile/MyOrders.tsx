@@ -1,33 +1,14 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, View, FlatList} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {grey, orange, white} from '../../styles/colors';
 import {TextStyle} from '../../styles/textStyle';
 import {Header} from '../../components/header';
-import OrderCard from './components/orderCard';
-import img2 from '../../assets/images/img2.jpg';
-import {string} from 'yup/lib/locale';
+import ActiveOrders from './components/activeOrders';
+import OrderHistory from './components/orderHistory';
 
 const MyOrders = () => {
   const [activeTab, setActiveTab] = useState<number>(1);
-  const orders = [
-    {
-      image: img2,
-      quantity: 2,
-      title: 'Egusi soup',
-      orderId: '#26234455',
-      arrival: 2,
-      status: 'Food on the way',
-    },
-    {
-      image: img2,
-      quantity: 2,
-      title: 'Egusi soup',
-      orderId: '#26234455',
-      arrival: 2,
-      status: 'Food on the way',
-    },
-  ];
   return (
     <View style={styles.container}>
       <ScrollView></ScrollView>
@@ -56,25 +37,7 @@ const MyOrders = () => {
           </Text>
         </TouchableOpacity>
       </View>
-      {/* <View style={{marginTop: 43}}> */}
-        <FlatList
-          data={orders}
-          keyExtractor={(item, index) => `orders${index}`}
-          renderItem={({item, index}) => (
-            <OrderCard
-              index={index}
-              image={item.image}
-              quantity={item.quantity}
-              title={item.title}
-              orderId={item.orderId}
-              arrival={item.arrival}
-              status={item.status}
-              primaryButtonTitle="Track order"
-              secondaryButtonTitle="Cancel"
-            />
-          )}
-        />
-      {/* </View> */}
+      {activeTab === 1 ? <ActiveOrders /> : <OrderHistory />}
     </View>
   );
 };
