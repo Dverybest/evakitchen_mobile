@@ -1,17 +1,18 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import {grey, orange, white} from '../../styles/colors';
 import {TextStyle} from '../../styles/textStyle';
 import {Header} from '../../components/header';
 import ActiveOrders from './components/activeOrders';
 import OrderHistory from './components/orderHistory';
+import Empty from '../../components/empty';
 
 const MyOrders = () => {
   const [activeTab, setActiveTab] = useState<number>(1);
+  const error = false;
   return (
     <View style={styles.container}>
-      <ScrollView></ScrollView>
       <Header title="My orders" showGoBack={true} />
       <View style={styles.tabContainer}>
         <TouchableOpacity
@@ -37,7 +38,13 @@ const MyOrders = () => {
           </Text>
         </TouchableOpacity>
       </View>
-      {activeTab === 1 ? <ActiveOrders /> : <OrderHistory />}
+      {error ? (
+        <Empty />
+      ) : activeTab === 1 ? (
+        <ActiveOrders />
+      ) : (
+        <OrderHistory />
+      )}
     </View>
   );
 };
@@ -46,6 +53,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 24,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   tabContainer: {
     marginTop: 39,
