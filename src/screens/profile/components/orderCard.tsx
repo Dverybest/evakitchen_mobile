@@ -128,8 +128,7 @@ const styles = StyleSheet.create({
     backgroundColor: white,
     paddingHorizontal: 21,
     paddingVertical: 16,
-    height: 213,
-    marginTop: 43,
+    marginBottom: 30,
   },
   image: {
     height: 70,
