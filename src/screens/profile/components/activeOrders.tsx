@@ -25,6 +25,7 @@ const ActiveOrders = () => {
   return (
     <FlatList
       data={orders}
+      contentContainerStyle={{padding:24}}
       keyExtractor={(item, index) => `orders${index}`}
       renderItem={({item, index}) => (
         <OrderCard

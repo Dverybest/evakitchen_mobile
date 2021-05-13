@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React, {Fragment, useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {grey, orange, white} from '../../styles/colors';
+import {grey, grey100, orange, white} from '../../styles/colors';
 import {TextStyle} from '../../styles/textStyle';
 import {Header} from '../../components/header';
 import ActiveOrders from './components/activeOrders';
@@ -14,6 +14,7 @@ const MyOrders = () => {
   return (
     <View style={styles.container}>
       <Header title="My orders" showGoBack={true} />
+      <View style={{flex:1}}>
       <View style={styles.tabContainer}>
         <TouchableOpacity
           style={activeTab === 1 ? styles.active : styles.inactive}
@@ -46,24 +47,21 @@ const MyOrders = () => {
         <OrderHistory />
       )}
     </View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 24,
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor:white,
   },
   tabContainer: {
-    marginTop: 39,
     alignSelf: 'center',
     flexDirection: 'row',
     borderRadius: 150,
     borderWidth: 1,
-    borderColor: grey,
+    borderColor: grey100,
   },
   active: {
     backgroundColor: orange,
