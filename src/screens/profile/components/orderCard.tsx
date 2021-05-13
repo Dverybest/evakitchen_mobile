@@ -36,7 +36,7 @@ const OrderCard = ({
   primaryButtonAction,
 }: IOrderCard) => {
   return (
-    <View style={styles.card} key={index} >
+    <View style={styles.card} key={index}>
       <View
         style={{
           flexDirection: 'row',
@@ -58,9 +58,15 @@ const OrderCard = ({
           </View>
         </View>
         <View style={{paddingTop: 8}}>
-          <Text style={{...TextStyle.regular, color: orange, fontSize: 12}}>
-            {orderId ? orderId : amount}
-          </Text>
+          {orderId ? (
+            <Text style={{...TextStyle.regular, color: orange, fontSize: 12}}>
+              {orderId}
+            </Text>
+          ) : (
+            <Text style={{...TextStyle.regular, color: orange, fontSize: 12}}>
+              {`${'\u20A6'}${amount}`}
+            </Text>
+          )}
         </View>
       </View>
       <View
