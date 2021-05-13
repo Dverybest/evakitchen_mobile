@@ -21,7 +21,7 @@ export const Header = ({
   const {goBack, canGoBack, navigate} = useNavigation();
   return (
     <View style={styles.containerStyle}>
-      <View style={styles.backBtn}>
+      <View style={[styles.backBtn,{flex:1}]}>
         {showGoBack && (
           <TouchableOpacity
             style={styles.backBtn}
@@ -32,7 +32,7 @@ export const Header = ({
                 ? goBack()
                 : navigate('Home')
             }>
-            <AntDesign color={black} size={15} name="left" />
+            <AntDesign color={black} size={20} name="left" />
           </TouchableOpacity>
         )}
       </View>
@@ -40,11 +40,13 @@ export const Header = ({
           <Text
             style={[
               TextStyle.medium,
-              {textAlign: 'center', fontSize: 18, lineHeight: 26},
+              {textAlign: 'center', fontSize: 18, lineHeight: 27},
             ]}>
             {title}
           </Text>
         </View>
+        <View style={[{flex:1}]}>
+      </View>
     </View>
   );
 };
@@ -56,14 +58,13 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   backBtn: {
-    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     marginLeft: 5,
     justifyContent: 'flex-start',
   },
   title: {
-    flex: 2,
+    flex: 5,
     alignItems: 'center',
     justifyContent: 'center',
   },
