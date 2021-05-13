@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 33,
     paddingTop: 44,
+    backgroundColor:white
   },
   profileImageContainer: {
     height: 156,
@@ -82,7 +83,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: grey,
     flexDirection: 'row',
-    marginBottom: 14,
   },
 });
 export default Profile;
