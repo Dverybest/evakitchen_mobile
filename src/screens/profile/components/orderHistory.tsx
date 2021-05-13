@@ -34,6 +34,7 @@ const OrderHistory = () => {
     <FlatList
       data={orders}
       keyExtractor={(item, index) => `history${index}`}
+      contentContainerStyle={{padding:24}}
       renderItem={({item, index}) => (
         <OrderCard
           index={index}
