@@ -5,6 +5,7 @@ import HomeScreen from '../screens/home/HomeScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import ProfileStack from './profileStack';
+import HomeStack from './homeStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -30,7 +31,7 @@ const DashboardStack = () => {
         activeTintColor: orange,
         inactiveTintColor: grey,
       }}>
-      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Home" component={HomeStack} />
       <Tab.Screen name="Favourite" component={HomeScreen} />
       <Tab.Screen name="Cart" component={HomeScreen} />
       <Tab.Screen name="Profile" component={ProfileStack} />
