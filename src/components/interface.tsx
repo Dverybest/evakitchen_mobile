@@ -1,5 +1,5 @@
 import {ImageSourcePropType} from 'react-native';
-import { ContextActionType } from '../context/enums';
+import {ContextActionType} from '../context/enums';
 
 export interface ICategory {
   name: string;
@@ -19,4 +19,12 @@ export interface IAction {
 }
 export interface IContextProvider {
   children: React.Component;
+}
+
+export interface IUser {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  contact: number;
 }
