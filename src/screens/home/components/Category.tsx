@@ -4,9 +4,9 @@ import { ICategory } from '../../../components/interface';
 import {orange300} from '../../../styles/colors'
 import { TextStyle } from '../../../styles/textStyle';
 
-const Category = ({name,icon}:ICategory)=>{
+const Category = ({name,icon, onPress}:ICategory)=>{
     return (
-        <TouchableOpacity style={styles.container}>
+        <TouchableOpacity style={styles.container} onPress={onPress}>
             <Image source={icon} style={styles.icon}/>
             <Text style={[TextStyle.medium,{fontSize:12}]}>{name}</Text>
         </TouchableOpacity>
