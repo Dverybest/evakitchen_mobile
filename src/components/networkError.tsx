@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Image, Modal, StyleSheet, Text, View} from 'react-native';
 import CardStyle from '../styles/cardStyle';
 import {black, red, white} from '../styles/colors';
@@ -7,6 +7,8 @@ import internetError from '../assets/images/internetError.png';
 import {TextStyle} from '../styles/textStyle';
 import {ButtonPrimary} from './buttons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import {AppContext} from '../context/appContext';
+import {ContextActionType} from '../context/enums';
 
 interface NetworkError {
   visible: boolean;
@@ -32,25 +34,31 @@ const styles = StyleSheet.create({
     marginTop: 38,
   },
 });
-const NetworkError = ({visible, setVisibility, errorType}: NetworkError) => {
+const NetworkError = () => {
+  const {appState, dispatchAppState} = useContext(AppContext);
   return (
-    <Modal visible={visible}>
+    <Modal visible={appState.isNetworkError || appState.isServerError}>
       <View
         style={{paddingHorizontal: 25, alignItems: 'flex-end', marginTop: 18}}>
         <AntDesign
           name="closesquareo"
           color={black}
           size={24}
-          onPress={() => setVisibility(false)}
+          onPress={() =>
+            dispatchAppState({
+              type:appState.isServerError?ContextActionType.IS_SERVER_ERROR:ContextActionType.IS_NETWORK_ERROR,
+              payload: false,
+            })
+          }
         />
       </View>
       <View style={styles.container}>
         <View style={styles.card}>
           <Image
             source={
-              errorType === 'Maintenance Error'
+              appState.isServerError
                 ? maintenance
-                : errorType === 'Network Error'
+                : appState.isNetworkError
                 ? internetError
                 : null
             }
@@ -73,9 +81,9 @@ const NetworkError = ({visible, setVisibility, errorType}: NetworkError) => {
               fontSize: 16,
               textAlign: 'center',
             }}>
-            {errorType === 'Maintenance Error'
+            {appState.isServerError
               ? 'We are working on fixing the problem. Please try again.'
-              : errorType === 'Network Error'
+              : appState.isNetworkError
               ? 'Check your internet connection and try again.'
               : null}
           </Text>
