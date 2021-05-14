@@ -1,21 +1,24 @@
 import React from 'react';
-import {Image, StyleSheet, View} from 'react-native';
+import {Image, StyleSheet, Text, View, ViewStyle} from 'react-native';
 import empty from '../assets/images/empty.png';
+import { TextStyle } from '../styles/textStyle';
 
-const Empty = () => {
+interface IEmptyView{
+  containerStyle?:ViewStyle,
+  text?:string
+}
+
+const Empty = ({containerStyle,text}:IEmptyView) => {
   return (
-    <View style={style.container}>
+    <View style={[containerStyle,{alignItems:'center'}]}>
       <Image
         source={empty}
         style={{height: 247, width: 241, resizeMode: 'contain'}}
       />
+      <Text style={[TextStyle.regular,{marginTop:40}]}>{text}</Text>
     </View>
   );
 };
 const style = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: 80
-  },
 });
 export default Empty;

@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/core';
 import React from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { IFood } from '../../../components/interface';
@@ -10,8 +11,10 @@ interface IFoodListView {
 }
 
 const FoodListView =({item,index}:IFoodListView)=>{
+  const {navigate} = useNavigation();
 return(
         <TouchableOpacity
+        onPress={()=>navigate('FoodDetails',{food:item})}
           style={{
             marginRight: 13,
             height: 166,
