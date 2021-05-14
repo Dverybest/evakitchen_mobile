@@ -16,8 +16,10 @@ import img8 from '../../assets/images/img7.jpg';
 import img7 from '../../assets/images/img7.jpg';
 import img6 from '../../assets/images/img6.jpg';
 import FoodListView from './components/FoodListView';
+import {useNavigation} from '@react-navigation/core';
 
 const HomeScreen = () => {
+  const {navigate} = useNavigation();
   const [searchText, setSearchText] = useState<string>('');
   const [categories, setCategories] = useState<ICategory[]>([
     {name: 'Breakfast', icon: breakfast},
@@ -103,7 +105,12 @@ const HomeScreen = () => {
             horizontal={true}
             showsHorizontalScrollIndicator={false}
             renderItem={({item, index}) => (
-              <Category key={index} name={item.name} icon={item.icon} />
+              <Category
+                key={index}
+                name={item.name}
+                icon={item.icon}
+                onPress={() => navigate('CategoryDetails', {title: item.name})}
+              />
             )}
             keyExtractor={(item, index) => `${index}`}
           />
@@ -121,6 +128,9 @@ const HomeScreen = () => {
               containerStyle={{height: 30}}
               textStyle={{fontSize: 9, paddingHorizontal: 15, color: orange}}
               text={'View all'}
+              onPress={() =>
+                navigate('CategoryDetails', {title: 'Popular Food'})
+              }
             />
           </View>
           <FlatList
@@ -149,6 +159,9 @@ const HomeScreen = () => {
               containerStyle={{height: 30}}
               textStyle={{fontSize: 9, paddingHorizontal: 15, color: orange}}
               text={'View all'}
+              onPress={() =>
+                navigate('CategoryDetails', {title: 'Special offers'})
+              }
             />
           </View>
           <FlatList
