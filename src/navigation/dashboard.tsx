@@ -33,8 +33,8 @@ const DashboardStack = () => {
         inactiveTintColor: grey,
       }}>
       <Tab.Screen name="Home" component={HomeStack} />
-      <Tab.Screen name="Cart" component={Cart} />
       <Tab.Screen name="Favourite" component={FavouriteStack} />
+      <Tab.Screen name="Cart" component={Cart} />
       <Tab.Screen name="Profile" component={ProfileStack} />
     </Tab.Navigator>
   );

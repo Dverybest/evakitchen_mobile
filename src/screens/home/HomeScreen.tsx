@@ -1,17 +1,9 @@
 import React, {useState} from 'react';
-import {
-  FlatList,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
+import {FlatList, StyleSheet, ScrollView, View, Text} from 'react-native';
 import {ICategory, IFood} from '../../components/interface';
 import SearchBar from '../../components/searchBar';
-import {black300, orange, orange300, white} from '../../styles/colors';
-import Category from './compontent/Category';
+import {orange, white} from '../../styles/colors';
+import Category from './components/Category';
 import lunch from '../../assets/images/lunch.png';
 import dinner from '../../assets/images/dinner.png';
 import breakfast from '../../assets/images/breakfast.png';
@@ -23,7 +15,7 @@ import img4 from '../../assets/images/img4.jpg';
 import img8 from '../../assets/images/img7.jpg';
 import img7 from '../../assets/images/img7.jpg';
 import img6 from '../../assets/images/img6.jpg';
-import FoodListView from './compontent/FoodListView';
+import FoodListView from './components/FoodListView';
 
 const HomeScreen = () => {
   const [searchText, setSearchText] = useState<string>('');
