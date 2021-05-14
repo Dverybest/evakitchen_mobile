@@ -6,7 +6,7 @@ import Empty from '../../components/empty';
 import {Header} from '../../components/header';
 import {white} from '../../styles/colors';
 import {TextStyle} from '../../styles/textStyle';
-import CartItemView from './component /CartItemView';
+import CartItemView from './component/CartItemView';
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([{},{},{}]);
@@ -33,7 +33,7 @@ const Cart = () => {
             <FlatList
                 data={cartItems}
                 renderItem={({item,index})=>(
-                    <CartItemView/>
+                    <CartItemView key={index}/>
                 )}
             />
           </View>
