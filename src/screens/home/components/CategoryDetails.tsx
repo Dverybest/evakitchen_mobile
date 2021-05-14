@@ -32,40 +32,44 @@ const CategoryDetails = () => {
     },
   ];
   return (
-    <View style={styles.container}>
+    <View
+      style={{
+        backgroundColor: white,
+      }}>
       <Header title={title} showGoBack />
-      <SearchBar
-        containerStyle={{
-          marginBottom: 45,
-        }}
-        onPress={() => {}}
-        value={searchText}
-        onChangeText={text => setSearchText(text)}
-        placeholder="What are you looking for?"
-      />
-      <FlatList
-        data={favourites}
-        keyExtractor={(item, index) => `favourites${index}`}
-        renderItem={({item, index}) => (
-          <FoodCard
-            image={item.image}
-            rating={item.rating}
-            favourite={item.favourite}
-            setFavourite={item.setFavourite}
-            text={item.text}
-            amount={item.amount}
-          />
-        )}
-      />
+      <View style={styles.container}>
+        <SearchBar
+          containerStyle={{
+            marginBottom: 45,
+          }}
+          onPress={() => {}}
+          value={searchText}
+          onChangeText={text => setSearchText(text)}
+          placeholder="What are you looking for?"
+        />
+        <FlatList
+          data={favourites}
+          keyExtractor={(item, index) => `favourites${index}`}
+          renderItem={({item, index}) => (
+            <FoodCard
+              image={item.image}
+              rating={item.rating}
+              favourite={item.favourite}
+              setFavourite={item.setFavourite}
+              text={item.text}
+              amount={item.amount}
+            />
+          )}
+        />
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     flexDirection: 'column',
-    backgroundColor: white,
     paddingHorizontal: 25,
   },
 });
