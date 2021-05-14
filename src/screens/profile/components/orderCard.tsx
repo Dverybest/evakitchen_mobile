@@ -105,17 +105,20 @@ const OrderCard = ({
         style={{
           flex: 1,
           marginTop: 15,
+          marginBottom: 15,
           flexDirection: 'row',
           justifyContent: 'space-between',
+          height: 42
         }}>
         <ButtonWhite
           text={secondaryButtonTitle}
-          containerStyle={{width: 150, height: 42}}
+          containerStyle={{flex: 1}}
           onPress={secondaryButtonAction}
         />
+        <View style={{width: 10}}></View>
         <ButtonPrimary
           text={primaryButtonTitle}
-          containerStyle={{width: 150, height: 42}}
+          containerStyle={{flex: 1}}
           onPress={primaryButtonAction}
         />
       </View>
