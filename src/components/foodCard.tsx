@@ -1,16 +1,30 @@
-import React, {useState} from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import React from 'react';
+import {Image, ImageSourcePropType, StyleSheet, Text, View} from 'react-native';
 import {black300, orange, white} from '../styles/colors';
 import {TextStyle} from '../styles/textStyle';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import img2 from '../assets/images/img2.jpg';
 
-const FoodCard = () => {
-  const [isFavorite, setIsFavorite] = useState(false);
+interface IFoodCard {
+  image: ImageSourcePropType;
+  rating: number;
+  favourite: boolean;
+  text: string;
+  amount: number;
+  setFavourite: (value: React.SetStateAction<boolean>) => void;
+}
+
+const FoodCard = ({
+  image,
+  rating,
+  favourite,
+  text,
+  amount,
+  setFavourite,
+}: IFoodCard) => {
   return (
     <View style={styles.card}>
-      <Image style={styles.image} source={img2} />
+      <Image style={styles.image} source={image} />
       <View
         style={{
           position: 'absolute',
@@ -34,14 +48,14 @@ const FoodCard = () => {
                 fontSize: 12,
                 marginLeft: 5,
               }}>
-              4.6
+              {rating}
             </Text>
           </View>
           <AntDesign
-            name={isFavorite ? 'heart' : 'hearto'}
-            onPress={() => setIsFavorite(prev => !prev)}
+            name={favourite ? 'heart' : 'hearto'}
+            onPress={() => setFavourite(prev => !prev)}
             size={20}
-            color={isFavorite ? orange : white}
+            color={favourite ? orange : white}
           />
         </View>
         <View style={{alignItems: 'center'}}>
@@ -57,7 +71,7 @@ const FoodCard = () => {
                 color: white,
                 lineHeight: 24,
               }}>
-              Egusi Soup with assorted meat
+              {text}
             </Text>
             <Text
               style={{
@@ -65,7 +79,7 @@ const FoodCard = () => {
                 color: white,
                 lineHeight: 40,
               }}>
-              ₦1,500
+              {`₦${amount}`}
             </Text>
           </View>
         </View>
