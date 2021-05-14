@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 
 export const userSchema = yup.object().shape({
-  full_name: yup
+  fullName: yup
     .string()
     .required('Full legal name is required')
     .test('test first & last name', 'Enter both first and last name', value => {
@@ -25,7 +25,7 @@ export const userSchema = yup.object().shape({
         value !== undefined &&
         value.length >= 8,
     ),
-  phone_number: yup
+  contact: yup
     .string()
     .required('Phone number is required')
     .test('text number', 'Invaild phone number', value => {

@@ -3,10 +3,10 @@ import React, {useState} from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {ButtonPrimary} from '../../components/buttons';
 import {Header} from '../../components/header';
 import {IFood} from '../../components/interface';
+import Rating from '../../components/rating';
 import {black, orange, orange300, white} from '../../styles/colors';
 import {TextStyle} from '../../styles/textStyle';
 
@@ -37,15 +37,13 @@ const FoodDetails = () => {
               margin: 25,
               justifyContent: 'space-between',
             }}>
-            <AntDesign name={isFavorite?'heart':'hearto'} onPress={()=>setIsFavorite(prev=>!prev)} size={20} color={isFavorite?orange:black} />
-            <View style={{flexDirection: 'row'}}>
-              <FontAwesome name={'star'} size={20} color={orange} />
-              <FontAwesome name={'star'} size={20} color={orange} />
-              <FontAwesome name={'star'} size={20} color={orange} />
-              <FontAwesome name={'star-half-full'} size={20} color={orange} />
-              <FontAwesome name={'star-o'} size={20} color={black} />
-              <Text style={styles.rating}>{food.rating}</Text>
-            </View>
+            <AntDesign
+              name={isFavorite ? 'heart' : 'hearto'}
+              onPress={() => setIsFavorite(prev => !prev)}
+              size={20}
+              color={isFavorite ? orange : black}
+            />
+            <Rating rating={food.rating} />
           </View>
           <View
             style={{
@@ -58,7 +56,9 @@ const FoodDetails = () => {
               <AntDesign
                 name={'minus'}
                 size={25}
-                onPress={()=>setQuantity(prev=>prev>1?prev-1:prev)}
+                onPress={() =>
+                  setQuantity(prev => (prev > 1 ? prev - 1 : prev))
+                }
                 color={black}
                 style={{
                   backgroundColor: orange300,
@@ -73,7 +73,7 @@ const FoodDetails = () => {
                 name={'plus'}
                 size={25}
                 color={black}
-                onPress={()=>setQuantity(prev=>prev+1)}
+                onPress={() => setQuantity(prev => prev + 1)}
                 style={{
                   backgroundColor: orange300,
                   padding: 7,

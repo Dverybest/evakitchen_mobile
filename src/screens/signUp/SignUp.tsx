@@ -15,25 +15,12 @@ import {orange, white} from '../../styles/colors';
 import {TextStyle} from '../../styles/textStyle';
 import {Formik, FormikHelpers} from 'formik';
 import {userSchema} from './userSchema';
+import {IUser} from '../../components/interface';
 
 const SignUp = () => {
   const {navigate} = useNavigation();
-  const handleSubmit = (
-    values: {
-      password: string;
-      email: string;
-    },
-    actions: FormikHelpers<{
-      full_name: string;
-      phone_number: string;
-      password: string;
-      email: string;
-    }>,
-  ) => {
-    // actions.setFieldError('password', 'Hiii');
-    // actions.setFieldError('email', 'Hiii');
+  const handleSubmit = (values: IUser, actions: FormikHelpers<IUser>) => {
     console.log(values);
-    navigate('Dashboard')
   };
   return (
     <View style={styles.container}>
@@ -45,10 +32,10 @@ const SignUp = () => {
         </Text>
         <Formik
           initialValues={{
-            full_name: '',
-            phone_number: '',
-            password: '',
+            fullName: '',
             email: '',
+            password: '',
+            contact: '',
           }}
           validationSchema={userSchema}
           onSubmit={(values, actions) => handleSubmit(values, actions)}>
@@ -58,11 +45,9 @@ const SignUp = () => {
                 <TextField
                   placeholder="Fullname"
                   containerStyle={{marginTop: 50}}
-                  value={props.values.full_name}
-                  onChangeText={props.handleChange('full_name')}
-                  errorMessage={
-                    props.touched.full_name && props.errors.full_name
-                  }
+                  value={props.values.fullName}
+                  onChangeText={props.handleChange('fullName')}
+                  errorMessage={props.touched.fullName && props.errors.fullName}
                 />
                 <TextField
                   keyboardType={'email-address'}
@@ -74,11 +59,9 @@ const SignUp = () => {
                 <TextField
                   keyboardType={'phone-pad'}
                   placeholder="Phone number"
-                  value={props.values.phone_number}
-                  onChangeText={props.handleChange('phone_number')}
-                  errorMessage={
-                    props.touched.phone_number && props.errors.phone_number
-                  }
+                  value={props.values.contact}
+                  onChangeText={props.handleChange('contact')}
+                  errorMessage={props.touched.contact && props.errors.contact}
                 />
                 <TextField
                   placeholder="Password"
