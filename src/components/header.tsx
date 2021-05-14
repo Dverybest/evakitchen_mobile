@@ -7,7 +7,7 @@ import { black } from '../styles/colors';
 
 interface IHeader{
 title:string;
-showGoBack:boolean;
+showGoBack?:boolean;
 containerStyle?:ViewStyle;
 customGoBackhandler?:()=>void
 }
@@ -39,7 +39,7 @@ export const Header = ({
         <View style={styles.title}>
           <Text
             style={[
-              TextStyle.medium,
+              TextStyle.semiBold,
               {textAlign: 'center', fontSize: 18, lineHeight: 27},
             ]}>
             {title}
