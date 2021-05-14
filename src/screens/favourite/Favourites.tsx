@@ -4,9 +4,11 @@ import FoodCard from '../../components/foodCard';
 import SearchBar from '../../components/searchBar';
 import {white} from '../../styles/colors';
 import {TextStyle} from '../../styles/textStyle';
+import img2 from '../../assets/images/img2.jpg';
 
 const Favourites = () => {
   const [searchText, setSearchText] = useState<string>('');
+  const [favourite, setFavourite] = useState(false);
   return (
     <View style={styles.container}>
       <SearchBar
@@ -21,8 +23,14 @@ const Favourites = () => {
       <View style={{alignItems: 'center', marginTop: 19, marginBottom: 34}}>
         <Text style={{...TextStyle.semiBold}}>Favourites</Text>
       </View>
-      <FoodCard />
-      <FoodCard />
+      <FoodCard
+        image={img2}
+        rating={4.6}
+        favourite={favourite}
+        setFavourite={setFavourite}
+        text="Egusi Soup with assorted meat"
+        amount={1500}
+      />
     </View>
   );
 };
