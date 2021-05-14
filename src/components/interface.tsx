@@ -9,6 +9,6 @@ export interface IFood {
   title: string;
   description: string;
   price: string;
-  rating: String;
+  rating: number;
   img: ImageSourcePropType;
 }
