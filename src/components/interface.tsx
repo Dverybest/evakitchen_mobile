@@ -1,4 +1,5 @@
 import {ImageSourcePropType} from 'react-native';
+import { ContextActionType } from '../context/enums';
 
 export interface ICategory {
   name: string;
@@ -11,4 +12,11 @@ export interface IFood {
   price: string;
   rating: String;
   img: ImageSourcePropType;
+}
+export interface IAction {
+  type: ContextActionType;
+  payload: any;
+}
+export interface IContextProvider {
+  children: React.Component;
 }
