@@ -6,6 +6,20 @@ import SignIn from '../screens/signIn/SignIn';
 const Stack = createStackNavigator();
 
 const AuthStack = () => {
+  /**
+   * TODO 1:
+   *  add useEffect 
+   *  inside it check if authcontext is auth context isAuthenticated
+   *  if true navigate to Dashboard  using  navigation.reset({ index: 0, routes: [{ name: 'Dashboard' }] })
+   * 
+   */
+ /**
+   * TODO 2:
+   * check f authcontext is auth context isAuthenticated
+   *  if true return the <SplashScreen/>
+   * 
+   */
+
   return (
     <Stack.Navigator screenOptions={{
       headerShown:false
