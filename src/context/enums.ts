@@ -1,4 +1,4 @@
-export enum ContextActionType {
+export enum ActionType {
   IS_NETWORK_ERROR = 'IS_NETWORK_ERROR',
   IS_SERVER_ERROR = 'IS_SERVER_ERROR',
   IS_LOADING = 'IS_LOADING',
