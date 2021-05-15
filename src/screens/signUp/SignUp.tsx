@@ -1,5 +1,5 @@
 import {useNavigation} from '@react-navigation/core';
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   StyleSheet,
   View,
@@ -15,12 +15,37 @@ import {orange, white} from '../../styles/colors';
 import {TextStyle} from '../../styles/textStyle';
 import {Formik, FormikHelpers} from 'formik';
 import {userSchema} from './userSchema';
-import {IUser} from '../../components/interface';
+import {useRequestProcessor} from '../../api/requestProcessor';
+import {AuthContext} from '../../context/authContext';
+import {ISignUpDetails} from '../../interfaces/user';
 
 const SignUp = () => {
   const {navigate} = useNavigation();
-  const handleSubmit = (values: IUser, actions: FormikHelpers<IUser>) => {
-    console.log(values);
+  const {dispatchAuthState} = useContext(AuthContext);
+  const {makeRequest} = useRequestProcessor();
+  const handleSubmit = async (
+    values: ISignUpDetails,
+    actions: FormikHelpers<ISignUpDetails>,
+  ) => {
+    const {response, error} = await makeRequest({
+      url: 'auth/signup',
+      method: 'POST',
+      payload: values,
+    });
+    if (error) {
+      console.log(error);
+      actions.setFieldError('email', error.message);
+      actions.setFieldError('password', error.message);
+    } else if (response && response?.success) {
+      /**
+       * TODOs:
+       *  Dispatch USER_DETAILS data to auth context
+       *  remove all console.log
+       */
+      console.log(response);
+    }
+    // TODO: remove this navigation here
+    navigate('Dashboard');
   };
   return (
     <View style={styles.container}>

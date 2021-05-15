@@ -15,20 +15,34 @@ import {useNavigation} from '@react-navigation/core';
 import {TextStyle} from '../../styles/textStyle';
 import {Formik, FormikHelpers} from 'formik';
 import {signInSchema} from './signInSchema';
+import {useRequestProcessor} from '../../api/requestProcessor';
+import {ISignInDetails} from '../../interfaces/user';
 
 const SignIn = () => {
   const {navigate} = useNavigation();
-  const handleSubmit = (
-    values: {
-      password: string;
-      email: string;
-    },
-    actions: FormikHelpers<{
-      password: string;
-      email: string;
-    }>,
+  const {makeRequest} = useRequestProcessor();
+  const handleSubmit = async (
+    values: ISignInDetails,
+    actions: FormikHelpers<ISignInDetails>,
   ) => {
-    navigate('Dashboard')
+    const {response, error} = await makeRequest({
+      url: '/auth/login',
+      method: 'POST',
+      payload: values,
+    });
+    if (error) {
+      actions.setFieldError('email', error.message);
+      actions.setFieldError('password', error.message);
+    } else if (response?.success) {
+      /**
+       * TODOs:
+       *  Dispatch USER_DETAILS data to auth context
+       *  remove all console.log
+       */
+      console.log(response);
+    }
+    // TODO: remove this navigation here
+    navigate('Dashboard');
   };
   return (
     <View style={styles.container}>
@@ -44,7 +58,6 @@ const SignIn = () => {
             validationSchema={signInSchema}
             onSubmit={(values, actions) => handleSubmit(values, actions)}>
             {props => {
-              console.log(props.errors);
               return (
                 <>
                   <TextField
