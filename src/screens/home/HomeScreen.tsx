@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {FlatList, StyleSheet, ScrollView, View, Text} from 'react-native';
-import {ICategory, IFood} from '../../components/interface';
 import SearchBar from '../../components/searchBar';
 import {orange, white} from '../../styles/colors';
 import Category from './components/Category';
@@ -17,6 +16,7 @@ import img7 from '../../assets/images/img7.jpg';
 import img6 from '../../assets/images/img6.jpg';
 import FoodListView from './components/FoodListView';
 import {useNavigation} from '@react-navigation/core';
+import { ICategory, IFood } from '../../interfaces/menu';
 
 const HomeScreen = () => {
   const {navigate} = useNavigation();
@@ -31,29 +31,33 @@ const HomeScreen = () => {
       title: 'Ora Soup',
       description: 'Nigerian ganished jellof rice with chicken laps',
       price: '1500',
-      rating: '5',
+      rating: 5,
       img: img8,
+      category:'lunch'
     },
     {
       title: 'Ganished Jellof Rice',
       description: 'Fried rice with chicken laps',
       price: '1500',
-      rating: '5',
+      rating: 5,
       img: img1,
+      category:'dinner'
     },
     {
       title: 'Fried Rice',
       description: 'Fried rice with chicken laps',
       price: '1500',
-      rating: '5',
+      rating: 5,
       img: img2,
+      category:'lunch'
     },
     {
       title: 'Fried Rice',
       description: 'Fried rice with chicken laps',
       price: '1500',
-      rating: '5',
+      rating: 5,
       img: img4,
+      category:'lunch'
     },
   ]);
   const [special, setSpecial] = useState<IFood[]>([
@@ -61,29 +65,33 @@ const HomeScreen = () => {
       title: 'Fried Rice',
       description: 'Fried rice with chicken laps',
       price: '1500',
-      rating: '5',
+      rating: 5,
       img: img6,
+      category:'lunch'
     },
     {
       title: 'Fried Rice',
       description: 'Fried rice with chicken laps',
       price: '1500',
-      rating: '5',
+      rating: 5,
       img: img7,
+      category:'lunch'
     },
     {
       title: 'Fried Rice',
       description: 'Fried rice with chicken laps',
       price: '1500',
-      rating: '5',
+      rating: 5,
       img: img2,
+      category:'lunch'
     },
     {
       title: 'Fried Rice',
       description: 'Fried rice with chicken laps',
       price: '1500',
-      rating: '5',
+      rating: 5,
       img: img4,
+      category:'lunch'
     },
   ]);
   return (

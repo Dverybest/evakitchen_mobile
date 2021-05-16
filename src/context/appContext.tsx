@@ -1,35 +1,31 @@
 import React, {createContext, Dispatch, useReducer} from 'react';
-import {IAction, IContextProvider} from '../components/interface';
-import {ContextActionType} from './enums';
-
-interface IAppContext {
-  isNetworkError: boolean;
-  isServerError: boolean;
-  isLoading: boolean;
-}
+import {IAction, IContextProvider} from '../interfaces/common';
+import {IAppContext, IAppState} from '../interfaces/appContext';
+import {ActionType} from './enums';
 
 const initialState = {
   isNetworkError: false,
   isServerError: false,
   isLoading: false,
 };
-export const AppContext = createContext<{
-  appState: IAppContext;
-  dispatchAppState: Dispatch<IAction>;
-}>({appState: initialState, dispatchAppState: () => undefined});
 
-const reducer = (state: IAppContext, action: IAction) => {
+const reducer = (state: IAppState, action: IAction) => {
   switch (action.type) {
-    case ContextActionType.IS_LOADING:
+    case ActionType.IS_LOADING:
       return {...state, isLoading: action.payload};
-    case ContextActionType.IS_SERVER_ERROR:
+    case ActionType.IS_SERVER_ERROR:
       return {...state, isServerError: action.payload};
-    case ContextActionType.IS_NETWORK_ERROR:
+    case ActionType.IS_NETWORK_ERROR:
       return {...state, isNetworkError: action.payload};
     default:
       return state;
   }
 };
+
+export const AppContext = createContext<IAppContext>({
+  appState: initialState,
+  dispatchAppState: () => undefined,
+});
 
 const AppContextProvider = ({children}: IContextProvider) => {
   const [appState, dispatchAppState] = useReducer(reducer, initialState);

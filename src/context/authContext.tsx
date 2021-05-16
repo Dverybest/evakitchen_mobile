@@ -1,35 +1,35 @@
-import React, {createContext, Dispatch, useReducer} from 'react';
-import {IAction, IContextProvider, IUser} from '../components/interface';
-import {ContextActionType} from './enums';
-
-interface IAppContext {
-  isAuthenticated: boolean;
-  user: IUser | null;
-}
+import React, {createContext, Dispatch, useEffect, useReducer} from 'react';
+import {IAction, IContextProvider} from '../interfaces/common';
+import {IAuthContext, IAuthState} from '../interfaces/authContext';
+import {ActionType} from './enums';
+import {saveToStorage, StorageNames} from './storage';
 
 const initialState = {
   isAuthenticated: false,
   user: null,
 };
-export const AuthContext = createContext<{
-  authState: IAppContext;
-  dispatchAuthState: Dispatch<IAction>;
-}>({authState: initialState, dispatchAuthState: () => undefined});
 
-const reducer = (state: IAppContext, action: IAction) => {
+const reducer = (state: IAuthState, action: IAction) => {
   switch (action.type) {
-    case ContextActionType.USER_DETAILS:
+    case ActionType.USER_DETAILS:
       return {...state, isAuthenticated: true, user: action.payload};
-    case ContextActionType.LOG_OUT:
+    case ActionType.LOG_OUT:
       return {...state, isAuthenticated: false, user: null};
     default:
       return state;
   }
 };
 
+export const AuthContext = createContext<IAuthContext>({
+  authState: initialState,
+  dispatchAuthState: () => undefined,
+});
+
 const AuthContextProvider = ({children}: IContextProvider) => {
   const [authState, dispatchAuthState] = useReducer(reducer, initialState);
-
+  useEffect(() => {
+    saveToStorage(StorageNames.AUTH, authState);
+  }, [authState]);
   return (
     <AuthContext.Provider value={{authState, dispatchAuthState}}>
       {children}

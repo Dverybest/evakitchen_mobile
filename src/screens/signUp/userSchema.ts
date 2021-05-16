@@ -14,17 +14,7 @@ export const userSchema = yup.object().shape({
     .email('Invalid email address'),
   password: yup
     .string()
-    .required('Password is required')
-    .test(
-      'test password',
-      'Invalid password',
-      value =>
-        /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z0-9])(?!.*\s).{8,}$/.test(
-          value ?? '',
-        ) &&
-        value !== undefined &&
-        value.length >= 8,
-    ),
+    .required('Password is required'),
   contact: yup
     .string()
     .required('Phone number is required')

@@ -7,12 +7,14 @@ import {orange} from './src/styles/colors';
 import AuthStack from './src/navigation/authStack';
 import DashboardStack from './src/navigation/dashboard';
 import NetworkError from './src/components/networkError';
+import Loader from './src/components/loader';
 const Stack = createStackNavigator();
 const App = () => {
   return (
     <SafeAreaView style={styles.Container}>
       <StatusBar backgroundColor={orange} barStyle={'light-content'} />
       <NetworkError />
+      <Loader/>
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{

@@ -5,8 +5,8 @@ import {ScrollView} from 'react-native-gesture-handler';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {ButtonPrimary} from '../../components/buttons';
 import {Header} from '../../components/header';
-import {IFood} from '../../components/interface';
 import Rating from '../../components/rating';
+import {IFood} from '../../interfaces/menu';
 import {black, orange, orange300, white} from '../../styles/colors';
 import {TextStyle} from '../../styles/textStyle';
 

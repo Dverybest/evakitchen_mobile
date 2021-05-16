@@ -1,5 +1,5 @@
 import React, { } from 'react';
-import { IContextProvider } from '../components/interface';
+import { IContextProvider } from '../interfaces/common';
 import AppContextProvider from './appContext';
 
 const Provider = ({children}:IContextProvider)=>{

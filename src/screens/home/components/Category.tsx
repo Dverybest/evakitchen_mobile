@@ -1,10 +1,10 @@
 import React from 'react';
-import { StyleSheet, View,Text,Image, TouchableOpacity} from 'react-native';
-import { ICategory } from '../../../components/interface';
+import { StyleSheet,Text,Image, TouchableOpacity} from 'react-native';
+import { ICategoryListView } from '../../../interfaces/menu';
 import {orange300} from '../../../styles/colors'
 import { TextStyle } from '../../../styles/textStyle';
 
-const Category = ({name,icon, onPress}:ICategory)=>{
+const Category = ({name,icon, onPress}:ICategoryListView)=>{
     return (
         <TouchableOpacity style={styles.container} onPress={onPress}>
             <Image source={icon} style={styles.icon}/>
