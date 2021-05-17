@@ -1,5 +1,5 @@
-import React, {createContext, Dispatch, useEffect, useReducer} from 'react';
-import {IAction, IContextProvider} from '../interfaces/common';
+import React, {createContext, useEffect, useReducer} from 'react';
+import {IAction, IAuthContextProvider} from '../interfaces/common';
 import {IAuthContext, IAuthState} from '../interfaces/authContext';
 import {ActionType} from './enums';
 import {saveToStorage, StorageNames} from './storage';
@@ -25,8 +25,11 @@ export const AuthContext = createContext<IAuthContext>({
   dispatchAuthState: () => undefined,
 });
 
-const AuthContextProvider = ({children}: IContextProvider) => {
-  const [authState, dispatchAuthState] = useReducer(reducer, initialState);
+const AuthContextProvider = ({children, value}: IAuthContextProvider) => {
+  const [authState, dispatchAuthState] = useReducer(
+    reducer,
+    value ?? initialState,
+  );
   useEffect(() => {
     saveToStorage(StorageNames.AUTH, authState);
   }, [authState]);
