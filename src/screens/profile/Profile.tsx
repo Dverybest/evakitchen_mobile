@@ -1,8 +1,14 @@
 import React, {useContext, useState} from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
-import {black, black300, grey, orange, white} from '../../styles/colors';
+import {
+  black,
+  black300,
+  grey100,
+  orange,
+  orange300,
+  white,
+} from '../../styles/colors';
 import {TextStyle} from '../../styles/textStyle';
-import profile from '../../assets/images/profile.png';
 import Feather from 'react-native-vector-icons/Feather';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import {TouchableOpacity} from 'react-native-gesture-handler';
@@ -15,10 +21,21 @@ const Profile = () => {
   const {dispatchAuthState} = useContext(AuthContext);
   const {navigate} = useNavigation();
   const [showUploadOption, setShowUploadOption] = useState(false);
+  const [photoUrl, setPhotoUrl] = useState('');
+  const handleUpload = (photo: any, setSelected: any) => {
+    setPhotoUrl(photo.uri);
+    setSelected({show: false});
+    setShowUploadOption(false);
+  };
+
   return (
     <>
       <View style={styles.container}>
-        <UploadOption show={showUploadOption} setShow={setShowUploadOption} />
+        <UploadOption
+          show={showUploadOption}
+          setShow={setShowUploadOption}
+          handleUpload={handleUpload}
+        />
         <View
           style={{
             marginBottom: 32,
@@ -38,18 +55,25 @@ const Profile = () => {
         </View>
         <View style={{alignItems: 'center', marginBottom: 32}}>
           <View style={styles.profileImageContainer}>
-            {/* <View
-          style={{
-            backgroundColor: orange300,
-            height: 156,
-            width: 156,
-            borderRadius: 78,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Text style={{...TextStyle.semiBold, fontSize: 40, color: white}}>CB</Text>
-        </View> */}
-            <Image source={profile} style={styles.image} />
+            {photoUrl !== '' ? (
+              <Image source={{uri: photoUrl}} style={styles.image} />
+            ) : (
+              <View
+                style={{
+                  backgroundColor: orange300,
+                  height: 156,
+                  width: 156,
+                  borderRadius: 78,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Text
+                  style={{...TextStyle.semiBold, fontSize: 40, color: white}}>
+                  CB
+                </Text>
+              </View>
+            )}
+
             <View style={styles.cameraBox}>
               <TouchableOpacity>
                 <Feather
@@ -110,7 +134,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     borderBottomWidth: 1,
-    borderBottomColor: grey,
+    borderBottomColor: grey100,
     flexDirection: 'row',
   },
 });
