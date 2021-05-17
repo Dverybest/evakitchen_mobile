@@ -22,8 +22,7 @@ import {AuthContext} from '../../context/authContext';
 
 const SignIn = () => {
   const {navigate} = useNavigation();
-  const {authState, dispatchAuthState} = useContext(AuthContext);
-  console.log(authState, 456);
+  const {dispatchAuthState} = useContext(AuthContext);
 
   const {makeRequest} = useRequestProcessor();
   const handleSubmit = async (
