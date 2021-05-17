@@ -21,6 +21,7 @@ const UploadOption = ({show, setShow}: IUploadOption) => {
             <Feather
               name={'x-square'}
               size={25}
+              style={{alignSelf: 'flex-end'}}
               onPress={() => setShow(false)}
             />
             <Text
