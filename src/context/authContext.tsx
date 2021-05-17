@@ -2,7 +2,7 @@ import React, {createContext, useEffect, useReducer} from 'react';
 import {IAction, IAuthContextProvider} from '../interfaces/common';
 import {IAuthContext, IAuthState} from '../interfaces/authContext';
 import {ActionType} from './enums';
-import {saveToStorage, StorageNames} from './storage';
+import {clearStorage, saveToStorage, StorageNames} from './storage';
 
 const initialState = {
   isAuthenticated: false,
@@ -33,6 +33,15 @@ const AuthContextProvider = ({children, value}: IAuthContextProvider) => {
   useEffect(() => {
     saveToStorage(StorageNames.AUTH, authState);
   }, [authState]);
+
+  useEffect(() => {
+    if (!authState.isAuthenticated) {
+      (async () => {
+        await clearStorage();
+      })();
+    }
+  }, [authState.isAuthenticated]);
+
   return (
     <AuthContext.Provider value={{authState, dispatchAuthState}}>
       {children}

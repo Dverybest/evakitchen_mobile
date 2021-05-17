@@ -8,7 +8,7 @@ import {TextStyle} from '../styles/textStyle';
 import {ButtonPrimary} from './buttons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {AppContext} from '../context/appContext';
-import {ContextActionType} from '../context/enums';
+import {ActionType} from '../context/enums';
 
 interface NetworkError {
   visible: boolean;
@@ -46,7 +46,9 @@ const NetworkError = () => {
           size={24}
           onPress={() =>
             dispatchAppState({
-              type:appState.isServerError?ContextActionType.IS_SERVER_ERROR:ContextActionType.IS_NETWORK_ERROR,
+              type: appState.isServerError
+                ? ActionType.IS_SERVER_ERROR
+                : ActionType.IS_NETWORK_ERROR,
               payload: false,
             })
           }
