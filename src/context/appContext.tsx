@@ -1,4 +1,4 @@
-import React, {createContext, Dispatch, useReducer} from 'react';
+import React, {createContext, useReducer} from 'react';
 import {IAction, IContextProvider} from '../interfaces/common';
 import {IAppContext, IAppState} from '../interfaces/appContext';
 import {ActionType} from './enums';
