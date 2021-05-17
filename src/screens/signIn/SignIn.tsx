@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   StyleSheet,
   View,
@@ -17,9 +17,14 @@ import {Formik, FormikHelpers} from 'formik';
 import {signInSchema} from './signInSchema';
 import {useRequestProcessor} from '../../api/requestProcessor';
 import {ISignInDetails} from '../../interfaces/user';
+import {ActionType} from '../../context/enums';
+import {AuthContext} from '../../context/authContext';
 
 const SignIn = () => {
   const {navigate} = useNavigation();
+  const {authState, dispatchAuthState} = useContext(AuthContext);
+  console.log(authState, 456);
+
   const {makeRequest} = useRequestProcessor();
   const handleSubmit = async (
     values: ISignInDetails,
@@ -33,16 +38,12 @@ const SignIn = () => {
     if (error) {
       actions.setFieldError('email', error.message);
       actions.setFieldError('password', error.message);
-    } else if (response?.success) {
-      /**
-       * TODOs:
-       *  Dispatch USER_DETAILS data to auth context
-       *  remove all console.log
-       */
-      console.log(response);
+    } else if (response && response?.success) {
+      dispatchAuthState({
+        type: ActionType.USER_DETAILS,
+        payload: response.data,
+      });
     }
-    // TODO: remove this navigation here
-    navigate('Dashboard');
   };
   return (
     <View style={styles.container}>
