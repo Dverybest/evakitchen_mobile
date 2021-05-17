@@ -1,18 +1,30 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
-import {black, grey, orange, orange300, white} from '../../styles/colors';
+import {black, black300, grey, orange, white} from '../../styles/colors';
 import {TextStyle} from '../../styles/textStyle';
 import profile from '../../assets/images/profile.png';
 import Feather from 'react-native-vector-icons/Feather';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/core';
+import {AuthContext} from '../../context/authContext';
+import { ActionType } from '../../context/enums';
 
 const Profile = () => {
+  const {dispatchAuthState} = useContext(AuthContext);
   const {navigate} = useNavigation();
   return (
     <View style={styles.container}>
-      <Text style={{...TextStyle.semiBold, marginBottom: 32}}>Profile</Text>
+      <View
+        style={{
+          marginBottom: 32,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}>
+        <Text style={{...TextStyle.semiBold}}>Profile</Text>
+        <Feather name="log-out" color={black300} size={25} onPress={()=> dispatchAuthState({type: ActionType.LOG_OUT, payload: null})} />
+      </View>
       <View style={{alignItems: 'center', marginBottom: 32}}>
         <View style={styles.profileImageContainer}>
           {/* <View
@@ -53,7 +65,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 33,
     paddingTop: 44,
-    backgroundColor:white
+    backgroundColor: white,
   },
   profileImageContainer: {
     height: 156,
