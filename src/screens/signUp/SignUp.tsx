@@ -16,12 +16,13 @@ import {TextStyle} from '../../styles/textStyle';
 import {Formik, FormikHelpers} from 'formik';
 import {userSchema} from './userSchema';
 import {useRequestProcessor} from '../../api/requestProcessor';
-import {AuthContext} from '../../context/authContext';
 import {ISignUpDetails} from '../../interfaces/user';
+import {AuthContext} from '../../context/authContext';
+import {ActionType} from '../../context/enums';
 
 const SignUp = () => {
-  const {navigate} = useNavigation();
   const {dispatchAuthState} = useContext(AuthContext);
+  const {navigate} = useNavigation();
   const {makeRequest} = useRequestProcessor();
   const handleSubmit = async (
     values: ISignUpDetails,
@@ -33,19 +34,13 @@ const SignUp = () => {
       payload: values,
     });
     if (error) {
-      console.log(error);
-      actions.setFieldError('email', error.message);
-      actions.setFieldError('password', error.message);
+      actions.resetForm();
     } else if (response && response?.success) {
-      /**
-       * TODOs:
-       *  Dispatch USER_DETAILS data to auth context
-       *  remove all console.log
-       */
-      console.log(response);
+      dispatchAuthState({
+        type: ActionType.USER_DETAILS,
+        payload: response.data,
+      });
     }
-    // TODO: remove this navigation here
-    navigate('Dashboard');
   };
   return (
     <View style={styles.container}>
@@ -60,7 +55,7 @@ const SignUp = () => {
             fullName: '',
             email: '',
             password: '',
-            contact: '',
+            phoneNumber: '',
           }}
           validationSchema={userSchema}
           onSubmit={(values, actions) => handleSubmit(values, actions)}>
@@ -84,9 +79,11 @@ const SignUp = () => {
                 <TextField
                   keyboardType={'phone-pad'}
                   placeholder="Phone number"
-                  value={props.values.contact}
-                  onChangeText={props.handleChange('contact')}
-                  errorMessage={props.touched.contact && props.errors.contact}
+                  value={props.values.phoneNumber}
+                  onChangeText={props.handleChange('phoneNumber')}
+                  errorMessage={
+                    props.touched.phoneNumber && props.errors.phoneNumber
+                  }
                 />
                 <TextField
                   placeholder="Password"
@@ -109,7 +106,7 @@ const SignUp = () => {
           containerStyle={{marginBottom: 50}}
         />
         <TouchableOpacity
-          style={{alignItems: 'center'}}
+          style={{alignItems: 'center', marginBottom: 20}}
           onPress={() => navigate('SignIn')}>
           <Text style={TextStyle.regular}>
             {`Already have an account? `}

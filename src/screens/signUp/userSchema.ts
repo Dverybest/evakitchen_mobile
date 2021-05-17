@@ -15,7 +15,7 @@ export const userSchema = yup.object().shape({
   password: yup
     .string()
     .required('Password is required'),
-  contact: yup
+  phoneNumber: yup
     .string()
     .required('Phone number is required')
     .test('text number', 'Invaild phone number', value => {
