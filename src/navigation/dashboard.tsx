@@ -9,12 +9,14 @@ import HomeStack from './homeStack';
 import Cart from '../screens/cart/Cart';
 import {AuthContext} from '../context/authContext';
 import {useNavigation} from '@react-navigation/core';
+import {CartContext} from '../context/cartContext';
 
 const Tab = createBottomTabNavigator();
 
 const DashboardStack = () => {
   const {reset} = useNavigation();
   const {authState} = useContext(AuthContext);
+  const {cartState} = useContext(CartContext);
   useEffect(() => {
     if (!authState.isAuthenticated) {
       reset({index: 0, routes: [{name: 'Auth'}]});
@@ -43,7 +45,13 @@ const DashboardStack = () => {
       }}>
       <Tab.Screen name="Home" component={HomeStack} />
       <Tab.Screen name="Favourite" component={FavouriteStack} />
-      <Tab.Screen name="Cart" component={Cart} />
+      <Tab.Screen
+        name="Cart"
+        component={Cart}
+        options={
+          cartState.items?.length ? {tabBarBadge: cartState.items.length} : {}
+        }
+      />
       <Tab.Screen name="Profile" component={ProfileStack} />
     </Tab.Navigator>
   );
