@@ -4,7 +4,7 @@ import {ActionType} from './enums';
 import {ICartContext, ICartState} from '../interfaces/cartContext';
 
 const initialState = {
-  items: null,
+  items: [],
 };
 
 const reducer = (state: ICartState, action: IAction) => {
@@ -13,10 +13,10 @@ const reducer = (state: ICartState, action: IAction) => {
     case ActionType.ADD_TO_CART:
       return {
         ...state,
-        items: items?.length ? [...items, action.payload] : [action.payload],
+        items: [...items, action.payload],
       };
     case ActionType.REMOVE_FROM_CART:
-      return {...state, items: null};
+      return {...state, items: []};
     default:
       return state;
   }
