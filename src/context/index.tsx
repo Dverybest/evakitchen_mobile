@@ -3,6 +3,7 @@ import {IContextProvider} from '../interfaces/common';
 import SplashScreen from '../screens/getStarted/SplashScreen';
 import AppContextProvider from './appContext';
 import AuthContextProvider from './authContext';
+import CartContextProvider from './cartContext';
 import {fetchFromStorage, StorageNames} from './storage';
 
 const Provider = ({children}: IContextProvider) => {
@@ -19,7 +20,9 @@ const Provider = ({children}: IContextProvider) => {
   }
   return (
     <AppContextProvider>
-      <AuthContextProvider value={initialValue}>{children}</AuthContextProvider>
+      <AuthContextProvider value={initialValue}>
+        <CartContextProvider>{children}</CartContextProvider>
+      </AuthContextProvider>
     </AppContextProvider>
   );
 };
