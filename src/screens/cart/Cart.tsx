@@ -1,21 +1,22 @@
 import {useNavigation} from '@react-navigation/core';
-import React, {useState} from 'react';
-import {StyleSheet, Text, View,FlatList} from 'react-native';
+import React, {useContext} from 'react';
+import {StyleSheet, Text, View, FlatList} from 'react-native';
 import {ButtonPrimary, ButtonWhite} from '../../components/buttons';
 import Empty from '../../components/empty';
 import {Header} from '../../components/header';
+import {CartContext} from '../../context/cartContext';
+import {ICart} from '../../interfaces/cartContext';
 import {white} from '../../styles/colors';
 import {TextStyle} from '../../styles/textStyle';
 import CartItemView from './component/CartItemView';
 
 const Cart = () => {
-  const [cartItems, setCartItems] = useState([{},{},{}]);
-  const [isEmpty, setIsEmpty] = useState(true);
+  const {cartState} = useContext(CartContext);
   const {navigate} = useNavigation();
   return (
     <View style={styles.container}>
       <Header title={'Shopping cart'} />
-      {isEmpty ? (
+      {cartState.items.length === 0 ? (
         <View style={{flex: 1}}>
           <Empty
             text={'Empty cart'}
@@ -31,10 +32,16 @@ const Cart = () => {
         <View style={styles.container}>
           <View style={[styles.container, {marginHorizontal: 25}]}>
             <FlatList
-                data={cartItems}
-                renderItem={({item,index})=>(
-                    <CartItemView key={index}/>
-                )}
+              data={cartState.items}
+              keyExtractor={(item, index) => `items${index}`}
+              renderItem={({item, index}) => (
+                <CartItemView
+                  key={index}
+                  quantity={item.quantity}
+                  title={item.title}
+                  amount={item.amount}
+                />
+              )}
             />
           </View>
           <View style={[{margin: 25}]}>
@@ -45,13 +52,20 @@ const Cart = () => {
                 marginBottom: 50,
               }}>
               <Text style={[TextStyle.medium]}>Total</Text>
-              <Text style={[TextStyle.medium]}>₦3,000</Text>
+              <Text style={[TextStyle.medium]}>{`₦${
+                cartState.items.reduce(
+                  (amount: number, newAmount: ICart) =>
+                    Number(amount) + Number(newAmount.amount),
+                  0,
+                ) *
+                cartState.items.reduce(
+                  (quantity: number, newQuantity: ICart) =>
+                    Number(quantity) + Number(newQuantity.quantity),
+                  0,
+                )
+              }`}</Text>
             </View>
-            <ButtonPrimary
-              containerStyle={{}}
-              text={'Make order'}
-            //   onPress={() => navigate('Home')}
-            />
+            <ButtonPrimary containerStyle={{}} text={'Make order'} />
             <ButtonWhite
               containerStyle={{marginTop: 25}}
               text={'Continue shopping'}
