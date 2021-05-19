@@ -7,21 +7,33 @@ import CartContextProvider from './cartContext';
 import {fetchFromStorage, StorageNames} from './storage';
 
 const Provider = ({children}: IContextProvider) => {
-  const [loading, setLoding] = React.useState(true);
-  const [initialValue, setInitialValue] = React.useState(null);
+  const [authLoading, setAuthLoading] = React.useState(true);
+  const [cartLoading, setCartLoading] = React.useState(true);
+  const [initialAuthValue, setInitialAuthValue] = React.useState(null);
+  const [initialCartValue, setinitialCartValue] = React.useState({items: []});
   React.useEffect(() => {
     fetchFromStorage(StorageNames.AUTH)
-      .then(value => setInitialValue(value))
+      .then(value => setInitialAuthValue(value))
       .catch()
-      .finally(() => setLoding(false));
+      .finally(() => setAuthLoading(false));
   }, []);
-  if (loading) {
+  React.useEffect(() => {
+    fetchFromStorage(StorageNames.CART)
+      .then(value => setinitialCartValue(value))
+      .catch()
+      .finally(() => setCartLoading(false));
+  }, []);
+  if (authLoading && cartLoading) {
     return <SplashScreen />;
   }
+  console.log(initialAuthValue,initialCartValue);
+  
   return (
     <AppContextProvider>
-      <AuthContextProvider value={initialValue}>
-        <CartContextProvider>{children}</CartContextProvider>
+      <AuthContextProvider value={initialAuthValue}>
+        <CartContextProvider value={initialCartValue}>
+          {children}
+        </CartContextProvider>
       </AuthContextProvider>
     </AppContextProvider>
   );
