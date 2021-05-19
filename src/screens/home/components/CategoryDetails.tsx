@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 import FoodCard from '../../../components/foodCard';
 import SearchBar from '../../../components/searchBar';
 import {white} from '../../../styles/colors';
@@ -20,7 +20,7 @@ const CategoryDetails = () => {
       favourite,
       setFavourite,
       text: 'Egusi Soup with assorted meat',
-      amount: 1500,
+      amount: '1500',
     },
     {
       image: img2,
@@ -28,7 +28,7 @@ const CategoryDetails = () => {
       favourite,
       setFavourite,
       text: 'Egusi Soup with assorted meat',
-      amount: 1300,
+      amount: '1300',
     },
   ];
   return (
@@ -52,12 +52,12 @@ const CategoryDetails = () => {
           keyExtractor={(item, index) => `favourites${index}`}
           renderItem={({item, index}) => (
             <FoodCard
-              image={item.image}
+              img={item.image}
               rating={item.rating}
               favourite={item.favourite}
               setFavourite={item.setFavourite}
-              text={item.text}
-              amount={item.amount}
+              title={item.text}
+              price={item.amount}
             />
           )}
         />
