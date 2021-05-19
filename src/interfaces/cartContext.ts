@@ -1,5 +1,5 @@
 import {Dispatch} from 'react';
-import {IAction} from './common';
+import {IAction, IContextProvider} from './common';
 
 export interface ICart {
   quantity: number;
@@ -16,4 +16,8 @@ export interface ICartState {
 export interface ICartContext {
   cartState: ICartState;
   dispatchCartState: Dispatch<IAction>;
+}
+
+export interface ICartContextProvider  extends IContextProvider {
+  value: ICartState
 }
