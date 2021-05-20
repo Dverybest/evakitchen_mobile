@@ -1,11 +1,13 @@
 import {RouteProp, useRoute} from '@react-navigation/core';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {ButtonPrimary} from '../../components/buttons';
 import {Header} from '../../components/header';
 import Rating from '../../components/rating';
+import {CartContext} from '../../context/cartContext';
+import {ActionType} from '../../context/enums';
 import {IFood} from '../../interfaces/menu';
 import {black, orange, orange300, white} from '../../styles/colors';
 import {TextStyle} from '../../styles/textStyle';
@@ -16,6 +18,23 @@ const FoodDetails = () => {
   }: RouteProp<{params: {food: IFood}}, 'params'> = useRoute();
   const [quantity, setQuantity] = useState(1);
   const [isFavorite, setIsFavorite] = useState(false);
+  const {dispatchCartState} = useContext(CartContext);
+
+  const addToCart = () => {
+    const {title, rating, price: amount, description} = food;
+    const payload = {
+      quantity,
+      title,
+      favourite: isFavorite,
+      rating,
+      amount,
+      description,
+    };
+    dispatchCartState({
+      type: ActionType.ADD_TO_CART,
+      payload,
+    });
+  };
   return (
     <View style={styles.container}>
       <Header title={food.title ?? ''} />
@@ -87,7 +106,11 @@ const FoodDetails = () => {
                 {marginHorizontal: 25},
               ]}>{`₦${food.price}`}</Text>
           </View>
-          <ButtonPrimary text={'Add to cart'} containerStyle={{margin: 25}} />
+          <ButtonPrimary
+            text="Add to cart"
+            containerStyle={{margin: 25}}
+            onPress={addToCart}
+          />
         </View>
       </ScrollView>
     </View>

@@ -67,7 +67,7 @@ const CheckImageQuality = ({
         />
         <TouchableOpacity
           onPress={() => setSeleted({show: false, image: null})}>
-          <Text style={[TextStyle.medium, {color: orange}]}>
+          <Text style={[TextStyle.medium, {color: orange, alignSelf: 'center'}]}>
             Take a new photo
           </Text>
         </TouchableOpacity>
