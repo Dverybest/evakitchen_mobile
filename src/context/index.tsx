@@ -20,14 +20,8 @@ const Provider = ({children}: IContextProvider) => {
     })
     .catch()
   .finally(() => setLoading(false));
-
   }, []);
-  React.useEffect(() => {
-    // fetchFromStorage(StorageNames.CART)
-    //   .then(value => setinitialCartValue(value))
-    //   .catch()
-    //   .finally(() => setCartLoading(false));
-  }, []);
+ 
   if (loading) {
     return <SplashScreen />;
   }
