@@ -46,6 +46,7 @@ const Favourites = () => {
         keyExtractor={(item, index) => `favourites${index}`}
         renderItem={({item, index}) => (
           <FoodCard
+            key={index}
             image={item.image}
             rating={item.rating}
             favourite={item.favourite}

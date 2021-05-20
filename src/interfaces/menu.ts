@@ -6,10 +6,10 @@ export interface ICategory {
   }
 export interface IFood {
   title: string;
-  description: string;
+  description?: string;
   price: string;
   rating: number;
-  category: string;
+  category?: string;
   img: ImageSourcePropType;
 }
 export interface IFoodListView {

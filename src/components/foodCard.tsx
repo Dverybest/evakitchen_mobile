@@ -1,90 +1,103 @@
 import React from 'react';
-import {Image, ImageSourcePropType, StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, View} from 'react-native';
 import {black300, orange, white} from '../styles/colors';
 import {TextStyle} from '../styles/textStyle';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {useNavigation} from '@react-navigation/core';
+import {IFood} from '../interfaces/menu';
 
-interface IFoodCard {
-  image: ImageSourcePropType;
-  rating: number;
-  favourite: boolean;
-  text: string;
-  amount: number;
+interface IFoodCard extends IFood {
+  favourite?: boolean;
   setFavourite: (value: React.SetStateAction<boolean>) => void;
 }
 
 const FoodCard = ({
-  image,
+  img,
   rating,
   favourite,
-  text,
-  amount,
+  title,
+  price,
   setFavourite,
 }: IFoodCard) => {
+  const {navigate} = useNavigation();
   return (
-    <View style={styles.card}>
-      <Image style={styles.image} source={image} />
-      <View
-        style={{
-          position: 'absolute',
-          backgroundColor: black300,
-          right: 0,
-          left: 0,
-          padding: 15,
-        }}>
+    <TouchableOpacity
+      onPress={() =>
+        navigate('FoodDetails', {
+          food: {
+            img,
+            rating,
+            favourite,
+            title,
+            price,
+          },
+        })
+      }>
+      <View style={styles.card}>
+        <Image style={styles.image} source={img} />
         <View
           style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginBottom: 63,
+            position: 'absolute',
+            backgroundColor: black300,
+            right: 0,
+            left: 0,
+            padding: 15,
           }}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <FontAwesome name="star" size={10} color={white} />
-            <Text
-              style={{
-                ...TextStyle.regular,
-                color: white,
-                fontSize: 12,
-                marginLeft: 5,
-              }}>
-              {rating}
-            </Text>
-          </View>
-          <AntDesign
-            name={favourite ? 'heart' : 'hearto'}
-            onPress={() => setFavourite(prev => !prev)}
-            size={20}
-            color={favourite ? orange : white}
-          />
-        </View>
-        <View style={{alignItems: 'center'}}>
           <View
             style={{
-              padding: 15,
-              marginBottom: 20,
-              alignItems: 'flex-end',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              marginBottom: 63,
             }}>
-            <Text
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <FontAwesome name="star" size={10} color={white} />
+              <Text
+                style={{
+                  ...TextStyle.regular,
+                  color: white,
+                  fontSize: 12,
+                  marginLeft: 5,
+                }}>
+                {rating}
+              </Text>
+            </View>
+            <AntDesign
+              name={favourite ? 'heart' : 'hearto'}
+              onPress={() => setFavourite(prev => !prev)}
+              size={20}
+              color={favourite ? orange : white}
+            />
+          </View>
+          <View style={{alignItems: 'center'}}>
+            <View
               style={{
-                ...TextStyle.medium,
-                color: white,
-                lineHeight: 24,
+                padding: 15,
+                marginBottom: 20,
+                alignItems: 'flex-end',
               }}>
-              {text}
-            </Text>
-            <Text
-              style={{
-                ...TextStyle.regular,
-                color: white,
-                lineHeight: 40,
-              }}>
-              {`₦${amount}`}
-            </Text>
+              <Text
+                style={{
+                  ...TextStyle.medium,
+                  color: white,
+                  lineHeight: 24,
+                }}>
+                {title}
+              </Text>
+              <Text
+                style={{
+                  ...TextStyle.regular,
+                  color: white,
+                  lineHeight: 40,
+                }}>
+                {`₦${price}`}
+              </Text>
+            </View>
           </View>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
