@@ -1,4 +1,6 @@
 import React from 'react';
+import { IAuthState } from '../interfaces/authContext';
+import { ICartState } from '../interfaces/cartContext';
 import {IContextProvider} from '../interfaces/common';
 import SplashScreen from '../screens/getStarted/SplashScreen';
 import AppContextProvider from './appContext';
@@ -7,23 +9,26 @@ import CartContextProvider from './cartContext';
 import {fetchFromStorage, StorageNames} from './storage';
 
 const Provider = ({children}: IContextProvider) => {
-  const [authLoading, setAuthLoading] = React.useState(true);
-  const [cartLoading, setCartLoading] = React.useState(true);
-  const [initialAuthValue, setInitialAuthValue] = React.useState(null);
-  const [initialCartValue, setinitialCartValue] = React.useState({items: []});
+  const [loading, setLoading] = React.useState(true);
+  const [initialAuthValue, setInitialAuthValue] = React.useState<IAuthState|null>(null);
+  const [initialCartValue, setinitialCartValue] = React.useState<ICartState>({items: []});
   React.useEffect(() => {
-    fetchFromStorage(StorageNames.AUTH)
-      .then(value => setInitialAuthValue(value))
-      .catch()
-      .finally(() => setAuthLoading(false));
+    Promise.all([fetchFromStorage(StorageNames.AUTH),fetchFromStorage(StorageNames.CART)]).then(result=>{
+      console.log({result});
+      setInitialAuthValue(result[0])
+      setinitialCartValue(result[1]??{items: []})
+    })
+    .catch()
+  .finally(() => setLoading(false));
+
   }, []);
   React.useEffect(() => {
-    fetchFromStorage(StorageNames.CART)
-      .then(value => setinitialCartValue(value))
-      .catch()
-      .finally(() => setCartLoading(false));
+    // fetchFromStorage(StorageNames.CART)
+    //   .then(value => setinitialCartValue(value))
+    //   .catch()
+    //   .finally(() => setCartLoading(false));
   }, []);
-  if (authLoading && cartLoading) {
+  if (loading) {
     return <SplashScreen />;
   }
   console.log(initialAuthValue,initialCartValue);
