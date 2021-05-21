@@ -8,7 +8,7 @@ import {
 } from '../interfaces/cartContext';
 import {saveToStorage, StorageNames} from './storage';
 
-const initialState = {
+let initialState:ICartState = {
   items: [],
 };
 
@@ -33,8 +33,9 @@ export const CartContext = createContext<ICartContext>({
 });
 
 const CartContextProvider = ({children, value}: ICartContextProvider) => {
-  const [cartState, dispatchCartState] = useReducer(reducer, value);
-  console.log({cartState, value}, 9005);
+  initialState = value
+  const [cartState, dispatchCartState] = useReducer(reducer,value);
+  console.log({value, cartState});
 
   useEffect(() => {
     saveToStorage(StorageNames.CART, cartState);
