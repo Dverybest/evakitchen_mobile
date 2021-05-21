@@ -6,10 +6,10 @@ import {black, orange300, white} from '../../../styles/colors';
 import {TextStyle} from '../../../styles/textStyle';
 
 interface ICartItemView extends ICart {
-  key: number;
+  // key: number;
 }
 
-const CartItemView = ({key, quantity, title, amount}: ICartItemView) => {
+const CartItemView = ({ quantity, title, amount}: ICartItemView) => {
   return (
     <View
       style={{
@@ -20,8 +20,7 @@ const CartItemView = ({key, quantity, title, amount}: ICartItemView) => {
         justifyContent: 'space-between',
         alignItems: 'center',
         marginBottom: 15,
-      }}
-      key={key}>
+      }}>
       <Text>{`${quantity} X`}</Text>
       <View style={{flex: 1, marginLeft: 30}}>
         <Text style={[TextStyle.regular]}>{`${title}`}</Text>
