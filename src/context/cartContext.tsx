@@ -4,7 +4,7 @@ import {ActionType} from './enums';
 import {ICartContext, ICartContextProvider, ICartState} from '../interfaces/cartContext';
 import { saveToStorage, StorageNames } from './storage';
 
-const initialState = {
+let initialState:ICartState = {
   items: [],
 };
 
@@ -29,9 +29,9 @@ export const CartContext = createContext<ICartContext>({
 });
 
 const CartContextProvider = ({children, value}: ICartContextProvider) => {
-  console.log(value, 7878);
-  
-  const [cartState, dispatchCartState] = useReducer(reducer, value ?? initialState);
+  initialState = value
+  const [cartState, dispatchCartState] = useReducer(reducer,value);
+  console.log({value, cartState});
 
   useEffect(() => {
     saveToStorage(StorageNames.CART, cartState);

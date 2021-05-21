@@ -31,6 +31,7 @@ const styles = StyleSheet.create<IStyles>({
     borderRadius: 4,
     paddingHorizontal: 15,
     borderWidth: 1,
+    justifyContent:'center'
   },
   textInput: {
     ...MyTextStyle.regular,
