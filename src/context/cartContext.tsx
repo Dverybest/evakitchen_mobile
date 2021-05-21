@@ -1,8 +1,12 @@
 import React, {createContext, useEffect, useReducer} from 'react';
 import {IAction} from '../interfaces/common';
 import {ActionType} from './enums';
-import {ICartContext, ICartContextProvider, ICartState} from '../interfaces/cartContext';
-import { saveToStorage, StorageNames } from './storage';
+import {
+  ICartContext,
+  ICartContextProvider,
+  ICartState,
+} from '../interfaces/cartContext';
+import {saveToStorage, StorageNames} from './storage';
 
 const initialState = {
   items: [],
@@ -29,9 +33,8 @@ export const CartContext = createContext<ICartContext>({
 });
 
 const CartContextProvider = ({children, value}: ICartContextProvider) => {
-  console.log(value, 7878);
-  
-  const [cartState, dispatchCartState] = useReducer(reducer, value ?? initialState);
+  const [cartState, dispatchCartState] = useReducer(reducer, value);
+  console.log({cartState, value}, 9005);
 
   useEffect(() => {
     saveToStorage(StorageNames.CART, cartState);
