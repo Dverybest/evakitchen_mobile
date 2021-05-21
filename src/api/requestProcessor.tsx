@@ -4,24 +4,42 @@ import {AppContext} from '../context/appContext';
 import {ActionType} from '../context/enums';
 import {baseUrl} from './config';
 import {IMakeRequest, IMakeRequestResponse} from '../interfaces/useProcessor';
+import {fetchFromStorage, StorageNames} from '../context/storage';
 
-axios.defaults.baseURL = baseUrl;
+const axiosApiInstance = axios.create();
+
+axiosApiInstance.defaults.baseURL = baseUrl;
+axiosApiInstance.interceptors.request.use(
+  async config => {
+    const result = await fetchFromStorage(StorageNames.AUTH);
+    config.headers = {
+      'x-auth-token': result?.authToken ?? null,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+    };
+    return config;
+  },
+  error => {
+    Promise.reject(error);
+  },
+);
 
 export const useRequestProcessor = () => {
   const {dispatchAppState} = useContext(AppContext);
 
   const makeRequest = async ({
     method,
-    payload,
+    payload: data,
     url,
     retry = () => {},
   }: IMakeRequest) => {
     try {
       dispatchAppState({type: ActionType.IS_LOADING, payload: true});
-      const result = await axios({
+      const result = await axiosApiInstance({
         url,
         method,
-        data: payload,
+        data,
       });
       return {
         response: {status: result.status, ...result.data},
