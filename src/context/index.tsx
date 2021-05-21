@@ -26,7 +26,6 @@ const Provider = ({children}: IContextProvider) => {
   if (authLoading && cartLoading) {
     return <SplashScreen />;
   }
-  console.log(initialAuthValue,initialCartValue);
   
   return (
     <AppContextProvider>
