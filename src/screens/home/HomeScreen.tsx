@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {FlatList, StyleSheet, ScrollView, View, Text} from 'react-native';
 import SearchBar from '../../components/searchBar';
 import {orange, white} from '../../styles/colors';
@@ -16,10 +16,11 @@ import img7 from '../../assets/images/img7.jpg';
 import img6 from '../../assets/images/img6.jpg';
 import FoodListView from './components/FoodListView';
 import {useNavigation} from '@react-navigation/core';
-import { ICategory, IFood } from '../../interfaces/menu';
+import {ICategory, IFood} from '../../interfaces/menu';
+import {useRequestProcessor} from '../../api/requestProcessor';
 
 const HomeScreen = () => {
-  const {navigate} = useNavigation();
+  const {navigate, addListener} = useNavigation();
   const [searchText, setSearchText] = useState<string>('');
   const [categories, setCategories] = useState<ICategory[]>([
     {name: 'Breakfast', icon: breakfast},
@@ -33,7 +34,7 @@ const HomeScreen = () => {
       price: '1500',
       rating: 5,
       img: img8,
-      category:'lunch'
+      category: 'lunch',
     },
     {
       title: 'Ganished Jellof Rice',
@@ -41,7 +42,7 @@ const HomeScreen = () => {
       price: '1500',
       rating: 5,
       img: img1,
-      category:'dinner'
+      category: 'dinner',
     },
     {
       title: 'Fried Rice',
@@ -49,7 +50,7 @@ const HomeScreen = () => {
       price: '1500',
       rating: 5,
       img: img2,
-      category:'lunch'
+      category: 'lunch',
     },
     {
       title: 'Fried Rice',
@@ -57,7 +58,7 @@ const HomeScreen = () => {
       price: '1500',
       rating: 5,
       img: img4,
-      category:'lunch'
+      category: 'lunch',
     },
   ]);
   const [special, setSpecial] = useState<IFood[]>([
@@ -67,7 +68,7 @@ const HomeScreen = () => {
       price: '1500',
       rating: 5,
       img: img6,
-      category:'lunch'
+      category: 'lunch',
     },
     {
       title: 'Fried Rice',
@@ -75,7 +76,7 @@ const HomeScreen = () => {
       price: '1500',
       rating: 5,
       img: img7,
-      category:'lunch'
+      category: 'lunch',
     },
     {
       title: 'Fried Rice',
@@ -83,7 +84,7 @@ const HomeScreen = () => {
       price: '1500',
       rating: 5,
       img: img2,
-      category:'lunch'
+      category: 'lunch',
     },
     {
       title: 'Fried Rice',
@@ -91,9 +92,27 @@ const HomeScreen = () => {
       price: '1500',
       rating: 5,
       img: img4,
-      category:'lunch'
+      category: 'lunch',
     },
   ]);
+  const {makeRequest} = useRequestProcessor();
+  useEffect(() => {
+    const listener = addListener('focus', () => {
+    fetchAllMenu()
+  });
+  return () => listener();
+  }, [])
+  const fetchAllMenu = async () => {
+    const {response, error} = await makeRequest({
+      method: 'get',
+      url: '/menu',
+    });
+    if (error) {
+      console.log(error.message, "Error");
+    } else if (response) {
+      console.log(response);
+    }
+  };
   return (
     <View style={styles.container}>
       <SearchBar
