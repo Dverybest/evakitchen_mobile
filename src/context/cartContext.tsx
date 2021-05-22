@@ -1,8 +1,12 @@
 import React, {createContext, useEffect, useReducer} from 'react';
 import {IAction} from '../interfaces/common';
 import {ActionType} from './enums';
-import {ICartContext, ICartContextProvider, ICartState} from '../interfaces/cartContext';
-import { saveToStorage, StorageNames } from './storage';
+import {
+  ICartContext,
+  ICartContextProvider,
+  ICartState,
+} from '../interfaces/cartContext';
+import {saveToStorage, StorageNames} from './storage';
 
 let initialState:ICartState = {
   items: [],
