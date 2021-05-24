@@ -18,4 +18,5 @@ export const clearStorage = async () => {
 export enum StorageNames {
   AUTH = 'AUTH',
   CART = 'CART',
+  FOOD = 'FOOD',
 }

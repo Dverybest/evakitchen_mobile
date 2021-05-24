@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {FlatList, StyleSheet, ScrollView, View, Text} from 'react-native';
 import SearchBar from '../../components/searchBar';
 import {orange, white} from '../../styles/colors';
@@ -12,23 +12,23 @@ import FoodListView from './components/FoodListView';
 import {useNavigation} from '@react-navigation/core';
 import {ICategory, IFood} from '../../interfaces/menu';
 import {useRequestProcessor} from '../../api/requestProcessor';
+import {HomeScreenContext} from '../../context/homeScreenContext';
+import {ActionType} from '../../context/enums';
 
 const HomeScreen = () => {
-  const {navigate, addListener} = useNavigation();
+  const {navigate} = useNavigation();
   const [searchText, setSearchText] = useState<string>('');
   const [categories, setCategories] = useState<ICategory[]>([
     {name: 'Breakfast', icon: breakfast},
     {name: 'Lunch', icon: lunch},
     {name: 'Dinner', icon: dinner},
   ]);
-  const [popular, setPopular] = useState<IFood[]>([]);
-  const [special, setSpecial] = useState<IFood[]>([]);
+  const {homeScreenState, dispatchHomeScreenState} = useContext(
+    HomeScreenContext,
+  );
   const {makeRequest} = useRequestProcessor();
   useEffect(() => {
-    const listener = addListener('focus', () => {
       fetchAllFoods();
-    });
-    return () => listener();
   }, []);
 
   const fetchAllFoods = () => {
@@ -47,15 +47,21 @@ const HomeScreen = () => {
         if (error) {
           console.log(error.message, 'Error');
         } else if (response) {
-          let a = response.data as {docs: IFood[]};
-          setPopular(a.docs);
+          let data = response.data as {docs: IFood[]};
+          dispatchHomeScreenState({
+            payload: data.docs,
+            type: ActionType.SET_POPULAR_FOOD,
+          });
         }
         const {response: res, error: err} = result[1];
         if (err) {
           console.log(err.message, 'Error');
         } else if (res) {
-          let a = res.data as {docs: IFood[]};
-          setSpecial(a.docs);
+          let data = res.data as {docs: IFood[]};
+          dispatchHomeScreenState({
+            payload: data.docs,
+            type: ActionType.SET_SPECIAL_FOOD,
+          });
         }
       })
       .catch();
@@ -108,7 +114,7 @@ const HomeScreen = () => {
             />
           </View>
           <FlatList
-            data={popular}
+            data={homeScreenState.popular}
             showsHorizontalScrollIndicator={false}
             horizontal={true}
             keyExtractor={(_, index) => `popular${index}`}
@@ -139,7 +145,7 @@ const HomeScreen = () => {
             />
           </View>
           <FlatList
-            data={special}
+            data={homeScreenState.special}
             showsHorizontalScrollIndicator={false}
             horizontal={true}
             keyExtractor={(_, index) => `special${index}`}
