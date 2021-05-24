@@ -14,7 +14,6 @@ const Provider = ({children}: IContextProvider) => {
   const [initialCartValue, setinitialCartValue] = React.useState<ICartState>({items: []});
   React.useEffect(() => {
     Promise.all([fetchFromStorage(StorageNames.AUTH),fetchFromStorage(StorageNames.CART)]).then(result=>{
-      console.log({result});
       setInitialAuthValue(result[0])
       setinitialCartValue(result[1]??{items: []})
     })
