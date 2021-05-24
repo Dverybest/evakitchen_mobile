@@ -6,10 +6,10 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import ProfileStack from './profileStack';
 import FavouriteStack from './favouriteStack';
 import HomeStack from './homeStack';
-import Cart from '../screens/cart/Cart';
 import {AuthContext} from '../context/authContext';
 import {useNavigation} from '@react-navigation/core';
 import {CartContext} from '../context/cartContext';
+import CartStack from './cartStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -47,7 +47,7 @@ const DashboardStack = () => {
       <Tab.Screen name="Favourite" component={FavouriteStack} />
       <Tab.Screen
         name="Cart"
-        component={Cart}
+        component={CartStack}
         options={
           cartState.items?.length ? {tabBarBadge: cartState.items.length} : {}
         }
