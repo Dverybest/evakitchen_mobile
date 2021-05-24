@@ -1,7 +1,7 @@
 import {useNavigation} from '@react-navigation/core';
 import React, {useContext, useMemo} from 'react';
-import {StyleSheet, Text, View, FlatList, TouchableOpacity} from 'react-native';
-import {ButtonWhite} from '../../components/buttons';
+import {StyleSheet, Text, View, FlatList} from 'react-native';
+import {ButtonPrimary, ButtonWhite} from '../../components/buttons';
 import Empty from '../../components/empty';
 import {Header} from '../../components/header';
 import {CartContext} from '../../context/cartContext';
@@ -9,11 +9,11 @@ import {ICart} from '../../interfaces/cartContext';
 import {orange, white} from '../../styles/colors';
 import {TextStyle} from '../../styles/textStyle';
 import CartItemView from './component/CartItemView';
-import {PayWithFlutterwave} from 'flutterwave-react-native';
 
 const Cart = () => {
   const {cartState} = useContext(CartContext);
   const {navigate} = useNavigation();
+  const deliveryFee = 100;
   const totalAmount = useMemo(
     () =>
       cartState.items.reduce(
@@ -54,17 +54,22 @@ const Cart = () => {
               )}
             />
           </View>
-          <View style={[{margin: 25}]}>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                marginBottom: 50,
-              }}>
-              <Text style={[TextStyle.medium]}>Total</Text>
-              <Text style={[TextStyle.medium]}>{totalAmount}</Text>
+          <View style={[{margin: 25, marginTop: 65}]}>
+            <View style={styles.priceDetails}>
+              <Text style={[TextStyle.medium]}>Sub Total</Text>
+              <Text style={[TextStyle.medium]}>{`₦${totalAmount}`}</Text>
             </View>
-            <PayWithFlutterwave
+            <View style={styles.priceDetails}>
+              <Text style={[TextStyle.medium]}>Delivery fee</Text>
+              <Text style={[TextStyle.medium]}>{`₦${deliveryFee}`}</Text>
+            </View>
+            <View style={styles.priceDetails}>
+              <Text style={[TextStyle.medium]}>Total</Text>
+              <Text style={[TextStyle.medium]}>{`₦${
+                totalAmount + deliveryFee
+              }`}</Text>
+            </View>
+            {/* <PayWithFlutterwave
               onRedirect={() => console.log(898)}
               options={{
                 tx_ref: '1223',
@@ -85,11 +90,11 @@ const Cart = () => {
                   <Text style={styles.text}>Make order</Text>
                 </TouchableOpacity>
               )}
-            />
-            <ButtonWhite
-              containerStyle={{marginTop: 25}}
-              text={'Continue shopping'}
-              onPress={() => navigate('Home')}
+            /> */}
+            <ButtonPrimary
+              containerStyle={{}}
+              text={'Make order'}
+              onPress={() => navigate('DeliveryDetails')}
             />
           </View>
         </View>
@@ -133,6 +138,11 @@ const styles = StyleSheet.create({
     color: white,
     ...TextStyle.regular,
     fontSize: 14,
+  },
+  priceDetails: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 15,
   },
 });
 export default Cart;
