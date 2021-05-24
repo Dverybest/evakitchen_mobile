@@ -8,12 +8,6 @@ import dinner from '../../assets/images/dinner.png';
 import breakfast from '../../assets/images/breakfast.png';
 import {ButtonWhite} from '../../components/buttons';
 import {TextStyle} from '../../styles/textStyle';
-import img1 from '../../assets/images/img1.jpg';
-import img2 from '../../assets/images/img2.jpg';
-import img4 from '../../assets/images/img4.jpg';
-import img8 from '../../assets/images/img7.jpg';
-import img7 from '../../assets/images/img7.jpg';
-import img6 from '../../assets/images/img6.jpg';
 import FoodListView from './components/FoodListView';
 import {useNavigation} from '@react-navigation/core';
 import {ICategory, IFood} from '../../interfaces/menu';
@@ -27,91 +21,44 @@ const HomeScreen = () => {
     {name: 'Lunch', icon: lunch},
     {name: 'Dinner', icon: dinner},
   ]);
-  const [popular, setPopular] = useState<IFood[]>([
-    {
-      title: 'Ora Soup',
-      description: 'Nigerian ganished jellof rice with chicken laps',
-      price: '1500',
-      rating: 5,
-      img: img8,
-      category: 'lunch',
-    },
-    {
-      title: 'Ganished Jellof Rice',
-      description: 'Fried rice with chicken laps',
-      price: '1500',
-      rating: 5,
-      img: img1,
-      category: 'dinner',
-    },
-    {
-      title: 'Fried Rice',
-      description: 'Fried rice with chicken laps',
-      price: '1500',
-      rating: 5,
-      img: img2,
-      category: 'lunch',
-    },
-    {
-      title: 'Fried Rice',
-      description: 'Fried rice with chicken laps',
-      price: '1500',
-      rating: 5,
-      img: img4,
-      category: 'lunch',
-    },
-  ]);
-  const [special, setSpecial] = useState<IFood[]>([
-    {
-      title: 'Fried Rice',
-      description: 'Fried rice with chicken laps',
-      price: '1500',
-      rating: 5,
-      img: img6,
-      category: 'lunch',
-    },
-    {
-      title: 'Fried Rice',
-      description: 'Fried rice with chicken laps',
-      price: '1500',
-      rating: 5,
-      img: img7,
-      category: 'lunch',
-    },
-    {
-      title: 'Fried Rice',
-      description: 'Fried rice with chicken laps',
-      price: '1500',
-      rating: 5,
-      img: img2,
-      category: 'lunch',
-    },
-    {
-      title: 'Fried Rice',
-      description: 'Fried rice with chicken laps',
-      price: '1500',
-      rating: 5,
-      img: img4,
-      category: 'lunch',
-    },
-  ]);
+  const [popular, setPopular] = useState<IFood[]>([]);
+  const [special, setSpecial] = useState<IFood[]>([]);
   const {makeRequest} = useRequestProcessor();
   useEffect(() => {
     const listener = addListener('focus', () => {
-    fetchAllMenu()
-  });
-  return () => listener();
-  }, [])
-  const fetchAllMenu = async () => {
-    const {response, error} = await makeRequest({
-      method: 'get',
-      url: '/menu',
+      fetchAllFoods();
     });
-    if (error) {
-      console.log(error.message, "Error");
-    } else if (response) {
-      console.log(response);
-    }
+    return () => listener();
+  }, []);
+
+  const fetchAllFoods = () => {
+    Promise.all([
+      makeRequest({
+        method: 'get',
+        url: `/menu?isPopular=${true}`,
+      }),
+      makeRequest({
+        method: 'get',
+        url: `/menu?isSpecial=${true}`,
+      }),
+    ])
+      .then(result => {
+        const {response, error} = result[0];
+        if (error) {
+          console.log(error.message, 'Error');
+        } else if (response) {
+          let a = response.data as {docs: IFood[]};
+          setPopular(a.docs);
+        }
+        const {response: res, error: err} = result[1];
+        if (err) {
+          console.log(err.message, 'Error');
+        } else if (res) {
+          let a = res.data as {docs: IFood[]};
+          setSpecial(a.docs);
+        }
+      })
+      .catch();
   };
   return (
     <View style={styles.container}>
@@ -139,7 +86,7 @@ const HomeScreen = () => {
                 onPress={() => navigate('CategoryDetails', {title: item.name})}
               />
             )}
-            keyExtractor={(item, index) => `${index}`}
+            keyExtractor={(_, index) => `${index}`}
           />
         </View>
         <View>
@@ -164,7 +111,7 @@ const HomeScreen = () => {
             data={popular}
             showsHorizontalScrollIndicator={false}
             horizontal={true}
-            keyExtractor={(item, index) => `popular${index}`}
+            keyExtractor={(_, index) => `popular${index}`}
             renderItem={({item, index}) => (
               <FoodListView item={item} index={index} />
             )}
@@ -195,7 +142,7 @@ const HomeScreen = () => {
             data={special}
             showsHorizontalScrollIndicator={false}
             horizontal={true}
-            keyExtractor={(item, index) => `special${index}`}
+            keyExtractor={(_, index) => `special${index}`}
             renderItem={({item, index}) => (
               <FoodListView item={item} index={index} />
             )}
