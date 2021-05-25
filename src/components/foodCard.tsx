@@ -10,14 +10,14 @@ import {IFood} from '../interfaces/menu';
 
 interface IFoodCard extends IFood {
   favourite?: boolean;
-  setFavourite: (value: React.SetStateAction<boolean>) => void;
+  setFavourite?: (value: React.SetStateAction<boolean>) => void;
 }
 
 const FoodCard = ({
-  img,
+  image,
   rating,
   favourite,
-  title,
+  name,
   price,
   setFavourite,
 }: IFoodCard) => {
@@ -27,16 +27,16 @@ const FoodCard = ({
       onPress={() =>
         navigate('FoodDetails', {
           food: {
-            img,
+            image,
             rating,
             favourite,
-            title,
+            name,
             price,
           },
         })
       }>
       <View style={styles.card}>
-        <Image style={styles.image} source={img} />
+        <Image style={styles.image} source={{uri: image}} />
         <View
           style={{
             position: 'absolute',
@@ -63,12 +63,12 @@ const FoodCard = ({
                 {rating}
               </Text>
             </View>
-            <AntDesign
+            {/* <AntDesign
               name={favourite ? 'heart' : 'hearto'}
               onPress={() => setFavourite(prev => !prev)}
               size={20}
               color={favourite ? orange : white}
-            />
+            /> */}
           </View>
           <View style={{alignItems: 'center'}}>
             <View
@@ -83,7 +83,7 @@ const FoodCard = ({
                   color: white,
                   lineHeight: 24,
                 }}>
-                {title}
+                {name}
               </Text>
               <Text
                 style={{
