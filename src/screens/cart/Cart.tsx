@@ -46,9 +46,9 @@ const Cart = () => {
               keyExtractor={(_, index) => `items${index}`}
               renderItem={({item, index}) => (
                 <CartItemView
-                  key={index}
+                  index={index}
                   quantity={item.quantity}
-                  title={item.title}
+                  name={item.name}
                   amount={item.amount}
                 />
               )}
