@@ -19,6 +19,7 @@ const FoodCard = ({
   favourite,
   name,
   price,
+  description,
   setFavourite,
 }: IFoodCard) => {
   const {navigate} = useNavigation();
@@ -30,6 +31,7 @@ const FoodCard = ({
             image,
             rating,
             favourite,
+            description,
             name,
             price,
           },
