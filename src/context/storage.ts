@@ -6,7 +6,7 @@ export const saveToStorage = async (name: string, data: any) => {
 
 export const fetchFromStorage = async (name: string) => {
   const value = await AsyncStorage.getItem(name);
-  if (value === null) return {};
+  if (value === null) return null;
   return JSON.parse(value);
 };
 

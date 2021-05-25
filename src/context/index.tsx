@@ -31,7 +31,7 @@ const Provider = ({children}: IContextProvider) => {
       fetchFromStorage(StorageNames.FOOD),
     ])
       .then(result => {
-        setInitialAuthValue(result[0]);
+        setInitialAuthValue(result[0]??{})
         setinitialCartValue(result[1] ?? {items: []});
         setInitialHomeValue(result[2]);
       })
@@ -42,7 +42,6 @@ const Provider = ({children}: IContextProvider) => {
   if (loading) {
     return <SplashScreen />;
   }
-
   return (
     <AppContextProvider>
       <AuthContextProvider value={initialAuthValue}>

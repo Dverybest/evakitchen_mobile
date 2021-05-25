@@ -33,7 +33,7 @@ export const CartContext = createContext<ICartContext>({
 });
 
 const CartContextProvider = ({children, value}: ICartContextProvider) => {
-  initialState = value
+
   const [cartState, dispatchCartState] = useReducer(reducer,value);
 
   useEffect(() => {
