@@ -57,6 +57,7 @@ const DeliveryDetails = () => {
             flex: 1,
             justifyContent: 'flex-end',
             marginBottom: 20,
+            marginTop: 95
           }}
           text="Continue to make payment"
         />
