@@ -57,7 +57,7 @@ const CategoryDetails = () => {
             <FoodCard
               image={item.image}
               rating={item.rating}
-              // favourite={item.favourite}
+              description={item.description}
               // setFavourite={item.setFavourite}
               name={item.name}
               price={item.price}
