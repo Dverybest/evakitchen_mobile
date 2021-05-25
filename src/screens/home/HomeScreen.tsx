@@ -133,14 +133,14 @@ const HomeScreen = () => {
               marginTop: 30,
             }}>
             <Text style={[TextStyle.medium, {fontSize: 18}]}>
-              Special offers
+              Special Offers
             </Text>
             <ButtonWhite
               containerStyle={{height: 30}}
               textStyle={{fontSize: 9, paddingHorizontal: 15, color: orange}}
               text={'View all'}
               onPress={() =>
-                navigate('CategoryDetails', {title: 'Special offers'})
+                navigate('CategoryDetails', {title: 'Special Offers'})
               }
             />
           </View>
