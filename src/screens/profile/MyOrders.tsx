@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {grey, grey100, orange, white} from '../../styles/colors';
@@ -13,7 +13,7 @@ const MyOrders = () => {
   const error = false;
   return (
     <View style={styles.container}>
-      <Header title="My orders" showGoBack={true} />
+      <Header title="My orders" showGoBack={false} />
       <View style={{flex:1}}>
       <View style={styles.tabContainer}>
         <TouchableOpacity
