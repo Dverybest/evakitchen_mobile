@@ -1,49 +1,46 @@
 import React, {useState} from 'react';
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 import FoodCard from '../../components/foodCard';
+import {Header} from '../../components/header';
 import SearchBar from '../../components/searchBar';
 import {white} from '../../styles/colors';
-import {TextStyle} from '../../styles/textStyle';
-import img2 from '../../assets/images/img2.jpg';
 
 const Favourites = () => {
   const [searchText, setSearchText] = useState<string>('');
   const [favourite, setFavourite] = useState(false);
   const favourites = [
     {
-      image: img2,
+      image:
+        'https://res.cloudinary.com/maryannokonkwo/image/upload/v1622041199/eva-kitchen/2021-05-26T14:59:59.829Z.png',
       rating: 4.6,
       favourite,
       setFavourite,
       text: 'Egusi Soup with assorted meat',
-      amount: 1500,
+      amount: '1500',
     },
     {
-      image: img2,
+      image:
+        'https://res.cloudinary.com/maryannokonkwo/image/upload/v1622041199/eva-kitchen/2021-05-26T14:59:59.829Z.png',
       rating: 4.5,
       favourite,
       setFavourite,
       text: 'Egusi Soup with assorted meat',
-      amount: 1300,
+      amount: '1300',
     },
   ];
   return (
     <View style={styles.container}>
+      <Header title="Favourites" />
       <SearchBar
-        containerStyle={{
-          marginTop: 25,
-        }}
+        containerStyle={{marginBottom: 36}}
         onPress={() => {}}
         value={searchText}
         onChangeText={text => setSearchText(text)}
         placeholder="What are you looking for?"
       />
-      <View style={{alignItems: 'center', marginTop: 19, marginBottom: 34}}>
-        <Text style={{...TextStyle.semiBold}}>Favourites</Text>
-      </View>
       <FlatList
         data={favourites}
-        keyExtractor={(item, index) => `favourites${index}`}
+        keyExtractor={(_, index) => `favourites${index}`}
         renderItem={({item, index}) => (
           <FoodCard
             key={index}
@@ -51,8 +48,8 @@ const Favourites = () => {
             rating={item.rating}
             favourite={item.favourite}
             setFavourite={item.setFavourite}
-            text={item.text}
-            amount={item.amount}
+            name={item.text}
+            price={item.amount}
           />
         )}
       />
