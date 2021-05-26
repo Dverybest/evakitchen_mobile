@@ -24,7 +24,7 @@ const FoodListView = ({item, index}: IFoodListView) => {
           resizeMode: 'cover',
           borderRadius: 8,
         }}
-        source={item.img}
+        source={{uri: item.image}}
       />
       <View
         style={{
@@ -38,7 +38,7 @@ const FoodListView = ({item, index}: IFoodListView) => {
           paddingBottom: 22,
         }}>
         <Text numberOfLines={1} style={[TextStyle.medium, {color: white}]}>
-          {item.title}
+          {item.name}
         </Text>
         <Text
           numberOfLines={2}

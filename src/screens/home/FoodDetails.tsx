@@ -5,7 +5,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {ButtonPrimary} from '../../components/buttons';
 import {Header} from '../../components/header';
-import Rating from '../../components/rating';
+// import Rating from '../../components/rating';
 import {CartContext} from '../../context/cartContext';
 import {ActionType} from '../../context/enums';
 import {IFood} from '../../interfaces/menu';
@@ -21,10 +21,10 @@ const FoodDetails = () => {
   const {dispatchCartState} = useContext(CartContext);
 
   const addToCart = () => {
-    const {title, rating, price: amount, description} = food;
+    const {name, rating, price: amount, description} = food;
     const payload = {
       quantity,
-      title,
+      name,
       favourite: isFavorite,
       rating,
       amount,
@@ -37,7 +37,7 @@ const FoodDetails = () => {
   };
   return (
     <View style={styles.container}>
-      <Header title={food.title ?? ''} />
+      <Header title={food.name ?? ''} />
       <ScrollView>
         <View>
           <View
@@ -47,7 +47,7 @@ const FoodDetails = () => {
               flexDirection: 'row',
               marginBottom: 54,
             }}>
-            <Image source={food.img} style={styles.image} />
+            <Image source={{uri: food.image}} style={styles.image} />
           </View>
           <Text style={styles.description}>{food.description}</Text>
           <View
@@ -62,7 +62,7 @@ const FoodDetails = () => {
               size={20}
               color={isFavorite ? orange : black}
             />
-            <Rating rating={food.rating} />
+            {/* <Rating rating={food.rating} /> */}
           </View>
           <View
             style={{

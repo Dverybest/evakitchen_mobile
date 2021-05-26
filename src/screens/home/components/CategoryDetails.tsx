@@ -1,39 +1,42 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
 import FoodCard from '../../../components/foodCard';
 import SearchBar from '../../../components/searchBar';
 import {white} from '../../../styles/colors';
-import img2 from '../../../assets/images/img2.jpg';
 import {Header} from '../../../components/header';
 import {RouteProp, useRoute} from '@react-navigation/core';
+import {useRequestProcessor} from '../../../api/requestProcessor';
+import {IFood} from '../../../interfaces/menu';
 
 const CategoryDetails = () => {
   const {
     params: {title},
   }: RouteProp<{params: {title: string}}, 'params'> = useRoute();
+  const {makeRequest} = useRequestProcessor();
   const [searchText, setSearchText] = useState<string>('');
-  const [favourite, setFavourite] = useState(false);
-  const favourites = [
-    {
-      image: img2,
-      rating: 4.6,
-      favourite,
-      setFavourite,
-      text: 'Egusi Soup with assorted meat',
-      amount: '1500',
-    },
-    {
-      image: img2,
-      rating: 4.5,
-      favourite,
-      setFavourite,
-      text: 'Egusi Soup with assorted meat',
-      amount: '1300',
-    },
-  ];
+  const [foods, setFoods] = useState<IFood[]>([]);
+  useEffect(() => {
+    fetchFoods();
+  }, []);
+  const fetchFoods = async () => {
+    const {response, error} = await makeRequest({
+      method: 'get',
+      url:
+        title === 'Popular Food'
+          ? `/menu?isPopular=${true}`
+          : `/menu?isSpecial=${true}`,
+    });
+    if (error) {
+      console.log(error.message, 'Error');
+    } else if (response) {
+      let data = response.data as {docs: IFood[]};
+      setFoods(data.docs);
+    }
+  };
   return (
     <View
       style={{
+        flex: 1,
         backgroundColor: white,
       }}>
       <Header title={title} showGoBack />
@@ -48,16 +51,16 @@ const CategoryDetails = () => {
           placeholder="What are you looking for?"
         />
         <FlatList
-          data={favourites}
-          keyExtractor={(item, index) => `favourites${index}`}
-          renderItem={({item, index}) => (
+          data={foods}
+          keyExtractor={(_, index) => `favourites${index}`}
+          renderItem={({item}) => (
             <FoodCard
-              img={item.image}
+              image={item.image}
               rating={item.rating}
-              favourite={item.favourite}
-              setFavourite={item.setFavourite}
-              title={item.text}
-              price={item.amount}
+              description={item.description}
+              // setFavourite={item.setFavourite}
+              name={item.name}
+              price={item.price}
             />
           )}
         />
@@ -68,8 +71,6 @@ const CategoryDetails = () => {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    flexDirection: 'column',
     paddingHorizontal: 25,
   },
 });

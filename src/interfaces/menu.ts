@@ -5,12 +5,13 @@ export interface ICategory {
     icon: ImageSourcePropType;
   }
 export interface IFood {
-  title: string;
+  name: string;
   description?: string;
+  discount?: 0;
   price: string;
-  rating: number;
+  rating?: number;
   category?: string;
-  img: ImageSourcePropType;
+  image: string;
 }
 export interface IFoodListView {
     item:IFood,

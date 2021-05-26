@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {FlatList, StyleSheet, ScrollView, View, Text} from 'react-native';
 import SearchBar from '../../components/searchBar';
 import {orange, white} from '../../styles/colors';
@@ -8,110 +8,63 @@ import dinner from '../../assets/images/dinner.png';
 import breakfast from '../../assets/images/breakfast.png';
 import {ButtonWhite} from '../../components/buttons';
 import {TextStyle} from '../../styles/textStyle';
-import img1 from '../../assets/images/img1.jpg';
-import img2 from '../../assets/images/img2.jpg';
-import img4 from '../../assets/images/img4.jpg';
-import img8 from '../../assets/images/img7.jpg';
-import img7 from '../../assets/images/img7.jpg';
-import img6 from '../../assets/images/img6.jpg';
 import FoodListView from './components/FoodListView';
 import {useNavigation} from '@react-navigation/core';
 import {ICategory, IFood} from '../../interfaces/menu';
 import {useRequestProcessor} from '../../api/requestProcessor';
+import {HomeScreenContext} from '../../context/homeScreenContext';
+import {ActionType} from '../../context/enums';
 
 const HomeScreen = () => {
-  const {navigate, addListener} = useNavigation();
+  const {navigate} = useNavigation();
   const [searchText, setSearchText] = useState<string>('');
   const [categories, setCategories] = useState<ICategory[]>([
     {name: 'Breakfast', icon: breakfast},
     {name: 'Lunch', icon: lunch},
     {name: 'Dinner', icon: dinner},
   ]);
-  const [popular, setPopular] = useState<IFood[]>([
-    {
-      title: 'Ora Soup',
-      description: 'Nigerian ganished jellof rice with chicken laps',
-      price: '1500',
-      rating: 5,
-      img: img8,
-      category: 'lunch',
-    },
-    {
-      title: 'Ganished Jellof Rice',
-      description: 'Fried rice with chicken laps',
-      price: '1500',
-      rating: 5,
-      img: img1,
-      category: 'dinner',
-    },
-    {
-      title: 'Fried Rice',
-      description: 'Fried rice with chicken laps',
-      price: '1500',
-      rating: 5,
-      img: img2,
-      category: 'lunch',
-    },
-    {
-      title: 'Fried Rice',
-      description: 'Fried rice with chicken laps',
-      price: '1500',
-      rating: 5,
-      img: img4,
-      category: 'lunch',
-    },
-  ]);
-  const [special, setSpecial] = useState<IFood[]>([
-    {
-      title: 'Fried Rice',
-      description: 'Fried rice with chicken laps',
-      price: '1500',
-      rating: 5,
-      img: img6,
-      category: 'lunch',
-    },
-    {
-      title: 'Fried Rice',
-      description: 'Fried rice with chicken laps',
-      price: '1500',
-      rating: 5,
-      img: img7,
-      category: 'lunch',
-    },
-    {
-      title: 'Fried Rice',
-      description: 'Fried rice with chicken laps',
-      price: '1500',
-      rating: 5,
-      img: img2,
-      category: 'lunch',
-    },
-    {
-      title: 'Fried Rice',
-      description: 'Fried rice with chicken laps',
-      price: '1500',
-      rating: 5,
-      img: img4,
-      category: 'lunch',
-    },
-  ]);
+  const {homeScreenState, dispatchHomeScreenState} = useContext(
+    HomeScreenContext,
+  );
   const {makeRequest} = useRequestProcessor();
   useEffect(() => {
-    const listener = addListener('focus', () => {
-    fetchAllMenu()
-  });
-  return () => listener();
-  }, [])
-  const fetchAllMenu = async () => {
-    const {response, error} = await makeRequest({
-      method: 'get',
-      url: '/menu',
-    });
-    if (error) {
-      console.log(error.message, "Error");
-    } else if (response) {
-      console.log(response);
-    }
+      fetchAllFoods();
+  }, []);
+
+  const fetchAllFoods = () => {
+    Promise.all([
+      makeRequest({
+        method: 'get',
+        url: `/menu?isPopular=${true}`,
+      }),
+      makeRequest({
+        method: 'get',
+        url: `/menu?isSpecial=${true}`,
+      }),
+    ])
+      .then(result => {
+        const {response, error} = result[0];
+        if (error) {
+          console.log(error.message, 'Error');
+        } else if (response) {
+          let data = response.data as {docs: IFood[]};
+          dispatchHomeScreenState({
+            payload: data.docs,
+            type: ActionType.SET_POPULAR_FOOD,
+          });
+        }
+        const {response: res, error: err} = result[1];
+        if (err) {
+          console.log(err.message, 'Error');
+        } else if (res) {
+          let data = res.data as {docs: IFood[]};
+          dispatchHomeScreenState({
+            payload: data.docs,
+            type: ActionType.SET_SPECIAL_FOOD,
+          });
+        }
+      })
+      .catch();
   };
   return (
     <View style={styles.container}>
@@ -139,7 +92,7 @@ const HomeScreen = () => {
                 onPress={() => navigate('CategoryDetails', {title: item.name})}
               />
             )}
-            keyExtractor={(item, index) => `${index}`}
+            keyExtractor={(_, index) => `${index}`}
           />
         </View>
         <View>
@@ -161,10 +114,10 @@ const HomeScreen = () => {
             />
           </View>
           <FlatList
-            data={popular}
+            data={homeScreenState.popular}
             showsHorizontalScrollIndicator={false}
             horizontal={true}
-            keyExtractor={(item, index) => `popular${index}`}
+            keyExtractor={(_, index) => `popular${index}`}
             renderItem={({item, index}) => (
               <FoodListView item={item} index={index} />
             )}
@@ -180,22 +133,22 @@ const HomeScreen = () => {
               marginTop: 30,
             }}>
             <Text style={[TextStyle.medium, {fontSize: 18}]}>
-              Special offers
+              Special Offers
             </Text>
             <ButtonWhite
               containerStyle={{height: 30}}
               textStyle={{fontSize: 9, paddingHorizontal: 15, color: orange}}
               text={'View all'}
               onPress={() =>
-                navigate('CategoryDetails', {title: 'Special offers'})
+                navigate('CategoryDetails', {title: 'Special Offers'})
               }
             />
           </View>
           <FlatList
-            data={special}
+            data={homeScreenState.special}
             showsHorizontalScrollIndicator={false}
             horizontal={true}
-            keyExtractor={(item, index) => `special${index}`}
+            keyExtractor={(_, index) => `special${index}`}
             renderItem={({item, index}) => (
               <FoodListView item={item} index={index} />
             )}
