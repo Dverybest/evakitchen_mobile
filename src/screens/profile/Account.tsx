@@ -16,7 +16,7 @@ import {AuthContext} from '../../context/authContext';
 import {ActionType} from '../../context/enums';
 import {useNavigation} from '@react-navigation/core';
 
-export const Account = () => {
+const Account = () => {
   const {navigate} = useNavigation();
   const {dispatchAuthState} = useContext(AuthContext);
   return (
@@ -122,3 +122,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
 });
+
+export default Account;
