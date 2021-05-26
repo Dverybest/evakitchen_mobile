@@ -62,7 +62,7 @@ const Account = () => {
                 }}>
                 <AccountOption
                   title="Favourites"
-                  onPress={() => console.log('hello')}
+                  onPress={() => navigate('Favourites')}
                 />
               </View>
             </View>
