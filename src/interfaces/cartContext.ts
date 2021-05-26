@@ -3,7 +3,7 @@ import {IAction, IContextProvider} from './common';
 
 export interface ICart {
   quantity: number;
-  title: string;
+  name: string;
   favourite?: boolean;
   amount: number;
   description?: string;

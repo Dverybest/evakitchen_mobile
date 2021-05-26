@@ -1,15 +1,18 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, Text} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import { ICart } from '../../../interfaces/cartContext';
+import {CartContext} from '../../../context/cartContext';
+import {ActionType} from '../../../context/enums';
+import {ICart} from '../../../interfaces/cartContext';
 import {black, orange300, white} from '../../../styles/colors';
 import {TextStyle} from '../../../styles/textStyle';
 
 interface ICartItemView extends ICart {
-  // key: number;
+  index: number;
 }
 
-const CartItemView = ({ quantity, title, amount}: ICartItemView) => {
+const CartItemView = ({quantity, name, amount, index}: ICartItemView) => {
+  const {dispatchCartState} = useContext(CartContext);
   return (
     <View
       style={{
@@ -23,7 +26,7 @@ const CartItemView = ({ quantity, title, amount}: ICartItemView) => {
       }}>
       <Text>{`${quantity} X`}</Text>
       <View style={{flex: 1, marginLeft: 30}}>
-        <Text style={[TextStyle.regular]}>{`${title}`}</Text>
+        <Text style={[TextStyle.regular]}>{`${name}`}</Text>
         <Text style={[TextStyle.regular]}>{`₦${amount}`}</Text>
       </View>
       <AntDesign
@@ -31,6 +34,9 @@ const CartItemView = ({ quantity, title, amount}: ICartItemView) => {
         name={'close'}
         size={25}
         color={black}
+        onPress={() =>
+          dispatchCartState({type: ActionType.REMOVE_FROM_CART, payload: index})
+        }
       />
     </View>
   );

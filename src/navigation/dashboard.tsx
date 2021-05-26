@@ -42,6 +42,7 @@ const DashboardStack = () => {
       tabBarOptions={{
         activeTintColor: orange,
         inactiveTintColor: grey,
+        keyboardHidesTabBar: true,
       }}>
       <Tab.Screen name="Home" component={HomeStack} />
       <Tab.Screen name="Favourite" component={FavouriteStack} />

@@ -8,7 +8,7 @@ import {
 } from '../interfaces/cartContext';
 import {saveToStorage, StorageNames} from './storage';
 
-let initialState:ICartState = {
+let initialState: ICartState = {
   items: [],
 };
 
@@ -21,7 +21,10 @@ const reducer = (state: ICartState, action: IAction) => {
         items: [...items, action.payload],
       };
     case ActionType.REMOVE_FROM_CART:
-      return {...state, items: []};
+      return {
+        ...state,
+        items: items.filter((_, index) => index !== action.payload),
+      };
     default:
       return state;
   }
@@ -33,8 +36,7 @@ export const CartContext = createContext<ICartContext>({
 });
 
 const CartContextProvider = ({children, value}: ICartContextProvider) => {
-
-  const [cartState, dispatchCartState] = useReducer(reducer,value);
+  const [cartState, dispatchCartState] = useReducer(reducer, value);
 
   useEffect(() => {
     saveToStorage(StorageNames.CART, cartState);

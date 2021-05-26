@@ -16,6 +16,7 @@ interface ITextFieldProps {
   password?: boolean;
   placeholder: string;
   containerStyle?: ViewStyle;
+  mainContainerStyle?: ViewStyle;
   errorMessage?: string | boolean;
   keyboardType?: KeyboardTypeOptions;
   onChangeText?: (text: string) => void;
@@ -43,6 +44,7 @@ export const TextField = ({
   password,
   placeholder,
   containerStyle,
+  mainContainerStyle,
   errorMessage,
   keyboardType,
   value,
@@ -53,7 +55,7 @@ export const TextField = ({
     ? {borderColor: red, color: black}
     : {borderColor: grey, color: black};
   return (
-    <View>
+    <View style={mainContainerStyle}>
       <View
         style={[
           styles.textInputContainer,

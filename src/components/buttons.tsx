@@ -6,16 +6,21 @@ import {
   Text,
   TextStyle,
   TouchableOpacity,
+  View,
   ViewStyle,
 } from 'react-native';
 import {black, orange, white} from '../styles/colors';
 import {TextStyle as MyTextStyle} from '../styles/textStyle';
-import googleIcon from '../assets/images/google.png'
+import googleIcon from '../assets/images/google.png';
+import {PayWithFlutterwave} from 'flutterwave-react-native';
 interface IButtonProps {
   text: string;
-  containerStyle:ViewStyle,
-  onPress?: ()=> void;
-  textStyle?:TextStyle
+  containerStyle: ViewStyle;
+  onPress?: () => void;
+  textStyle?: TextStyle;
+  transactionReference?: string;
+  email?: string;
+  amount?: number;
 }
 interface IStyles {
   button: ViewStyle;
@@ -54,13 +59,11 @@ export const ButtonPrimary = ({
   text,
   containerStyle,
   onPress,
-  textStyle
+  textStyle,
 }: IButtonProps) => {
   return (
-    <TouchableOpacity
-      style={[styles.button,containerStyle]}
-      onPress={onPress}>
-      <Text style={[styles.text,textStyle]}>{text}</Text>
+    <TouchableOpacity style={[styles.button, containerStyle]} onPress={onPress}>
+      <Text style={[styles.text, textStyle]}>{text}</Text>
     </TouchableOpacity>
   );
 };
@@ -69,14 +72,13 @@ export const ButtonWhite = ({
   text,
   containerStyle,
   onPress,
-  textStyle
+  textStyle,
 }: IButtonProps) => {
-  
   return (
     <TouchableOpacity
       style={[styles.button, containerStyle, styles.buttonWhite]}
       onPress={onPress}>
-      <Text style={[styles.text,{color:orange},textStyle]}>{text}</Text>
+      <Text style={[styles.text, {color: orange}, textStyle]}>{text}</Text>
     </TouchableOpacity>
   );
 };
@@ -87,7 +89,44 @@ export const ButtonGoogle = ({text, containerStyle, onPress}: IButtonProps) => {
       style={[styles.button, containerStyle, styles.buttonWhite]}
       onPress={onPress}>
       <Text style={[styles.text, {color: black}]}>{text}</Text>
-      <Image source={googleIcon} style={[styles.image, {position: "absolute", right: 34}]} />
+      <Image
+        source={googleIcon}
+        style={[styles.image, {position: 'absolute', right: 34}]}
+      />
     </TouchableOpacity>
+  );
+};
+
+export const ButtonFlutterWave = ({
+  transactionReference,
+  email,
+  amount,
+  containerStyle,
+  text,
+}: IButtonProps) => {
+  return (
+    <View style={containerStyle}>
+      <PayWithFlutterwave
+        onRedirect={() => console.log(898)}
+        options={{
+          tx_ref: transactionReference ?? '',
+          authorization: 'FLWPUBK_TEST-7753e6df013e9285a4d93a10b751b747-X',
+          customer: {
+            email: email ?? '',
+          },
+          amount: amount ?? 0,
+          currency: 'NGN',
+          payment_options: 'card',
+        }}
+        customButton={props => (
+          <TouchableOpacity
+            style={[styles.button, styles.buttonWhite]}
+            onPress={props.onPress}
+            disabled={props.disabled}>
+            <Text style={[styles.text, {color: orange}]}>{text}</Text>
+          </TouchableOpacity>
+        )}
+      />
+    </View>
   );
 };

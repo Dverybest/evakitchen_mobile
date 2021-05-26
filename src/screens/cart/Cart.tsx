@@ -14,7 +14,7 @@ const Cart = () => {
   const {cartState} = useContext(CartContext);
   const {navigate} = useNavigation();
   const deliveryFee = 100;
-  const totalAmount = useMemo(
+  const subTotal = useMemo(
     () =>
       cartState.items.reduce(
         (amount: number, items: ICart) =>
@@ -23,6 +23,7 @@ const Cart = () => {
       ),
     [cartState.items],
   );
+  const total = subTotal + deliveryFee;
   return (
     <View style={styles.container}>
       <Header title={'Shopping cart'} />
@@ -46,9 +47,9 @@ const Cart = () => {
               keyExtractor={(_, index) => `items${index}`}
               renderItem={({item, index}) => (
                 <CartItemView
-                  key={index}
+                  index={index}
                   quantity={item.quantity}
-                  title={item.title}
+                  name={item.name}
                   amount={item.amount}
                 />
               )}
@@ -57,7 +58,7 @@ const Cart = () => {
           <View style={[{margin: 25, marginTop: 65}]}>
             <View style={styles.priceDetails}>
               <Text style={[TextStyle.medium]}>Sub Total</Text>
-              <Text style={[TextStyle.medium]}>{`₦${totalAmount}`}</Text>
+              <Text style={[TextStyle.medium]}>{`₦${subTotal}`}</Text>
             </View>
             <View style={styles.priceDetails}>
               <Text style={[TextStyle.medium]}>Delivery fee</Text>
@@ -65,36 +66,14 @@ const Cart = () => {
             </View>
             <View style={styles.priceDetails}>
               <Text style={[TextStyle.medium]}>Total</Text>
-              <Text style={[TextStyle.medium]}>{`₦${
-                totalAmount + deliveryFee
-              }`}</Text>
+              <Text style={[TextStyle.medium]}>{`₦${total}`}</Text>
             </View>
-            {/* <PayWithFlutterwave
-              onRedirect={() => console.log(898)}
-              options={{
-                tx_ref: '1223',
-                authorization:
-                  'FLWPUBK_TEST-7753e6df013e9285a4d93a10b751b747-X',
-                customer: {
-                  email: 'customer-email@example.com',
-                },
-                amount: totalAmount,
-                currency: 'NGN',
-                payment_options: 'card',
-              }}
-              customButton={props => (
-                <TouchableOpacity
-                  style={styles.paymentButton}
-                  onPress={props.onPress}
-                  disabled={props.disabled}>
-                  <Text style={styles.text}>Make order</Text>
-                </TouchableOpacity>
-              )}
-            /> */}
             <ButtonPrimary
               containerStyle={{}}
               text={'Make order'}
-              onPress={() => navigate('DeliveryDetails')}
+              onPress={() =>
+                navigate('DeliveryDetails', {paymentDetails: {total}})
+              }
             />
           </View>
         </View>
