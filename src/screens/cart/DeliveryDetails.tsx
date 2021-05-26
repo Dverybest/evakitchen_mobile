@@ -7,6 +7,7 @@ import {AuthContext} from '../../context/authContext';
 import {white} from '../../styles/colors';
 import {TextStyle} from '../../styles/textStyle';
 import {v4 as uuidv4} from 'uuid';
+import 'react-native-get-random-values';
 import {ButtonFlutterWave} from '../../components/buttons';
 import LocationSearch from './component/locationSearch';
 
