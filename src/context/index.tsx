@@ -31,9 +31,11 @@ const Provider = ({children}: IContextProvider) => {
       fetchFromStorage(StorageNames.FOOD),
     ])
       .then(result => {
-        setInitialAuthValue(result[0]??{})
+        setInitialAuthValue(result[0] ?? {});
         setinitialCartValue(result[1] ?? {items: []});
-        setInitialHomeValue(result[2]);
+        if (result[2]) {
+          setInitialHomeValue(result[2]);
+        }
       })
       .catch()
       .finally(() => setLoading(false));
