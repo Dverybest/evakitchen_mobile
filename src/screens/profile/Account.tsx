@@ -99,15 +99,11 @@ const Account = () => {
                 marginBottom: 35,
                 flexDirection: 'row',
                 alignSelf: 'center',
-              }}>
-              <Feather
-                name="log-out"
-                color={red}
-                size={25}
-                onPress={() =>
-                  dispatchAuthState({type: ActionType.LOG_OUT, payload: null})
-                }
-              />
+              }}
+              onPress={() =>
+                dispatchAuthState({type: ActionType.LOG_OUT, payload: null})
+              }>
+              <Feather name="log-out" color={red} size={25} />
               <Text style={{...TextStyle.medium, color: red}}>Logout</Text>
             </TouchableOpacity>
           </View>
