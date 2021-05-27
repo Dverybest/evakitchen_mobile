@@ -7,12 +7,15 @@ import {clearStorage, saveToStorage, StorageNames} from './storage';
 const initialState = {
   isAuthenticated: false,
   user: null,
+  token: null,
 };
 
 const reducer = (state: IAuthState, action: IAction) => {
   switch (action.type) {
     case ActionType.USER_DETAILS:
-      return {...state, isAuthenticated: true, user: action.payload};
+      return {...state, user: action.payload};
+    case ActionType.TOKEN:
+      return {...state, isAuthenticated: true, token: action.payload};
     case ActionType.LOG_OUT:
       return {...state, isAuthenticated: false, user: null};
     default:

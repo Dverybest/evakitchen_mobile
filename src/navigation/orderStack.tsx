@@ -1,16 +1,16 @@
 import * as React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import Favourites from '../screens/favourite/Favourites';
+import MyOrders from '../screens/profile/MyOrders';
 const Stack = createStackNavigator();
 
-const FavouriteStack = () => {
+const OrderStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name="Profile" component={Favourites} />
+      <Stack.Screen name="MyOrders" component={MyOrders} />
     </Stack.Navigator>
   );
 };
-export default FavouriteStack;
+export default OrderStack;

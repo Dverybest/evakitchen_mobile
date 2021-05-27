@@ -26,7 +26,7 @@ const Cart = () => {
   const total = subTotal + deliveryFee;
   return (
     <View style={styles.container}>
-      <Header title={'Shopping cart'} />
+      <Header title={'Shopping cart'} showGoBack={false} />
       {cartState.items.length === 0 ? (
         <View style={{flex: 1}}>
           <Empty

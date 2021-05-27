@@ -1,5 +1,12 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {FlatList, StyleSheet, ScrollView, View, Text} from 'react-native';
+import {
+  FlatList,
+  StyleSheet,
+  ScrollView,
+  View,
+  Text,
+  Image,
+} from 'react-native';
 import SearchBar from '../../components/searchBar';
 import {orange, white} from '../../styles/colors';
 import Category from './components/Category';
@@ -14,6 +21,7 @@ import {ICategory, IFood} from '../../interfaces/menu';
 import {useRequestProcessor} from '../../api/requestProcessor';
 import {HomeScreenContext} from '../../context/homeScreenContext';
 import {ActionType} from '../../context/enums';
+import banner from '../../assets/images/banner.png';
 
 const HomeScreen = () => {
   const {navigate} = useNavigation();
@@ -28,7 +36,7 @@ const HomeScreen = () => {
   );
   const {makeRequest} = useRequestProcessor();
   useEffect(() => {
-      fetchAllFoods();
+    fetchAllFoods();
   }, []);
 
   const fetchAllFoods = () => {
@@ -123,6 +131,7 @@ const HomeScreen = () => {
             )}
           />
         </View>
+        <Image source={banner} style={{flex: 1,height: 107, resizeMode: 'contain'}} />
         <View>
           <View
             style={{

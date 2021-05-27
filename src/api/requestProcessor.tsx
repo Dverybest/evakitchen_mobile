@@ -13,7 +13,7 @@ axiosApiInstance.interceptors.request.use(
   async config => {
     const result = await fetchFromStorage(StorageNames.AUTH);
     config.headers = {
-      'x-auth-token': result?.authToken ?? null,
+      'x-auth-token': result?.token ?? null,
       Accept: 'application/json',
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',

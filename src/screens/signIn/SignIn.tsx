@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {
   StyleSheet,
   View,
@@ -6,6 +6,7 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  Linking,
 } from 'react-native';
 import {white, orange} from '../../styles/colors';
 import {ButtonGoogle, ButtonPrimary} from '../../components/buttons';
@@ -19,8 +20,9 @@ import {useRequestProcessor} from '../../api/requestProcessor';
 import {ISignInDetails} from '../../interfaces/user';
 import {ActionType} from '../../context/enums';
 import {AuthContext} from '../../context/authContext';
+import {baseUrl} from '../../api/config';
 
-const SignIn = () => {
+const SignIn = (props: any) => {
   const {navigate} = useNavigation();
   const {dispatchAuthState} = useContext(AuthContext);
 
@@ -38,12 +40,75 @@ const SignIn = () => {
       actions.setFieldError('email', error.message);
       actions.setFieldError('password', error.message);
     } else if (response && response?.success) {
+      console.log(response.data);
+      const {authToken, ...userDetails} = response.data;
       dispatchAuthState({
         type: ActionType.USER_DETAILS,
-        payload: response.data,
+        payload: userDetails,
+      });
+      dispatchAuthState({
+        type: ActionType.TOKEN,
+        payload: response.data.authToken,
       });
     }
   };
+
+  const handleGoogleSignIn = async () => {
+    Linking.openURL(baseUrl + '/auth/google');
+  };
+
+  const decodeQueryParams = (uriParams: string): any => {
+    return uriParams.split('&').reduce(
+      (acc, current) => ({
+        ...acc,
+        [current.split('=')[0]]: current.split('=')[1],
+      }),
+      {},
+    );
+  };
+
+  const handleOpenURL = ({url}: {url: string}) => {
+    console.log(url);
+
+    let uri = decodeURI(url);
+    console.log(uri);
+
+    if (!/(?=login)/.test(uri)) return;
+    console.log(
+      JSON.parse(
+        decodeQueryParams(uri.replace('eva-kitchen://login?', '')).data,
+      ),
+    );
+
+    // const result = JSON.parse(
+    //   decodeQueryParams(uri.replace('eva-kitchen://login?', '')).data.replace(
+    //     '#',
+    //     '',
+    //   ),
+    // );
+    // if (result.success === false) {
+    //   console.log(result.message);
+    // } else {
+    //   dispatchAuthState({
+    //     type: ActionType.USER_DETAILS,
+    //     payload: result.data,
+    //   });
+    // }
+  };
+
+  useEffect(() => {
+    Linking.addEventListener('url', handleOpenURL);
+    Linking.getInitialURL().then(url => {
+      if (url) {
+        handleOpenURL({url});
+      }
+    });
+
+    return () => {
+      Linking.removeEventListener('url', handleOpenURL);
+    };
+  }, [props.route.params]);
+
   return (
     <View style={styles.container}>
       <View>
@@ -98,6 +163,7 @@ const SignIn = () => {
           <ButtonGoogle
             text="Sign In with Google"
             containerStyle={{marginBottom: 50}}
+            onPress={handleGoogleSignIn}
           />
           <TouchableOpacity
             style={{alignItems: 'center'}}
