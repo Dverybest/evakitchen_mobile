@@ -6,6 +6,7 @@ import {
   View,
   Text,
   Image,
+  Dimensions,
 } from 'react-native';
 import SearchBar from '../../components/searchBar';
 import {orange, white} from '../../styles/colors';
@@ -43,7 +44,7 @@ const HomeScreen = () => {
     Promise.all([
       makeRequest({
         method: 'get',
-        url: `/menu?isPopular=${true}`,
+        url: `/menu/getPopular`,
       }),
       makeRequest({
         method: 'get',
@@ -55,9 +56,9 @@ const HomeScreen = () => {
         if (error) {
           console.log(error.message, 'Error');
         } else if (response) {
-          let data = response.data as {docs: IFood[]};
+          let data = response.data; //as {docs: IFood[]};
           dispatchHomeScreenState({
-            payload: data.docs,
+            payload: data,
             type: ActionType.SET_POPULAR_FOOD,
           });
         }
@@ -109,7 +110,7 @@ const HomeScreen = () => {
               flexDirection: 'row',
               justifyContent: 'space-between',
               alignItems: 'center',
-              marginBottom: 21,
+              marginBottom: 15,
             }}>
             <Text style={[TextStyle.medium, {fontSize: 18}]}>Popular Food</Text>
             <ButtonWhite
@@ -122,7 +123,7 @@ const HomeScreen = () => {
             />
           </View>
           <FlatList
-            data={homeScreenState.popular}
+            data={homeScreenState.popular.slice(0,4)}
             showsHorizontalScrollIndicator={false}
             horizontal={true}
             keyExtractor={(_, index) => `popular${index}`}
@@ -131,15 +132,24 @@ const HomeScreen = () => {
             )}
           />
         </View>
-        <Image source={banner} style={{flex: 1,height: 107, resizeMode: 'contain'}} />
+        <View
+          style={{
+            marginVertical: 19,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Image
+            source={banner}
+            style={{flex: 1, height: 110, width: Dimensions.get('window').width, resizeMode: 'contain'}}
+          />
+        </View>
         <View>
           <View
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
               alignItems: 'center',
-              marginBottom: 21,
-              marginTop: 30,
+              marginBottom: 15,
             }}>
             <Text style={[TextStyle.medium, {fontSize: 18}]}>
               Special Offers
@@ -172,7 +182,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     backgroundColor: white,
-    paddingHorizontal: 25,
+    paddingHorizontal: 20,
   },
 });
 export default HomeScreen;
