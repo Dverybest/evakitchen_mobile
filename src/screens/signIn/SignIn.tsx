@@ -80,20 +80,17 @@ const SignIn = (props: any) => {
       ),
     );
 
-    // const result = JSON.parse(
-    //   decodeQueryParams(uri.replace('eva-kitchen://login?', '')).data.replace(
-    //     '#',
-    //     '',
-    //   ),
-    // );
-    // if (result.success === false) {
-    //   console.log(result.message);
-    // } else {
-    //   dispatchAuthState({
-    //     type: ActionType.USER_DETAILS,
-    //     payload: result.data,
-    //   });
-    // }
+    const result = JSON.parse(
+      decodeQueryParams(uri.replace('eva-kitchen://login?', '')).data,
+    );
+    dispatchAuthState({
+      type: ActionType.TOKEN,
+      payload: result.token,
+    });
+    dispatchAuthState({
+      type: ActionType.USER_DETAILS,
+      payload: result.user,
+    });
   };
 
   useEffect(() => {
