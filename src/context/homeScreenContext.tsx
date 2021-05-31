@@ -11,6 +11,7 @@ import {saveToStorage, StorageNames} from './storage';
 let initialState: IHomeScreenState = {
   popular: [],
   special: [],
+  categories:[],
 };
 
 const reducer = (state: IHomeScreenState, action: IAction) => {
@@ -25,6 +26,11 @@ const reducer = (state: IHomeScreenState, action: IAction) => {
         ...state,
         special: action.payload,
       };
+      case ActionType.SET_CATEGORIES:
+        return {
+          ...state,
+          categories: action.payload,
+        };
     default:
       return state;
   }

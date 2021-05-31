@@ -1,10 +1,11 @@
 import {Dispatch} from 'react';
 import {IAction, IContextProvider} from './common';
-import {IFood} from './menu';
+import {ICategory, IFood} from './menu';
 
 export interface IHomeScreenState {
   popular: IFood[];
   special: IFood[];
+  categories :ICategory[]
 }
 export interface IHomeScreenContextContext {
   homeScreenState: IHomeScreenState;
