@@ -1,6 +1,6 @@
 import React from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
-import {black300, orange, white} from '../styles/colors';
+import {black100, black300, orange, white} from '../styles/colors';
 import {TextStyle} from '../styles/textStyle';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -42,7 +42,7 @@ const FoodCard = ({
         <View
           style={{
             position: 'absolute',
-            backgroundColor: black300,
+            backgroundColor: black100,
             right: 0,
             left: 0,
             padding: 15,
@@ -54,12 +54,12 @@ const FoodCard = ({
               marginBottom: 63,
             }}>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <FontAwesome name="star" size={10} color={white} />
+              <FontAwesome name="star" size={15} color={white} />
               <Text
                 style={{
-                  ...TextStyle.regular,
+                  ...TextStyle.medium,
                   color: white,
-                  fontSize: 12,
+                  fontSize: 18,
                   marginLeft: 5,
                 }}>
                 {rating}
@@ -72,17 +72,18 @@ const FoodCard = ({
               color={favourite ? orange : white}
             /> */}
           </View>
-          <View style={{alignItems: 'center'}}>
+          <View style={{alignItems: 'flex-start'}}>
             <View
               style={{
                 padding: 15,
                 marginBottom: 20,
-                alignItems: 'flex-end',
+                alignItems:'flex-start',
               }}>
               <Text
                 style={{
-                  ...TextStyle.medium,
+                  ...TextStyle.semiBold,
                   color: white,
+                  fontSize:16,
                   lineHeight: 24,
                 }}>
                 {name}
@@ -91,7 +92,8 @@ const FoodCard = ({
                 style={{
                   ...TextStyle.regular,
                   color: white,
-                  lineHeight: 40,
+                  lineHeight: 26,
+                  fontSize:14,
                 }}>
                 {`₦${price}`}
               </Text>
@@ -108,7 +110,7 @@ const styles = StyleSheet.create({
     height: 204,
     overflow: 'hidden',
     flexDirection: 'row',
-    marginBottom: 54,
+    marginBottom: 20,
     borderRadius: 10,
   },
   image: {

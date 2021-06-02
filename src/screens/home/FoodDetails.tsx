@@ -9,7 +9,7 @@ import {Header} from '../../components/header';
 import {CartContext} from '../../context/cartContext';
 import {ActionType} from '../../context/enums';
 import {IFood} from '../../interfaces/menu';
-import {black, orange, orange300, white} from '../../styles/colors';
+import {black, orange, orange300, red, white} from '../../styles/colors';
 import {TextStyle} from '../../styles/textStyle';
 
 const FoodDetails = () => {
@@ -37,7 +37,7 @@ const FoodDetails = () => {
   };
   return (
     <View style={styles.container}>
-      <Header title={food.name ?? ''} />
+      <Header/>
       <ScrollView>
         <View>
           <View
@@ -45,10 +45,11 @@ const FoodDetails = () => {
               height: 255,
               overflow: 'hidden',
               flexDirection: 'row',
-              marginBottom: 54,
+              marginBottom: 30,
             }}>
             <Image source={{uri: food.image}} style={styles.image} />
           </View>
+          <Text style={[styles.description,TextStyle.semiBold]}>{food.name}</Text>
           <Text style={styles.description}>{food.description}</Text>
           <View
             style={{
@@ -59,8 +60,8 @@ const FoodDetails = () => {
             <AntDesign
               name={isFavorite ? 'heart' : 'hearto'}
               onPress={() => setIsFavorite(prev => !prev)}
-              size={20}
-              color={isFavorite ? orange : black}
+              size={25}
+              color={isFavorite ? red : black}
             />
             {/* <Rating rating={food.rating} /> */}
           </View>

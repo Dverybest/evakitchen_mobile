@@ -55,7 +55,8 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 25,
     justifyContent: 'center',
-    padding: 15,
+    paddingVertical: 13,
+    paddingHorizontal:26
   },
 });
 export default SearchBar;

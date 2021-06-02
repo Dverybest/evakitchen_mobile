@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {Header} from '../../components/header';
 import {black, orange100, red, white} from '../../styles/colors';
 import {TextStyle} from '../../styles/textStyle';
 import {AccountOption} from './components/accountOption';
@@ -21,10 +20,10 @@ const Account = () => {
   const {dispatchAuthState} = useContext(AuthContext);
   return (
     <View style={{flex: 1, backgroundColor: white}}>
-      <Header title="Account" showGoBack={false} />
+        <Text style={{...TextStyle.semiBold,marginLeft:25, marginVertical: 20}}>Account</Text>
       <ScrollView>
         <View style={styles.container}>
-          <View style={{marginTop: 45}}>
+          <View >
             <View>
               <Text style={{...TextStyle.medium, marginBottom: 12}}>
                 Profile
@@ -115,7 +114,7 @@ const Account = () => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 15,
+    paddingHorizontal: 25,
   },
 });
 

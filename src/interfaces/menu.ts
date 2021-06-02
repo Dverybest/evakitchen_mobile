@@ -1,8 +1,8 @@
-import {ImageSourcePropType} from 'react-native';
 
 export interface ICategory {
     name: string;
-    icon: ImageSourcePropType;
+    image: string;
+    _id?:string
   }
 export interface IFood {
   name: string;
