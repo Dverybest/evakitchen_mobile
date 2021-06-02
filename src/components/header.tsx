@@ -6,7 +6,7 @@ import { TextStyle } from '../styles/textStyle';
 import { black } from '../styles/colors';
 
 interface IHeader{
-title:string;
+title?:string;
 showGoBack?:boolean;
 containerStyle?:ViewStyle;
 customGoBackhandler?:()=>void
@@ -15,7 +15,6 @@ customGoBackhandler?:()=>void
 export const Header = ({
   title,
   showGoBack =true,
-  containerStyle,
   customGoBackhandler,
 }:IHeader) => {
   const {goBack, canGoBack, navigate} = useNavigation();
@@ -54,7 +53,7 @@ export const Header = ({
 const styles = StyleSheet.create({
   containerStyle: {
     flexDirection: 'row',
-    paddingVertical: 25,
+    paddingVertical: 15,
     width: '100%',
   },
   backBtn: {

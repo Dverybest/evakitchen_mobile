@@ -7,11 +7,12 @@ import {Header} from '../../../components/header';
 import {RouteProp, useRoute} from '@react-navigation/core';
 import {useRequestProcessor} from '../../../api/requestProcessor';
 import {IFood} from '../../../interfaces/menu';
+import Empty from '../../../components/empty';
 
 const CategoryDetails = () => {
   const {
-    params: {title},
-  }: RouteProp<{params: {title: string}}, 'params'> = useRoute();
+    params: {title,id},
+  }: RouteProp<{params: {title: string,id:string}}, 'params'> = useRoute();
   const {makeRequest} = useRequestProcessor();
   const [searchText, setSearchText] = useState<string>('');
   const [foods, setFoods] = useState<IFood[]>([]);
@@ -23,14 +24,21 @@ const CategoryDetails = () => {
       method: 'get',
       url:
         title === 'Popular Food'
-          ? `/menu?isPopular=${true}`
-          : `/menu?isSpecial=${true}`,
+          ? `/menu/getPopular`:
+          title === 'Popular Food'?
+          `/menu?isSpecial=${true}`:
+          `/menu?category=${id}`
     });
     if (error) {
       console.log(error.message, 'Error');
     } else if (response) {
-      let data = response.data as {docs: IFood[]};
-      setFoods(data.docs);
+      let data:IFood[] = [];
+      if(title === 'Popular Food'){
+        data = response.data as IFood[];  
+      }else{
+        data = response.data.docs as IFood[];  
+      }
+      setFoods(data);
     }
   };
   return (
@@ -43,7 +51,7 @@ const CategoryDetails = () => {
       <View style={styles.container}>
         <SearchBar
           containerStyle={{
-            marginBottom: 45,
+            marginBottom: 25,
           }}
           onPress={() => {}}
           value={searchText}
@@ -53,6 +61,7 @@ const CategoryDetails = () => {
         <FlatList
           data={foods}
           keyExtractor={(_, index) => `favourites${index}`}
+          contentContainerStyle={{paddingBottom:100}}
           renderItem={({item}) => (
             <FoodCard
               image={item.image}
@@ -64,6 +73,11 @@ const CategoryDetails = () => {
             />
           )}
         />
+        {
+          foods.length===0?
+          <Empty text={'No food in this menu category'}/>
+          :null
+        }
       </View>
     </View>
   );
@@ -71,7 +85,8 @@ const CategoryDetails = () => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 25,
+    paddingHorizontal: 20,
+    marginBottom:20
   },
 });
 export default CategoryDetails;

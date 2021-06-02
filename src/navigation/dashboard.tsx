@@ -46,7 +46,7 @@ const DashboardStack = () => {
         keyboardHidesTabBar: true,
       }}>
       <Tab.Screen name="Home" component={HomeStack} />
-      <Tab.Screen name="Orders" component={OrderStack} />
+      <Tab.Screen name="My Orders" component={OrderStack} />
       <Tab.Screen
         name="Cart"
         component={CartStack}
@@ -54,7 +54,7 @@ const DashboardStack = () => {
           cartState.items?.length ? {tabBarBadge: cartState.items.length} : {}
         }
       />
-      <Tab.Screen name="Profile" component={ProfileStack} />
+      <Tab.Screen name="Account" component={ProfileStack} />
     </Tab.Navigator>
   );
 };

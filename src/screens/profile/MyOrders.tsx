@@ -3,7 +3,6 @@ import {StyleSheet, Text, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {grey, grey100, orange, white} from '../../styles/colors';
 import {TextStyle} from '../../styles/textStyle';
-import {Header} from '../../components/header';
 import ActiveOrders from './components/activeOrders';
 import OrderHistory from './components/orderHistory';
 import Empty from '../../components/empty';
@@ -13,7 +12,7 @@ const MyOrders = () => {
   const error = false;
   return (
     <View style={styles.container}>
-      <Header title="My orders" showGoBack={false} />
+       <Text style={{...TextStyle.semiBold,marginLeft:25, marginVertical: 20}}>My Orders</Text>
       <View style={{flex:1}}>
       <View style={styles.tabContainer}>
         <TouchableOpacity
