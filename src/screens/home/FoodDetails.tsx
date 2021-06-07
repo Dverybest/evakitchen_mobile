@@ -49,8 +49,8 @@ const FoodDetails = () => {
             }}>
             <Image source={{uri: food.image}} style={styles.image} />
           </View>
-          <Text style={[styles.description,TextStyle.semiBold]}>{food.name}</Text>
-          <Text style={styles.description}>{food.description}</Text>
+          <Text numberOfLines={1} style={[styles.description,TextStyle.semiBold]}>{food.name?.trim()}</Text>
+          <Text style={styles.description}>{food.description?.trim()}</Text>
           <View
             style={{
               flexDirection: 'row',
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     marginHorizontal: 24,
-    resizeMode: 'contain',
+    resizeMode: 'cover',
     height: 255,
   },
   description: {
