@@ -88,7 +88,7 @@ const HomeScreen = () => {
         containerStyle={{
           marginTop: 19,
         }}
-        onPress={() => {}}
+        onPress={() => navigate('CategoryDetails', {title: 'Search',search:searchText})}
         value={searchText}
         onChangeText={text => setSearchText(text)}
         placeholder="What are you looking for?"
@@ -158,6 +158,7 @@ const HomeScreen = () => {
             source={banner}
             style={{
               flex: 1,
+              resizeMode:'contain',
               height: 120,
             }}
           />
