@@ -54,12 +54,12 @@ const FoodCard = ({
               marginBottom: 63,
             }}>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <FontAwesome name="star" size={15} color={white} />
+              <FontAwesome name="star" size={12} color={white} />
               <Text
                 style={{
                   ...TextStyle.medium,
                   color: white,
-                  fontSize: 18,
+                  fontSize: 15,
                   marginLeft: 5,
                 }}>
                 {rating}
