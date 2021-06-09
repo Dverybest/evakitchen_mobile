@@ -48,7 +48,7 @@ const Account = () => {
                 />
               </View>
             </View>
-            <View>
+            {/* <View>
               <Text
                 style={{...TextStyle.medium, marginTop: 44, marginBottom: 12}}>
                 Favourites
@@ -64,7 +64,7 @@ const Account = () => {
                   onPress={() => navigate('Favourites')}
                 />
               </View>
-            </View>
+            </View> */}
             <View>
               <Text
                 style={{...TextStyle.medium, marginTop: 44, marginBottom: 12}}>
@@ -83,13 +83,13 @@ const Account = () => {
                     <EvilIcons name="external-link" color={black} size={20} />
                   }
                 />
-                <AccountOption
+                {/* <AccountOption
                   title="Privacy Policy"
                   onPress={() => console.log('hello')}
                   icon={
                     <EvilIcons name="external-link" color={black} size={20} />
                   }
-                />
+                /> */}
               </View>
             </View>
             <TouchableOpacity
@@ -103,7 +103,7 @@ const Account = () => {
                 dispatchAuthState({type: ActionType.LOG_OUT, payload: null})
               }>
               <Feather name="log-out" color={red} size={25} />
-              <Text style={{...TextStyle.medium, color: red}}>Logout</Text>
+              <Text style={{...TextStyle.medium, color: red,marginLeft:7}}>Logout</Text>
             </TouchableOpacity>
           </View>
         </View>
