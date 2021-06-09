@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {View, Text, StyleSheet, TouchableOpacity, ViewStyle} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
@@ -31,7 +31,7 @@ export const Header = ({
                 ? goBack()
                 : navigate('Home')
             }>
-            <AntDesign color={black} size={20} name="left" />
+            <AntDesign color={black} size={18} name="left" />
           </TouchableOpacity>
         )}
       </View>
