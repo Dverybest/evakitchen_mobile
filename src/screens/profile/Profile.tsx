@@ -13,37 +13,54 @@ import {Formik} from 'formik';
 import {IUser} from '../../interfaces/user';
 import {userSchema} from './userSchema';
 import {useRequestProcessor} from '../../api/requestProcessor';
+import {ActionType} from '../../context/enums';
 
 const Profile = () => {
   const {authState, dispatchAuthState} = useContext(AuthContext);
   const {makeRequest} = useRequestProcessor();
   const [showUploadOption, setShowUploadOption] = useState(false);
-  const [photoUrl, setPhotoUrl] = useState('');
-  const handleUpload = (photo: any, setSelected: any) => {
-    setPhotoUrl(photo.uri);
-    setSelected({show: false});
-    setShowUploadOption(false);
-  };
+  const handleUpload = async (photo: any, setSelected: any) => {
+    const payload = new FormData();
+    payload.append('image', {
+      name: photo.fileName,
+      type: photo.type,
+      uri: photo.uri,
+    });
 
-  const handleSubmit = async (values: IUser) => {
     const {response, error} = await makeRequest({
       url: '/user/update',
       method: 'PATCH',
-      payload: values,
+      payload: payload,
+    });
+
+    if (error) {
+      console.log(error.message);
+    } else if (response) {
+      console.log(response);
+      dispatchAuthState({
+        type: ActionType.USER_DETAILS,
+        payload: response.data,
+      });
+      setSelected({show: false});
+      setShowUploadOption(false);
+    }
+  };
+
+  const handleSubmit = async (values: IUser) => {
+    const {email, ...details} = values;
+    const {response, error} = await makeRequest({
+      url: '/user/update',
+      method: 'PATCH',
+      payload: details,
     });
     if (error) {
       console.log(error);
     } else if (response && response?.success) {
       console.log(response.data);
-      // const {authToken, ...userDetails} = response.data;
-      // dispatchAuthState({
-      //   type: ActionType.USER_DETAILS,
-      //   payload: userDetails,
-      // });
-      // dispatchAuthState({
-      //   type: ActionType.TOKEN,
-      //   payload: response.data.authToken,
-      // });
+      dispatchAuthState({
+        type: ActionType.USER_DETAILS,
+        payload: response.data,
+      });
     }
   };
 
@@ -59,8 +76,11 @@ const Profile = () => {
           />
           <View style={{alignItems: 'center', marginBottom: 32}}>
             <View style={styles.profileImageContainer}>
-              {photoUrl !== '' ? (
-                <Image source={{uri: photoUrl}} style={styles.image} />
+              {authState.user?.image ? (
+                <Image
+                  source={{uri: authState.user?.image}}
+                  style={styles.image}
+                />
               ) : (
                 <View
                   style={{
@@ -73,7 +93,10 @@ const Profile = () => {
                   }}>
                   <Text
                     style={{...TextStyle.semiBold, fontSize: 40, color: white}}>
-                    CB
+                    {authState.user
+                      ? authState.user?.fullName.split(' ')[0].split('')[0] +
+                        authState.user?.fullName.split(' ')[1].split('')[0]
+                      : ''}
                   </Text>
                 </View>
               )}
@@ -117,6 +140,7 @@ const Profile = () => {
                     value={props.values.email}
                     onChangeText={props.handleChange('email')}
                     errorMessage={props.touched.email && props.errors.email}
+                    editable={false}
                   />
                   <TextField
                     placeholder="eg. 07061011343"
