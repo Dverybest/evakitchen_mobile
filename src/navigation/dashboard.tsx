@@ -11,6 +11,7 @@ import {useNavigation} from '@react-navigation/core';
 import {CartContext} from '../context/cartContext';
 import CartStack from './cartStack';
 import OrderStack from './orderStack';
+import {Image} from 'react-native';
 
 const Tab = createBottomTabNavigator();
 
@@ -34,7 +35,12 @@ const DashboardStack = () => {
           } else if (route.name === 'Cart') {
             return <Ionicons name={'cart-outline'} size={size} color={color} />;
           } else {
-            return (
+            return authState.user?.image ? (
+              <Image
+                source={{uri: authState.user?.image}}
+                style={{height: 24, width: 24, borderRadius: 12}}
+              />
+            ) : (
               <Ionicons name={'md-person-outline'} size={size} color={color} />
             );
           }
@@ -46,7 +52,7 @@ const DashboardStack = () => {
         keyboardHidesTabBar: true,
       }}>
       <Tab.Screen name="Home" component={HomeStack} />
-      <Tab.Screen name="My Orders" component={OrderStack} />
+      <Tab.Screen name="Orders" component={OrderStack} />
       <Tab.Screen
         name="Cart"
         component={CartStack}

@@ -22,6 +22,7 @@ interface ITextFieldProps {
   onChangeText?: (text: string) => void;
   value?: string;
   multiline?: boolean;
+  editable?: boolean;
 }
 interface IStyles {
   textInputContainer: ViewStyle;
@@ -51,6 +52,7 @@ export const TextField = ({
   value,
   onChangeText,
   multiline,
+  editable
 }: ITextFieldProps) => {
   const [show, setShow] = useState<boolean>(false);
   let colorStyle = errorMessage
@@ -74,7 +76,8 @@ export const TextField = ({
             value={value}
             keyboardType={keyboardType}
             onChangeText={onChangeText}
-            multiline={multiline ? true : false}
+            multiline={multiline}
+            editable={editable}
           />
           {password && (
             <Feather
