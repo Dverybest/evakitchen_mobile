@@ -1,11 +1,9 @@
 import {useNavigation} from '@react-navigation/core';
-import React, {useContext, useMemo} from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet, Text, View, FlatList} from 'react-native';
-import {ButtonPrimary, ButtonWhite} from '../../components/buttons';
+import {ButtonPrimary} from '../../components/buttons';
 import Empty from '../../components/empty';
-import {Header} from '../../components/header';
 import {CartContext} from '../../context/cartContext';
-import {ICart} from '../../interfaces/cartContext';
 import {orange, white} from '../../styles/colors';
 import {TextStyle} from '../../styles/textStyle';
 import CartItemView from './component/CartItemView';
@@ -13,17 +11,6 @@ import CartItemView from './component/CartItemView';
 const Cart = () => {
   const {cartState} = useContext(CartContext);
   const {navigate} = useNavigation();
-  const deliveryFee = 100;
-  const subTotal = useMemo(
-    () =>
-      cartState.items.reduce(
-        (amount: number, items: ICart) =>
-          Number(amount) + Number(items.amount) * Number(items.quantity),
-        0,
-      ),
-    [cartState.items],
-  );
-  const total = subTotal + deliveryFee;
   return (
     <View style={styles.container}>
        <Text style={{...TextStyle.semiBold,marginLeft:25, marginVertical: 20}}>Cart</Text>
@@ -33,7 +20,7 @@ const Cart = () => {
             text={'Empty cart'}
             containerStyle={{flex: 1, justifyContent: 'center'}}
           />
-          <ButtonWhite
+          <ButtonPrimary
             containerStyle={{margin: 25}}
             text={'Continue shopping'}
             onPress={() => navigate('Home')}
@@ -56,23 +43,12 @@ const Cart = () => {
             />
           </View>
           <View style={[{margin: 25, marginTop: 65}]}>
-            <View style={styles.priceDetails}>
-              <Text style={[TextStyle.medium]}>Sub Total</Text>
-              <Text style={[TextStyle.medium]}>{`₦${subTotal}`}</Text>
-            </View>
-            <View style={styles.priceDetails}>
-              <Text style={[TextStyle.medium]}>Delivery fee</Text>
-              <Text style={[TextStyle.medium]}>{`₦${deliveryFee}`}</Text>
-            </View>
-            <View style={styles.priceDetails}>
-              <Text style={[TextStyle.medium]}>Total</Text>
-              <Text style={[TextStyle.medium]}>{`₦${total}`}</Text>
-            </View>
+           
             <ButtonPrimary
               containerStyle={{}}
               text={'Make order'}
               onPress={() =>
-                navigate('DeliveryDetails', {paymentDetails: {total}})
+                navigate('DeliveryDetails')
               }
             />
           </View>

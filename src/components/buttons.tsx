@@ -120,10 +120,10 @@ export const ButtonFlutterWave = ({
         }}
         customButton={props => (
           <TouchableOpacity
-            style={[styles.button, styles.buttonWhite]}
+            style={[styles.button]}
             onPress={props.onPress}
             disabled={props.disabled}>
-            <Text style={[styles.text, {color: orange}]}>{text}</Text>
+            <Text style={[styles.text, {color: white}]}>{text}</Text>
           </TouchableOpacity>
         )}
       />

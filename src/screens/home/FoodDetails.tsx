@@ -9,7 +9,7 @@ import {Header} from '../../components/header';
 import {CartContext} from '../../context/cartContext';
 import {ActionType} from '../../context/enums';
 import {IFood} from '../../interfaces/menu';
-import {black, orange, orange300, red, white} from '../../styles/colors';
+import {black, orange300, white} from '../../styles/colors';
 import {TextStyle} from '../../styles/textStyle';
 
 const FoodDetails = () => {
@@ -42,33 +42,33 @@ const FoodDetails = () => {
         <View>
           <View
             style={{
-              height: 255,
+              height: 250,
               overflow: 'hidden',
               flexDirection: 'row',
               marginBottom: 30,
             }}>
             <Image source={{uri: food.image}} style={styles.image} />
           </View>
-          <Text style={[styles.description,TextStyle.semiBold]}>{food.name}</Text>
-          <Text style={styles.description}>{food.description}</Text>
+          <Text numberOfLines={1} style={[styles.description,TextStyle.semiBold]}>{food.name?.trim()}</Text>
+          <Text style={styles.description}>{food.description?.trim()}</Text>
           <View
             style={{
               flexDirection: 'row',
-              margin: 25,
+              margin: 20,
               justifyContent: 'space-between',
             }}>
-            <AntDesign
+            {/* <AntDesign
               name={isFavorite ? 'heart' : 'hearto'}
               onPress={() => setIsFavorite(prev => !prev)}
               size={25}
               color={isFavorite ? red : black}
-            />
+            /> */}
             {/* <Rating rating={food.rating} /> */}
           </View>
           <View
             style={{
               flexDirection: 'row',
-              margin: 25,
+              marginHorizontal: 25,
               justifyContent: 'space-between',
               alignItems: 'center',
             }}>
@@ -126,7 +126,6 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: 24,
     resizeMode: 'contain',
-    height: 255,
   },
   description: {
     marginHorizontal: 35,

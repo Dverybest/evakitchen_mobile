@@ -40,7 +40,7 @@ const HomeScreen = () => {
       }),
       makeRequest({
         method: 'get',
-        url: `/menu?isSpecial=${true}`,
+        url: `/menu/getSpecial`,
       }),
       makeRequest({
         method: 'get',
@@ -61,10 +61,12 @@ const HomeScreen = () => {
         const {response: res, error: err} = result[1];
         if (err) {
           console.log(err.message, 'Error');
-        } else if (res) {
-          let data = res.data as {docs: IFood[]};
+        } else if (res?.data) {
+          let data = res.data as  IFood[];
+          console.log(data);
+          
           dispatchHomeScreenState({
-            payload: data.docs,
+            payload: data,
             type: ActionType.SET_SPECIAL_FOOD,
           });
           const {response: catResponse, error: catError} = result[2];
@@ -86,7 +88,7 @@ const HomeScreen = () => {
         containerStyle={{
           marginTop: 19,
         }}
-        onPress={() => {}}
+        onPress={() => navigate('CategoryDetails', {title: 'Search',search:searchText})}
         value={searchText}
         onChangeText={text => setSearchText(text)}
         placeholder="What are you looking for?"
@@ -117,7 +119,7 @@ const HomeScreen = () => {
         </View>
         <View
           style={{
-            marginVertical: 19,
+            marginVertical: 15,
           }}>
           <View
             style={{
@@ -156,17 +158,18 @@ const HomeScreen = () => {
             source={banner}
             style={{
               flex: 1,
+              resizeMode:'contain',
               height: 120,
             }}
           />
         </View>
-        <View>
+        <View style={{paddingBottom:15}}>
           <View
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
               alignItems: 'center',
-              marginVertical: 19,
+              marginVertical: 15,
             }}>
             <Text style={[TextStyle.medium, {fontSize: 18}]}>
               Special Offers
