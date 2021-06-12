@@ -5,7 +5,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {ButtonPrimary} from '../../components/buttons';
 import {Header} from '../../components/header';
-// import Rating from '../../components/rating';
+import Rating from '../../components/rating';
 import {CartContext} from '../../context/cartContext';
 import {ActionType} from '../../context/enums';
 import {IFood} from '../../interfaces/menu';
@@ -22,6 +22,7 @@ const FoodDetails = () => {
 
   const addToCart = () => {
     const {name, rating, price: amount, description} = food;
+    
     const payload = {
       quantity,
       name,
@@ -35,6 +36,7 @@ const FoodDetails = () => {
       payload,
     });
   };
+  
   return (
     <View style={styles.container}>
       <Header/>
@@ -63,7 +65,7 @@ const FoodDetails = () => {
               size={25}
               color={isFavorite ? red : black}
             /> */}
-            {/* <Rating rating={food.rating} /> */}
+            <Rating rating={food.rating} />
           </View>
           <View
             style={{
