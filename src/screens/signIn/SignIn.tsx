@@ -40,7 +40,6 @@ const SignIn = (props: any) => {
       actions.setFieldError('email', error.message);
       actions.setFieldError('password', error.message);
     } else if (response && response?.success) {
-      console.log(response.data);
       const {authToken, ...userDetails} = response.data;
       dispatchAuthState({
         type: ActionType.USER_DETAILS,
@@ -68,17 +67,9 @@ const SignIn = (props: any) => {
   };
 
   const handleOpenURL = ({url}: {url: string}) => {
-    console.log(url);
 
     let uri = decodeURI(url);
-    console.log(uri);
-
     if (!/(?=login)/.test(uri)) return;
-    console.log(
-      JSON.parse(
-        decodeQueryParams(uri.replace('eva-kitchen://login?', '')).data,
-      ),
-    );
 
     const result = JSON.parse(
       decodeQueryParams(uri.replace('eva-kitchen://login?', '')).data,
