@@ -8,7 +8,7 @@ import {
   View,
   KeyboardTypeOptions,
 } from 'react-native';
-import {grey, red, black} from '../styles/colors';
+import {grey, red, black, grey100} from '../styles/colors';
 import {TextStyle as MyTextStyle} from '../styles/textStyle';
 import Feather from 'react-native-vector-icons/Feather';
 
@@ -52,11 +52,13 @@ export const TextField = ({
   value,
   onChangeText,
   multiline,
-  editable
+  editable,
 }: ITextFieldProps) => {
   const [show, setShow] = useState<boolean>(false);
   let colorStyle = errorMessage
     ? {borderColor: red, color: black}
+    : editable === false
+    ? {borderColor: grey, color: black, backgroundColor: grey100}
     : {borderColor: grey, color: black};
   return (
     <View style={mainContainerStyle}>
