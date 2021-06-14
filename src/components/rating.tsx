@@ -1,4 +1,5 @@
 import React from 'react';
+import {useMemo} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {black, orange} from '../styles/colors';
@@ -15,40 +16,25 @@ const Rating = ({rating}: IRating) => {
     <FontAwesome name={'star-half-full'} size={20} color={orange} />
   );
 
-  const stars = useMemo(()=>{
-  let arr = []
-  const limit = 5;
-  const difference = limit - (rating ? rating : 0);
-  let roundDifference = Math.round(limit - difference + 1);
-  for (let index = 1; index <= limit; index++) {
-    const notWholeNumber = (rating || 0) - Math.floor(rating || 0) !== 0;
-    const indexOfNumber = index === Math.floor(rating || 0) + 1;
-    if (notWholeNumber && indexOfNumber) {
-      arr.push(halfStar);
-    } else if (difference > 0 && index === roundDifference) {
-      roundDifference += 1;
-      arr.push(emptyStar);
-    } else {
-      arr.push(fullStar);
+  const stars = useMemo(() => {
+    let arr = [];
+    const limit = 5;
+    const difference = limit - (rating ? rating : 0);
+    let roundDifference = Math.round(limit - difference + 1);
+    for (let index = 1; index <= limit; index++) {
+      const notWholeNumber = (rating || 0) - Math.floor(rating || 0) !== 0;
+      const indexOfNumber = index === Math.floor(rating || 0) + 1;
+      if (notWholeNumber && indexOfNumber) {
+        arr.push(halfStar);
+      } else if (difference > 0 && index === roundDifference) {
+        roundDifference += 1;
+        arr.push(emptyStar);
+      } else {
+        arr.push(fullStar);
+      }
     }
-  }
-  },[rating]);
-  
-  const limit = 5;
-  const difference = limit - (rating ? rating : 0);
-  let roundDifference = Math.round(limit - difference + 1);
-  for (let index = 1; index <= limit; index++) {
-    const notWholeNumber = (rating || 0) - Math.floor(rating || 0) !== 0;
-    const indexOfNumber = index === Math.floor(rating || 0) + 1;
-    if (notWholeNumber && indexOfNumber) {
-      stars.push(halfStar);
-    } else if (difference > 0 && index === roundDifference) {
-      roundDifference += 1;
-      stars.push(emptyStar);
-    } else {
-      stars.push(fullStar);
-    }
-  }
+    return arr;
+  }, [rating]);
 
   return (
     <View style={{flexDirection: 'row'}}>
