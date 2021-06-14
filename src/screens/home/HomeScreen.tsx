@@ -63,7 +63,6 @@ const HomeScreen = () => {
           console.log(err.message, 'Error');
         } else if (res?.data) {
           let data = res.data as  IFood[];
-          console.log(data);
           
           dispatchHomeScreenState({
             payload: data,

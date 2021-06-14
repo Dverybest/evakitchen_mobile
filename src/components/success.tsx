@@ -7,8 +7,10 @@ import {TextStyle} from '../styles/textStyle';
 import {ButtonPrimary} from './buttons';
 interface SuccessProps {
   visible: boolean;
-  setVisibility: React.Dispatch<React.SetStateAction<boolean>>;
   text: string;
+  title?: string;
+  buttonText?: string;
+  onPress: () => void;
 }
 
 const styles = StyleSheet.create({
@@ -28,7 +30,7 @@ const styles = StyleSheet.create({
     marginTop: 85,
   },
 });
-const Success = ({visible, setVisibility, text}: SuccessProps) => {
+const Success = ({visible, title, onPress, buttonText, text}: SuccessProps) => {
   return (
     <Modal visible={visible}>
       <View style={styles.container}>
@@ -41,7 +43,7 @@ const Success = ({visible, setVisibility, text}: SuccessProps) => {
               color: green,
               fontSize: 18,
             }}>
-            Successful
+            {title || 'Successful'}
           </Text>
           <Text
             style={{
@@ -54,9 +56,9 @@ const Success = ({visible, setVisibility, text}: SuccessProps) => {
           </Text>
         </View>
         <ButtonPrimary
-          text="Ok"
+          text={buttonText || 'Ok'}
           containerStyle={{marginTop: 70}}
-          onPress={() => setVisibility(false)}
+          onPress={onPress}
         />
       </View>
     </Modal>

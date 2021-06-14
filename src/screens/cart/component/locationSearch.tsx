@@ -36,12 +36,10 @@ const LocationSearch = ({
         url,
         method: 'GET',
       });
-      console.log(response);
       setPlaces(response.data.results);
       setShowResults(true);
     } catch (error) {
       setShowResults(false);
-      console.log(error);
     }
   };
   const setLocation = (loaction: string) => {
@@ -62,7 +60,6 @@ const LocationSearch = ({
           placeholderTextColor={grey}
           value={searchText}
           onChangeText={text => {
-            console.log(text);
             setSearchText(text);
             searchLocation(text);
           }}
