@@ -5,9 +5,10 @@ export interface ICategory {
     _id?:string
   }
 export interface IFood {
+  _id:string,
   name: string;
   description?: string;
-  discount?: 0;
+  discount: number;
   price: string;
   rating?: number;
   category?: string;

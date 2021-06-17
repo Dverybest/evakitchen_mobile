@@ -20,14 +20,22 @@ const FoodDetails = () => {
   const [isFavorite, setIsFavorite] = useState(false);
   const {dispatchCartState} = useContext(CartContext);
 
+  const discounter = (amount: string, discount: number) => {
+    if(!discount)return Number(amount);
+    return Number(amount) - (Number(discount) / 100) * Number(amount);
+  };
+
   const addToCart = () => {
-    const {name, rating, price: amount, description} = food;
+    const {name, rating, price: amount, description, _id, discount} = food;
+    const cost = discounter(amount, discount);
     const payload = {
       quantity,
+      _id,
       name,
       favourite: isFavorite,
       rating,
-      amount,
+      discount,
+      amount: cost,
       description,
     };
     dispatchCartState({
@@ -37,7 +45,7 @@ const FoodDetails = () => {
   };
   return (
     <View style={styles.container}>
-      <Header/>
+      <Header />
       <ScrollView>
         <View>
           <View
@@ -49,7 +57,11 @@ const FoodDetails = () => {
             }}>
             <Image source={{uri: food.image}} style={styles.image} />
           </View>
-          <Text numberOfLines={1} style={[styles.description,TextStyle.semiBold]}>{food.name?.trim()}</Text>
+          <Text
+            numberOfLines={1}
+            style={[styles.description, TextStyle.semiBold]}>
+            {food.name?.trim()}
+          </Text>
           <Text style={styles.description}>{food.description?.trim()}</Text>
           <View
             style={{
@@ -72,7 +84,7 @@ const FoodDetails = () => {
               justifyContent: 'space-between',
               alignItems: 'center',
             }}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{flexDirection: 'row', alignItems: 'center', flex: 1}}>
               <AntDesign
                 name={'minus'}
                 size={25}
@@ -101,11 +113,17 @@ const FoodDetails = () => {
                 }}
               />
             </View>
-            <Text
-              style={[
-                TextStyle.medium,
-                {marginHorizontal: 25},
-              ]}>{`₦${food.price}`}</Text>
+            {food.discount? (
+              <Text
+                style={[
+                  TextStyle.medium,
+                  {textDecorationLine: 'line-through', marginHorizontal: 5},
+                ]}>{`₦${food.price}`}</Text>
+            ):null}
+            <Text style={[TextStyle.medium, {fontSize: 22}]}>{`₦${discounter(
+              food.price,
+              food.discount,
+            )}`}</Text>
           </View>
           <ButtonPrimary
             text="Add to cart"
