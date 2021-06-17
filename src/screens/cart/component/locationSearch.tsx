@@ -13,17 +13,18 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import {FlatList, TextInput} from 'react-native-gesture-handler';
 import {GOOGLE_MAP_API_KEY} from '../../../api/config';
+import { Value } from 'react-native-reanimated';
 
 interface ILocationSearch {
-  text: string;
   containerStyle: ViewStyle;
   placeholder?: string;
+  handleChange:(value:string)=>void
 }
 
 const LocationSearch = ({
-  text,
   containerStyle,
   placeholder,
+  handleChange,
 }: ILocationSearch) => {
   const [searchText, setSearchText] = useState('');
   const [showResults, setShowResults] = useState(false);
@@ -36,25 +37,24 @@ const LocationSearch = ({
         url,
         method: 'GET',
       });
-      console.log(response);
       setPlaces(response.data.results);
       setShowResults(true);
     } catch (error) {
       setShowResults(false);
-      console.log(error);
     }
   };
   const setLocation = (loaction: string) => {
     setSearchText(loaction);
     setShowResults(false);
+    handleChange(loaction)
   };
   const clearField = () => {
     setSearchText('');
     setShowResults(false);
+    handleChange('')
   };
   return (
     <View style={containerStyle}>
-      <Text style={{...TextStyle.regular}}>{text}</Text>
       <View style={styles.textInputContainer}>
         <TextInput
           style={styles.textInput}
@@ -62,7 +62,6 @@ const LocationSearch = ({
           placeholderTextColor={grey}
           value={searchText}
           onChangeText={text => {
-            console.log(text);
             setSearchText(text);
             searchLocation(text);
           }}
