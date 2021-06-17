@@ -14,11 +14,13 @@ import {IUser} from '../../interfaces/user';
 import {userSchema} from './userSchema';
 import {useRequestProcessor} from '../../api/requestProcessor';
 import {ActionType} from '../../context/enums';
+import Success from '../../components/success';
 
 const Profile = () => {
   const {authState, dispatchAuthState} = useContext(AuthContext);
   const {makeRequest} = useRequestProcessor();
   const [showUploadOption, setShowUploadOption] = useState(false);
+  const [showSuccess, setShowSuccess] = useState({show: false, message: ''});
   const handleUpload = async (photo: any, setSelected: any) => {
     const payload = new FormData();
     payload.append('image', {
@@ -36,7 +38,7 @@ const Profile = () => {
     if (error) {
       console.log(error.message);
     } else if (response) {
-      console.log(response);
+      setShowSuccess({show: true, message: response.message});
       dispatchAuthState({
         type: ActionType.USER_DETAILS,
         payload: response.data,
@@ -56,7 +58,7 @@ const Profile = () => {
     if (error) {
       console.log(error);
     } else if (response && response?.success) {
-      console.log(response.data);
+      setShowSuccess({show: true, message: response.message});
       dispatchAuthState({
         type: ActionType.USER_DETAILS,
         payload: response.data,
@@ -69,6 +71,11 @@ const Profile = () => {
       <Header title="Profile" />
       <ScrollView>
         <View style={styles.container}>
+          <Success
+            visible={showSuccess.show}
+            onPress={() => setShowSuccess({show: false, message: ''})}
+            text={showSuccess.message}
+          />
           <UploadOption
             show={showUploadOption}
             setShow={setShowUploadOption}

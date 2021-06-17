@@ -1,5 +1,5 @@
 import {useNavigation} from '@react-navigation/core';
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {
   StyleSheet,
   View,
@@ -7,6 +7,7 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  Linking,
 } from 'react-native';
 import logo from '../../assets/images/logo.png';
 import {ButtonGoogle, ButtonPrimary} from '../../components/buttons';
@@ -19,8 +20,9 @@ import {useRequestProcessor} from '../../api/requestProcessor';
 import {ISignUpDetails} from '../../interfaces/user';
 import {AuthContext} from '../../context/authContext';
 import {ActionType} from '../../context/enums';
+import {baseUrl} from '../../api/config';
 
-const SignUp = () => {
+const SignUp = (props: any) => {
   const {dispatchAuthState} = useContext(AuthContext);
   const {navigate} = useNavigation();
   const {makeRequest} = useRequestProcessor();
@@ -42,6 +44,51 @@ const SignUp = () => {
       });
     }
   };
+  const handleGoogleSignIn = async () => {
+    Linking.openURL(baseUrl + '/auth/google');
+  };
+
+  const decodeQueryParams = (uriParams: string): any => {
+    return uriParams.split('&').reduce(
+      (acc, current) => ({
+        ...acc,
+        [current.split('=')[0]]: current.split('=')[1],
+      }),
+      {},
+    );
+  };
+
+  const handleOpenURL = ({url}: {url: string}) => {
+
+    let uri = decodeURI(url);
+    if (!/(?=login)/.test(uri)) return;
+
+    const result = JSON.parse(
+      decodeQueryParams(uri.replace('eva-kitchen://login?', '')).data,
+    );
+    dispatchAuthState({
+      type: ActionType.TOKEN,
+      payload: result.token,
+    });
+    dispatchAuthState({
+      type: ActionType.USER_DETAILS,
+      payload: result.user,
+    });
+  };
+
+  useEffect(() => {
+    Linking.addEventListener('url', handleOpenURL);
+    Linking.getInitialURL().then(url => {
+      if (url) {
+        handleOpenURL({url});
+      }
+    });
+
+    return () => {
+      Linking.removeEventListener('url', handleOpenURL);
+    };
+  }, [props.route.params]);
+
   return (
     <View style={styles.container}>
       <Image source={logo} style={styles.image} />
@@ -104,6 +151,7 @@ const SignUp = () => {
         <ButtonGoogle
           text="Sign Up with Google"
           containerStyle={{marginBottom: 50}}
+          onPress={handleGoogleSignIn}
         />
         <TouchableOpacity
           style={{alignItems: 'center', marginBottom: 20}}
