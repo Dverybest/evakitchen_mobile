@@ -12,13 +12,18 @@ import LocationSearch from './component/locationSearch';
 import {ICart} from '../../interfaces/cartContext';
 import {CartContext} from '../../context/cartContext';
 import {useRequestProcessor} from '../../api/requestProcessor';
+import Error from '../../components/error';
 import Success from '../../components/success';
+import { ActionType } from '../../context/enums';
+import { useNavigation } from '@react-navigation/native';
 
 const DeliveryDetails = () => {
   const {authState} = useContext(AuthContext);
-  const {cartState} = useContext(CartContext);
+  const {cartState,dispatchCartState} = useContext(CartContext);
   const {makeRequest} = useRequestProcessor();
   const [showSuccess, setShowSuccess] = useState({show: false, message: ''});
+  const [showError, setShowError] = useState({show: false, message: ''});
+  const {reset} = useNavigation();
   const [details, setDetails] = useState({
     fullName: '',
     phoneNumber: '',
@@ -62,11 +67,16 @@ const DeliveryDetails = () => {
       payload: {...details,discount:subTotal[1], transactionId: data.transaction_id, orderItems},
     });
     if (error) {
-      console.log(error)
+      setShowError({show: false, message: error.message})
     } else if (response) {
+      dispatchCartState({type:ActionType.CLEAR_CART,payload:null})
       setShowSuccess({show: true, message: response.message});
     }
   };
+  const cleanUp =()=>{
+    setShowSuccess({show: false, message: ''});
+    reset({index: 0, routes: [{name: 'My Orders'}]});
+  }
   return (
     <View style={styles.container}>
       <Header title={'Delivery detail'} />
@@ -74,11 +84,12 @@ const DeliveryDetails = () => {
         Please enter delivery details
       </Text>
       <ScrollView style={{flex: 1, marginHorizontal: 25}}>
-      {/* <Success
+      <Error text={''} visible={showError.show} setVisibility={()=>setShowError({show: false, message: ''})}/>
+      <Success
             visible={showSuccess.show}
-            // onPress={() => setShowSuccess({show: false, message: ''})}
+            onPress={cleanUp}
             text={showSuccess.message}
-          /> */}
+          />
         <View>
           <View style={{flexDirection: 'row', marginTop: 15}}>
             <TextField

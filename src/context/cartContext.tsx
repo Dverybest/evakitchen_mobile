@@ -25,6 +25,10 @@ const reducer = (state: ICartState, action: IAction) => {
         ...state,
         items: items.filter((_, index) => index !== action.payload),
       };
+    case ActionType.CLEAR_CART:
+      return {
+        ...initialState
+      };
     default:
       return state;
   }
