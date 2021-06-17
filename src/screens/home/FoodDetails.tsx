@@ -9,7 +9,7 @@ import Rating from '../../components/rating';
 import {CartContext} from '../../context/cartContext';
 import {ActionType} from '../../context/enums';
 import {IFood} from '../../interfaces/menu';
-import {black, orange300, white} from '../../styles/colors';
+import {black, orange300, red, white} from '../../styles/colors';
 import {TextStyle} from '../../styles/textStyle';
 
 const FoodDetails = () => {
@@ -54,10 +54,11 @@ const FoodDetails = () => {
               height: 250,
               overflow: 'hidden',
               flexDirection: 'row',
-              marginBottom: 30,
+              marginBottom: 15,
             }}>
             <Image source={{uri: food.image}} style={styles.image} />
           </View>
+          <View style={{marginBottom: 15,justifyContent:'center',alignItems:'center'}}><Rating rating={food.rating} /></View>
           <Text
             numberOfLines={1}
             style={[styles.description, TextStyle.semiBold]}>
@@ -76,7 +77,7 @@ const FoodDetails = () => {
               size={25}
               color={isFavorite ? red : black}
             /> */}
-            <Rating rating={food.rating} />
+            
           </View>
           <View
             style={{
