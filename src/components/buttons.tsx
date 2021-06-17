@@ -9,7 +9,7 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import {black, orange, white} from '../styles/colors';
+import {black, grey100, orange, white} from '../styles/colors';
 import {TextStyle as MyTextStyle} from '../styles/textStyle';
 import googleIcon from '../assets/images/google.png';
 import {PayWithFlutterwave} from 'flutterwave-react-native';
@@ -18,9 +18,13 @@ interface IButtonProps {
   containerStyle: ViewStyle;
   onPress?: () => void;
   textStyle?: TextStyle;
+  disabled?:boolean
+}
+interface IPaymentButtonProps extends IButtonProps {
   transactionReference?: string;
-  email?: string;
-  amount?: number;
+  email: string;
+  amount: number;
+  handleRedirect:(data:any)=>void
 }
 interface IStyles {
   button: ViewStyle;
@@ -39,8 +43,8 @@ const styles = StyleSheet.create<IStyles>({
     backgroundColor: orange,
   },
   text: {
-    color: white,
     ...MyTextStyle.regular,
+    color: white,
     fontSize: 14,
   },
   buttonWhite: {
@@ -103,26 +107,28 @@ export const ButtonFlutterWave = ({
   amount,
   containerStyle,
   text,
-}: IButtonProps) => {
+  disabled,
+  handleRedirect
+}: IPaymentButtonProps) => {
   return (
     <View style={containerStyle}>
       <PayWithFlutterwave
-        onRedirect={() => console.log(898)}
+        onRedirect={handleRedirect}
         options={{
           tx_ref: transactionReference ?? '',
-          authorization: 'FLWPUBK_TEST-7753e6df013e9285a4d93a10b751b747-X',
+          authorization: 'FLWPUBK_TEST-10ed23d9dd726640e569e3b6c54944f1-X',
           customer: {
             email: email ?? '',
           },
           amount: amount ?? 0,
           currency: 'NGN',
-          payment_options: 'card',
+          payment_options: 'card'
         }}
         customButton={props => (
           <TouchableOpacity
-            style={[styles.button]}
+            style={[styles.button,disabled?{backgroundColor:grey100}:{}]}
             onPress={props.onPress}
-            disabled={props.disabled}>
+            disabled={disabled||props.disabled}>
             <Text style={[styles.text, {color: white}]}>{text}</Text>
           </TouchableOpacity>
         )}
