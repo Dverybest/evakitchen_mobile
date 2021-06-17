@@ -52,7 +52,7 @@ const DashboardStack = () => {
         keyboardHidesTabBar: true,
       }}>
       <Tab.Screen name="Home" component={HomeStack} />
-      <Tab.Screen name="Orders" component={OrderStack} />
+      <Tab.Screen name="My Orders" component={OrderStack} />
       <Tab.Screen
         name="Cart"
         component={CartStack}
