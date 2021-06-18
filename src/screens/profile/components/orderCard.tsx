@@ -1,13 +1,12 @@
 import React from 'react';
-import {Image, ImageSourcePropType, StyleSheet, Text, View} from 'react-native';
-import {ButtonPrimary, ButtonWhite} from '../../../components/buttons';
+import {Image, TouchableOpacity, StyleSheet, Text, View} from 'react-native';
 import CardStyle from '../../../styles/cardStyle';
 import {black, grey, orange, white} from '../../../styles/colors';
 import {TextStyle} from '../../../styles/textStyle';
 
 interface IOrderCard {
   index?: number;
-  image: ImageSourcePropType;
+  image: string;
   quantity: number;
   title: string;
   orderId?: string;
@@ -30,20 +29,16 @@ const OrderCard = ({
   status,
   amount,
   date,
-  secondaryButtonTitle,
-  primaryButtonTitle,
-  secondaryButtonAction,
-  primaryButtonAction,
 }: IOrderCard) => {
   return (
-    <View style={styles.card} key={index}>
+    <TouchableOpacity style={styles.card} key={index}>
       <View
         style={{
           flexDirection: 'row',
           justifyContent: 'space-between',
         }}>
         <View style={{flexDirection: 'row'}}>
-          <Image source={image} style={styles.image} />
+          <Image source={{uri:image}} style={styles.image} />
           <View style={{paddingTop: 8}}>
             <Text
               style={{
@@ -101,7 +96,7 @@ const OrderCard = ({
           </Text>
         </View>
       </View>
-      <View
+      {/* <View
         style={{
           flex: 1,
           marginTop: 15,
@@ -121,8 +116,8 @@ const OrderCard = ({
           containerStyle={{flex: 1}}
           onPress={primaryButtonAction}
         />
-      </View>
-    </View>
+      </View> */}
+    </TouchableOpacity>
   );
 };
 const styles = StyleSheet.create({
@@ -136,7 +131,8 @@ const styles = StyleSheet.create({
   image: {
     height: 70,
     width: 118,
-    resizeMode: 'contain',
+    resizeMode: 'cover',
+    marginRight:5,
     borderRadius: 10,
   },
 });

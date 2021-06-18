@@ -1,42 +1,43 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {FlatList} from 'react-native';
 import OrderCard from './orderCard';
-import img2 from '../../../assets/images/img2.jpg';
 import Empty from '../../../components/empty';
+import { useRequestProcessor } from '../../../api/requestProcessor';
 
 const ActiveOrders = () => {
-    const orders:any = [
-      // {
-      //   image: img2,
-      //   quantity: 2,
-      //   title: 'Egusi soup',
-      //   orderId: '#26234455',
-      //   arrival: 2,
-      //   status: 'Food on the way',
-      // },
-      // {
-      //   image: img2,
-      //   quantity: 2,
-      //   title: 'Egusi soup',
-      //   orderId: '#26234455',
-      //   arrival: 2,
-      //   status: 'Food on the way',
-      // },
-    ];
+  const [orders, setOrders]: any = useState([]);
+  const {makeRequest} = useRequestProcessor();
+
+  const getActiveOrders = async () => {
+    const {response, error} = await makeRequest({
+      url: '/user/order?status=active',
+      method: 'get',
+    });
+
+    if (error) {
+      console.log(error.message);
+    } else if (response) {
+      setOrders(response.data.docs);
+    }
+  };
+  useEffect(() => {
+    getActiveOrders ();
+  }, []);
   return (
     <FlatList
       data={orders}
-      contentContainerStyle={{padding:24}}
+      contentContainerStyle={{padding: 24}}
       keyExtractor={(_, index) => `orders${index}`}
-      ListEmptyComponent={<Empty text={'No active orders'}/>}
+      ListEmptyComponent={<Empty text={'No active orders'} />}
       renderItem={({item, index}) => (
         <OrderCard
           index={index}
-          image={item.image}
-          quantity={item.quantity}
-          title={item.title}
+          image={item.orderItems[0].menu.image}
+          quantity={item.orderItems.length}
+          title={item.orderItems[0].menu.name}
+          amount={item.total}
           orderId={item.orderId}
-          arrival={item.arrival}
+          arrival={30}
           status={item.status}
           primaryButtonTitle="Track order"
           secondaryButtonTitle="Cancel"

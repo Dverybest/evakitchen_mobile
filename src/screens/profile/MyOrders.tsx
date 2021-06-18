@@ -9,43 +9,38 @@ import Empty from '../../components/empty';
 
 const MyOrders = () => {
   const [activeTab, setActiveTab] = useState<number>(1);
-  const error = false;
   return (
     <View style={styles.container}>
-       <Text style={{...TextStyle.semiBold,marginLeft:25, marginVertical: 20}}>My Orders</Text>
-      <View style={{flex:1}}>
-      <View style={styles.tabContainer}>
-        <TouchableOpacity
-          style={activeTab === 1 ? styles.active : styles.inactive}
-          onPress={() => setActiveTab(1)}>
-          <Text
-            style={[
-              {...TextStyle.regular},
-              activeTab === 1 ? {color: white} : {color: orange},
-            ]}>
-            Active
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={activeTab === 2 ? styles.active : styles.inactive}
-          onPress={() => setActiveTab(2)}>
-          <Text
-            style={[
-              {...TextStyle.regular},
-              activeTab === 2 ? {color: white} : {color: orange},
-            ]}>
-            History
-          </Text>
-        </TouchableOpacity>
+      <Text style={{...TextStyle.semiBold, marginLeft: 25, marginVertical: 20}}>
+        My Orders
+      </Text>
+      <View style={{flex: 1}}>
+        <View style={styles.tabContainer}>
+          <TouchableOpacity
+            style={activeTab === 1 ? styles.active : styles.inactive}
+            onPress={() => setActiveTab(1)}>
+            <Text
+              style={[
+                {...TextStyle.regular},
+                activeTab === 1 ? {color: white} : {color: orange},
+              ]}>
+              Active
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={activeTab === 2 ? styles.active : styles.inactive}
+            onPress={() => setActiveTab(2)}>
+            <Text
+              style={[
+                {...TextStyle.regular},
+                activeTab === 2 ? {color: white} : {color: orange},
+              ]}>
+              History
+            </Text>
+          </TouchableOpacity>
+        </View>
+        {activeTab === 1 ? <ActiveOrders /> : <OrderHistory />}
       </View>
-      {error ? (
-        <Empty />
-      ) : activeTab === 1 ? (
-        <ActiveOrders />
-      ) : (
-        <OrderHistory />
-      )}
-    </View>
     </View>
   );
 };
@@ -53,7 +48,7 @@ const MyOrders = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor:white,
+    backgroundColor: white,
   },
   tabContainer: {
     alignSelf: 'center',
