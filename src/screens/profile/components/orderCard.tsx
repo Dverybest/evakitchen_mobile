@@ -1,44 +1,36 @@
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {Image, TouchableOpacity, StyleSheet, Text, View} from 'react-native';
+import {IOrder} from '../../../interfaces/order';
 import CardStyle from '../../../styles/cardStyle';
 import {black, grey, orange, white} from '../../../styles/colors';
 import {TextStyle} from '../../../styles/textStyle';
 
 interface IOrderCard {
   index?: number;
-  image: string;
-  quantity: number;
-  title: string;
-  orderId?: string;
-  arrival?: number;
-  status: string;
-  amount?: number;
-  date?: string;
-  secondaryButtonTitle: string;
-  primaryButtonTitle: string;
-  primaryButtonAction?: () => void;
-  secondaryButtonAction?: () => void;
+  order: IOrder;
+  // secondaryButtonTitle: string;
+  // primaryButtonTitle: string;
+  // primaryButtonAction?: () => void;
+  // secondaryButtonAction?: () => void;
 }
-const OrderCard = ({
-  index,
-  image,
-  quantity,
-  title,
-  orderId,
-  arrival,
-  status,
-  amount,
-  date,
-}: IOrderCard) => {
+const OrderCard = ({index, order}: IOrderCard) => {
+  const navigation = useNavigation();
   return (
-    <TouchableOpacity style={styles.card} key={index}>
+    <TouchableOpacity
+      style={styles.card}
+      key={index}
+      onPress={() => navigation.navigate('OrderDetails', {order})}>
       <View
         style={{
           flexDirection: 'row',
           justifyContent: 'space-between',
         }}>
         <View style={{flexDirection: 'row'}}>
-          <Image source={{uri:image}} style={styles.image} />
+          <Image
+            source={{uri: order.orderItems[0].menu.image}}
+            style={styles.image}
+          />
           <View style={{paddingTop: 8}}>
             <Text
               style={{
@@ -47,21 +39,18 @@ const OrderCard = ({
                 fontSize: 12,
                 marginBottom: 8,
               }}>
-              {`${quantity} items`}
+                {`#${order.orderId}`}
+             
             </Text>
-            <Text style={{...TextStyle.medium, fontSize: 18}}>{title}</Text>
+            <Text style={{...TextStyle.medium, fontSize: 18}}>
+            {`${order.orderItems.length} item${order.orderItems.length!==1?'s':''}`}
+            </Text>
           </View>
         </View>
         <View style={{paddingTop: 8}}>
-          {orderId ? (
-            <Text style={{...TextStyle.regular, color: orange, fontSize: 12}}>
-              {orderId}
+            <Text style={{...TextStyle.regular, color: orange, fontSize: 15}}>
+            {`${'\u20A6'}${order.total}`}
             </Text>
-          ) : (
-            <Text style={{...TextStyle.regular, color: orange, fontSize: 12}}>
-              {`${'\u20A6'}${amount}`}
-            </Text>
-          )}
         </View>
       </View>
       <View
@@ -72,51 +61,22 @@ const OrderCard = ({
         }}>
         <View>
           <Text style={{...TextStyle.regular, color: grey, fontSize: 12}}>
-            {arrival ? 'Estimated. Arrival' : 'Date'}
+            {'Date'}
           </Text>
-          {arrival ? (
-            <Text style={{...TextStyle.medium, color: black}}>
-              {`${arrival} `}
-              <Text style={{...TextStyle.regular, color: black, fontSize: 12}}>
-                min
-              </Text>
-            </Text>
-          ) : (
-            <Text style={{...TextStyle.regular, color: black, fontSize: 12}}>
-              {date}
-            </Text>
-          )}
+          <Text style={{...TextStyle.regular, color: black, fontSize: 12}}>
+            {new Date(order.createdAt).toDateString()}
+          </Text>
         </View>
         <View>
           <Text style={{...TextStyle.regular, color: grey, fontSize: 12}}>
             status
           </Text>
           <Text style={{...TextStyle.regular, color: black, fontSize: 12}}>
-            {status}
+            {order.status}
           </Text>
         </View>
       </View>
-      {/* <View
-        style={{
-          flex: 1,
-          marginTop: 15,
-          marginBottom: 15,
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          height: 42
-        }}>
-        <ButtonWhite
-          text={secondaryButtonTitle}
-          containerStyle={{flex: 1}}
-          onPress={secondaryButtonAction}
-        />
-        <View style={{width: 10}}></View>
-        <ButtonPrimary
-          text={primaryButtonTitle}
-          containerStyle={{flex: 1}}
-          onPress={primaryButtonAction}
-        />
-      </View> */}
+    
     </TouchableOpacity>
   );
 };
@@ -132,7 +92,7 @@ const styles = StyleSheet.create({
     height: 70,
     width: 118,
     resizeMode: 'cover',
-    marginRight:5,
+    marginRight: 5,
     borderRadius: 10,
   },
 });

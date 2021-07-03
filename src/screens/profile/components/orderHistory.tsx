@@ -1,11 +1,11 @@
 import React from 'react';
 import {FlatList} from 'react-native';
 import OrderCard from './orderCard';
-import img2 from '../../../assets/images/img2.jpg';
 import Empty from '../../../components/empty';
 import {useState} from 'react';
 import {useRequestProcessor} from '../../../api/requestProcessor';
 import {useEffect} from 'react';
+import { IOrder } from '../../../interfaces/order';
 
 const OrderHistory = () => {
   const [orders, setOrders]: any = useState([]);
@@ -37,14 +37,9 @@ const OrderHistory = () => {
         return (
           <OrderCard
             index={index}
-            image={item.orderItems[0].menu.image}
-            quantity={item.orderItems.length}
-            title={item.orderItems[0].menu.name}
-            amount={item.total}
-            date={new Date(item.createdAt).toDateString()}
-            status={item.status}
-            primaryButtonTitle="Re-order"
-            secondaryButtonTitle="Rate"
+            order={item as IOrder}
+            // primaryButtonTitle="Re-order"
+            // secondaryButtonTitle="Rate"
           />
         );
       }}

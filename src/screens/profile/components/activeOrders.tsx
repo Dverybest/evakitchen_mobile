@@ -3,6 +3,7 @@ import {FlatList} from 'react-native';
 import OrderCard from './orderCard';
 import Empty from '../../../components/empty';
 import { useRequestProcessor } from '../../../api/requestProcessor';
+import { IOrder } from '../../../interfaces/order';
 
 const ActiveOrders = () => {
   const [orders, setOrders]: any = useState([]);
@@ -32,15 +33,7 @@ const ActiveOrders = () => {
       renderItem={({item, index}) => (
         <OrderCard
           index={index}
-          image={item.orderItems[0].menu.image}
-          quantity={item.orderItems.length}
-          title={item.orderItems[0].menu.name}
-          amount={item.total}
-          orderId={item.orderId}
-          arrival={30}
-          status={item.status}
-          primaryButtonTitle="Track order"
-          secondaryButtonTitle="Cancel"
+          order={item as IOrder}
         />
       )}
     />
