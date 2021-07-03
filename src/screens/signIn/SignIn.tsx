@@ -130,15 +130,16 @@ const SignIn = (props: any) => {
                     value={props.values.password}
                     onChangeText={props.handleChange('password')}
                   />
-                  <TouchableOpacity>
+                  {/* <TouchableOpacity>
                     <Text
+                    onPress={()=>navigate('ForgetPassword')}
                       style={{
-                        color: orange,
                         ...TextStyle.regular,
+                        color: orange,
                       }}>
                       Forgot password?
                     </Text>
-                  </TouchableOpacity>
+                  </TouchableOpacity> */}
                   <ButtonPrimary
                     text="Sign In"
                     containerStyle={{marginBottom: 31, marginTop: 20}}
