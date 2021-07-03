@@ -29,7 +29,7 @@ const DeliveryDetails = () => {
     phoneNumber: '',
     address: '',
     deliveryType: 'instant Delivery',
-    shippingFee: 0,
+    shippingFee: 500,
   });
   const handleChange = (name: string, value: string) => {
     if (name === 'address' && value != '') {
@@ -80,8 +80,8 @@ const DeliveryDetails = () => {
   return (
     <View style={styles.container}>
       <Header title={'Delivery detail'} />
-      <Text style={{...TextStyle.regular, fontSize: 18, marginHorizontal: 25}}>
-        Please enter delivery details
+      <Text style={{...TextStyle.regular, fontSize: 16, marginHorizontal: 25}}>
+        Please enter delivery details to proceed to payment
       </Text>
       <ScrollView style={{flex: 1, marginHorizontal: 25}}>
       <Error text={''} visible={showError.show} setVisibility={()=>setShowError({show: false, message: ''})}/>
