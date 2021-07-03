@@ -5,6 +5,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Linking
 } from 'react-native';
 import {black, orange100, red, white} from '../../styles/colors';
 import {TextStyle} from '../../styles/textStyle';
@@ -38,14 +39,14 @@ const Account = () => {
                   title="Edit Profile"
                   onPress={() => navigate('Profile')}
                 />
-                <AccountOption
+                {/* <AccountOption
                   title="Change Password"
                   onPress={() => console.log('hello')}
                 />
                 <AccountOption
                   title="Recovery Mail"
                   onPress={() => console.log('hello')}
-                />
+                /> */}
               </View>
             </View>
             {/* <View>
@@ -76,20 +77,27 @@ const Account = () => {
                   paddingHorizontal: 18,
                   borderRadius: 1,
                 }}>
+                  <AccountOption
+                    title="About Us"
+                    onPress={() => Linking.openURL('https://eva-kitchen.herokuapp.com/about')}
+                    icon={
+                      <EvilIcons name="external-link" color={black} size={20} />
+                    }
+                  />
+                   <AccountOption
+                    title="Contact Us"
+                    onPress={() => Linking.openURL('https://eva-kitchen.herokuapp.com/contact-us')}
+                    icon={
+                      <EvilIcons name="external-link" color={black} size={20} />
+                    }
+                  />
                 <AccountOption
                   title="Terms and Conditions"
-                  onPress={() => console.log('hello')}
+                  onPress={() => Linking.openURL('https://eva-kitchen.herokuapp.com')}
                   icon={
                     <EvilIcons name="external-link" color={black} size={20} />
                   }
                 />
-                {/* <AccountOption
-                  title="Privacy Policy"
-                  onPress={() => console.log('hello')}
-                  icon={
-                    <EvilIcons name="external-link" color={black} size={20} />
-                  }
-                /> */}
               </View>
             </View>
             <TouchableOpacity

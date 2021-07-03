@@ -51,16 +51,19 @@ const DashboardStack = () => {
         inactiveTintColor: grey,
         keyboardHidesTabBar: true,
       }}>
-      <Tab.Screen name="Home" component={HomeStack} />
-      <Tab.Screen name="Orders" component={OrderStack} />
+      <Tab.Screen options={{unmountOnBlur: true}} name="Home" component={HomeStack} />
+      <Tab.Screen options={{unmountOnBlur: true}} name="My Orders" component={OrderStack} />
       <Tab.Screen
         name="Cart"
         component={CartStack}
         options={
-          cartState.items?.length ? {tabBarBadge: cartState.items.length} : {}
+         {
+           ...cartState.items?.length ? {tabBarBadge: cartState.items.length} : {},
+           unmountOnBlur: true
+         }
         }
       />
-      <Tab.Screen name="Account" component={ProfileStack} />
+      <Tab.Screen options={{unmountOnBlur: true}} name="Account" component={ProfileStack} />
     </Tab.Navigator>
   );
 };

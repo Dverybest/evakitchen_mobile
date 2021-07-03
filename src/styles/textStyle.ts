@@ -16,6 +16,7 @@ export const TextStyle = StyleSheet.create({
     },
     regular: {
         fontSize: 14,
+        color: black,
         fontFamily: 'Poppins-Regular'
     }
 });

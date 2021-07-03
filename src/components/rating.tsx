@@ -41,7 +41,7 @@ const Rating = ({rating}: IRating) => {
       {stars.map((star, index) => (
         <View key={index}>{star}</View>
       ))}
-      <Text style={styles.rating}>{rating}</Text>
+      {/* <Text style={styles.rating}>{rating}</Text> */}
     </View>
   );
 };

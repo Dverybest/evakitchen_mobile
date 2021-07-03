@@ -42,7 +42,7 @@ const Cart = () => {
               )}
             />
           </View>
-          <View style={[{margin: 25, marginTop: 65}]}>
+          <View style={[{margin: 25,}]}>
            
             <ButtonPrimary
               containerStyle={{}}
@@ -90,8 +90,8 @@ const styles = StyleSheet.create({
     backgroundColor: orange,
   },
   text: {
-    color: white,
     ...TextStyle.regular,
+    color: white,
     fontSize: 14,
   },
   priceDetails: {

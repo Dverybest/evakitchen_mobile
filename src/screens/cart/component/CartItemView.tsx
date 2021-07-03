@@ -3,12 +3,14 @@ import {View, Text} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {CartContext} from '../../../context/cartContext';
 import {ActionType} from '../../../context/enums';
-import {ICart} from '../../../interfaces/cartContext';
 import {black, orange300, white} from '../../../styles/colors';
 import {TextStyle} from '../../../styles/textStyle';
 
-interface ICartItemView extends ICart {
+interface ICartItemView {
   index: number;
+  quantity: number;
+  name: string;
+  amount: number;
 }
 
 const CartItemView = ({quantity, name, amount, index}: ICartItemView) => {
@@ -28,6 +30,7 @@ const CartItemView = ({quantity, name, amount, index}: ICartItemView) => {
       <View style={{flex: 1, marginLeft: 30}}>
         <Text style={[TextStyle.regular]}>{`${name}`}</Text>
         <Text style={[TextStyle.regular]}>{`₦${amount}`}</Text>
+        {/* <Text style={[TextStyle.regular]}>{`-₦${discount}`}</Text> */}
       </View>
       <AntDesign
         style={{backgroundColor: white, borderRadius: 15, padding: 5}}

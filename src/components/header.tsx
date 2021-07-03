@@ -3,7 +3,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import {View, Text, StyleSheet, TouchableOpacity, ViewStyle} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import { TextStyle } from '../styles/textStyle';
-import { black } from '../styles/colors';
+import { black, white } from '../styles/colors';
 
 interface IHeader{
 title?:string;
@@ -20,7 +20,7 @@ export const Header = ({
   const {goBack, canGoBack, navigate} = useNavigation();
   return (
     <View style={styles.containerStyle}>
-      <View style={[styles.backBtn,{flex:1}]}>
+      <View style={[styles.backBtn]}>
         {showGoBack && (
           <TouchableOpacity
             style={styles.backBtn}
@@ -39,7 +39,7 @@ export const Header = ({
           <Text
             style={[
               TextStyle.semiBold,
-              {textAlign: 'center', fontSize: 18, lineHeight: 27},
+              
             ]}>
             {title}
           </Text>
@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingVertical: 15,
     width: '100%',
+    backgroundColor:white
   },
   backBtn: {
     flexDirection: 'row',
@@ -64,8 +65,7 @@ const styles = StyleSheet.create({
   },
   title: {
     flex: 5,
-    alignItems: 'center',
-    justifyContent: 'center',
+    marginLeft:25
   },
   cancle: {
     flex: 1,
