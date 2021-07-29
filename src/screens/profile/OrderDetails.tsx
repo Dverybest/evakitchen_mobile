@@ -1,16 +1,14 @@
-import {useNavigation, useRoute} from '@react-navigation/core';
+import {useRoute} from '@react-navigation/core';
 import {RouteProp} from '@react-navigation/native';
-import React, {useState, useEffect} from 'react';
-import {StyleSheet, Text, View, FlatList, ScrollView} from 'react-native';
-import {useRequestProcessor} from '../../api/requestProcessor';
-import {ButtonPrimary, ButtonWhite} from '../../components/buttons';
+import React from 'react';
+import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import {Header} from '../../components/header';
 import {IOrder} from '../../interfaces/order';
 import {black, grey, orange, white} from '../../styles/colors';
 import {TextStyle} from '../../styles/textStyle';
+import numberFormatter from '../../utils/numberFormatter';
 
 const OrderDetails = () => {
-  const {makeRequest} = useRequestProcessor();
   const {
     params: {order},
   }: RouteProp<{params: {order: IOrder}}, 'params'> = useRoute();
@@ -43,38 +41,39 @@ const OrderDetails = () => {
                 borderColor: grey,
               }}></View>
 
-            {
-              order.orderItems.map((item, index) => {
-                return (
-                  <View
-                    key={index}
+            {order.orderItems.map((item, index) => {
+              return (
+                <View
+                  key={index}
+                  style={{
+                    borderStyle: 'dashed',
+                    borderBottomWidth: 0.5,
+                    borderBottomColor: grey,
+                    paddingVertical: 10,
+                  }}>
+                  <Text
                     style={{
-                      borderStyle: 'dashed',
-                      borderBottomWidth: 0.5,
-                      borderBottomColor: grey,
-                      paddingVertical: 10,
+                      ...TextStyle.medium,
+                      fontSize: 17,
+                      lineHeight: 25,
                     }}>
-                    <Text
-                      style={{
-                        ...TextStyle.medium,
-                        fontSize: 17,
-                        lineHeight: 25,
-                      }}>
-                      {item.menu?.name.trim()}
-                    </Text>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                      }}>
-                      <Text style={{color: black}}>{`${item.quantity} x ₦${
-                        item.menu?.price ?? 0
-                      }`}</Text>
-                      <Text>{`₦${item.quantity * item.menu?.price ?? 0}`}</Text>
-                    </View>
+                    {item.menu?.name.trim()}
+                  </Text>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                    }}>
+                    <Text style={{color: black}}>{`${
+                      item.quantity
+                    } x ₦${numberFormatter(item.menu?.price ?? 0)}`}</Text>
+                    <Text>{`₦${numberFormatter(
+                      item.quantity * item.menu?.price ?? 0,
+                    )}`}</Text>
                   </View>
-              )})
-            }
+                </View>
+              );
+            })}
             <View style={{marginTop: 50}}>
               <View style={styles.priceDetails}>
                 <Text style={[TextStyle.medium]}>Order ID</Text>
@@ -82,16 +81,21 @@ const OrderDetails = () => {
               </View>
               <View style={styles.priceDetails}>
                 <Text style={[TextStyle.medium]}>Sub Total</Text>
-                <Text style={[TextStyle.medium]}>{`₦${order.subTotal}`}</Text>
+                <Text style={[TextStyle.medium]}>{`₦${numberFormatter(
+                  Number(order.subTotal),
+                )}`}</Text>
               </View>
               <View style={styles.priceDetails}>
                 <Text style={[TextStyle.medium]}>Delivery fee</Text>
-                <Text
-                  style={[TextStyle.medium]}>{`₦${order.shippingFee}`}</Text>
+                <Text style={[TextStyle.medium]}>{`₦${numberFormatter(
+                  Number(order.shippingFee),
+                )}`}</Text>
               </View>
               <View style={styles.priceDetails}>
                 <Text style={[TextStyle.medium]}>Total</Text>
-                <Text style={[TextStyle.medium]}>{`₦${order.total}`}</Text>
+                <Text style={[TextStyle.medium]}>{`₦${numberFormatter(
+                  order.total,
+                )}`}</Text>
               </View>
               <View style={styles.priceDetails}>
                 <Text style={[TextStyle.medium]}>Status</Text>
@@ -103,28 +107,6 @@ const OrderDetails = () => {
               </View>
             </View>
           </View>
-          {/* <View
-        style={{
-          flex: 1,
-          marginTop: 15,
-          marginBottom: 15,
-          flexDirection: 'row',
-          marginHorizontal:20,
-          justifyContent: 'space-between',
-          height: 42
-        }}>
-        <ButtonWhite
-          text={'Rate'}
-          containerStyle={{flex: 1}}
-          onPress={()=>{}}
-        />
-        <View style={{width: 10}}></View>
-        <ButtonPrimary
-          text={'Re-order'}
-          containerStyle={{flex: 1}}
-          onPress={()=>{}}
-        />
-      </View> */}
         </View>
       </ScrollView>
     </View>

@@ -1,4 +1,4 @@
-import React, {useContext, useRef, useMemo, useState, useEffect} from 'react';
+import React, {useContext, useRef, useMemo, useState} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {Header} from '../../components/header';
 import {TextField} from '../../components/textfield';
@@ -14,12 +14,13 @@ import {CartContext} from '../../context/cartContext';
 import {useRequestProcessor} from '../../api/requestProcessor';
 import Error from '../../components/error';
 import Success from '../../components/success';
-import { ActionType } from '../../context/enums';
-import { useNavigation } from '@react-navigation/native';
+import {ActionType} from '../../context/enums';
+import {useNavigation} from '@react-navigation/native';
+import numberFormatter from '../../utils/numberFormatter';
 
 const DeliveryDetails = () => {
   const {authState} = useContext(AuthContext);
-  const {cartState,dispatchCartState} = useContext(CartContext);
+  const {cartState, dispatchCartState} = useContext(CartContext);
   const {makeRequest} = useRequestProcessor();
   const [showSuccess, setShowSuccess] = useState({show: false, message: ''});
   const [showError, setShowError] = useState({show: false, message: ''});
@@ -42,9 +43,11 @@ const DeliveryDetails = () => {
   const subTotal = useMemo(
     () =>
       cartState.items.reduce(
-        (amount: any, items: ICart) =>
-         [ Number(amount[0]) + Number(items.amount) * Number(items.quantity),Number(amount[1]) + Number(items.discount)],
-        [0,0],
+        (amount: any, items: ICart) => [
+          Number(amount[0]) + Number(items.amount) * Number(items.quantity),
+          Number(amount[1]) + Number(items.discount),
+        ],
+        [0, 0],
       ),
     [cartState.items],
   );
@@ -60,23 +63,35 @@ const DeliveryDetails = () => {
     [cartState.items],
   );
   const handleRedirect = async (data: any) => {
-    console.log({data},{...details, transactionId: data.transaction_id, orderItems});
+    console.log(
+      {data},
+      {...details, transactionId: data.transaction_id, orderItems},
+    );
     const {response, error} = await makeRequest({
       method: 'post',
       url: `/makeorder`,
-      payload: {...details,discount:subTotal[1], transactionId: data.transaction_id, orderItems},
+      payload: {
+        ...details,
+        discount: subTotal[1],
+        transactionId: data.transaction_id,
+        orderItems,
+      },
     });
     if (error) {
-      setShowError({show: false, message: error.message})
+      console.log(error,"Error");
+      
+      setShowError({show: false, message: error.message});
     } else if (response) {
-      dispatchCartState({type:ActionType.CLEAR_CART,payload:null})
+      console.log("I suceeded");
+      
+      dispatchCartState({type: ActionType.CLEAR_CART, payload: null});
       setShowSuccess({show: true, message: response.message});
     }
   };
-  const cleanUp =()=>{
+  const cleanUp = () => {
     setShowSuccess({show: false, message: ''});
     reset({index: 0, routes: [{name: 'My Orders'}]});
-  }
+  };
   return (
     <View style={styles.container}>
       <Header title={'Delivery detail'} />
@@ -84,12 +99,16 @@ const DeliveryDetails = () => {
         Please enter delivery details to proceed to payment
       </Text>
       <ScrollView style={{flex: 1, marginHorizontal: 25}}>
-      <Error text={''} visible={showError.show} setVisibility={()=>setShowError({show: false, message: ''})}/>
-      <Success
-            visible={showSuccess.show}
-            onPress={cleanUp}
-            text={showSuccess.message}
-          />
+        <Error
+          text={''}
+          visible={showError.show}
+          setVisibility={() => setShowError({show: false, message: ''})}
+        />
+        <Success
+          visible={showSuccess.show}
+          onPress={cleanUp}
+          text={showSuccess.message}
+        />
         <View>
           <View style={{flexDirection: 'row', marginTop: 15}}>
             <TextField
@@ -117,17 +136,21 @@ const DeliveryDetails = () => {
         <View style={{justifyContent: 'flex-end', flex: 1, marginTop: 50}}>
           <View style={styles.priceDetails}>
             <Text style={[TextStyle.medium]}>Sub Total</Text>
-            <Text style={[TextStyle.medium]}>{`₦${subTotal}`}</Text>
+            <Text style={[TextStyle.medium]}>{`₦${numberFormatter(
+              subTotal[0],
+            )}`}</Text>
           </View>
           <View style={styles.priceDetails}>
             <Text style={[TextStyle.medium]}>Delivery fee</Text>
-            <Text style={[TextStyle.medium]}>{`₦${details.shippingFee}`}</Text>
+            <Text style={[TextStyle.medium]}>{`₦${numberFormatter(
+              details.shippingFee,
+            )}`}</Text>
           </View>
           <View style={styles.priceDetails}>
             <Text style={[TextStyle.medium]}>Total</Text>
-            <Text style={[TextStyle.medium]}>{`₦${
-              subTotal[0] + details.shippingFee
-            }`}</Text>
+            <Text style={[TextStyle.medium]}>{`₦${numberFormatter(
+              subTotal[0] + details.shippingFee,
+            )}`}</Text>
           </View>
           <ButtonFlutterWave
             disabled={

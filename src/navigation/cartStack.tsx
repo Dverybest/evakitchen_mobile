@@ -10,7 +10,7 @@ const CartStack = () => {
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name="Home" component={Cart} />
+      <Stack.Screen name="Cart" component={Cart} />
       <Stack.Screen name="DeliveryDetails" component={DeliveryDetails} />
     </Stack.Navigator>
   );
