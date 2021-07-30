@@ -82,8 +82,6 @@ const DeliveryDetails = () => {
       
       setShowError({show: false, message: error.message});
     } else if (response) {
-      console.log("I suceeded");
-      
       dispatchCartState({type: ActionType.CLEAR_CART, payload: null});
       setShowSuccess({show: true, message: response.message});
     }
