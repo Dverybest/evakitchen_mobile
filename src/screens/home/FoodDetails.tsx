@@ -11,6 +11,7 @@ import {ActionType} from '../../context/enums';
 import {IFood} from '../../interfaces/menu';
 import {black, orange300, red, white} from '../../styles/colors';
 import {TextStyle} from '../../styles/textStyle';
+import numberFormatter from '../../utils/numberFormatter';
 
 const FoodDetails = () => {
   const {
@@ -21,7 +22,7 @@ const FoodDetails = () => {
   const {dispatchCartState} = useContext(CartContext);
 
   const discounter = (amount: string, discount: number) => {
-    if(!discount)return Number(amount);
+    if (!discount) return Number(amount);
     return Number(amount) - (Number(discount) / 100) * Number(amount);
   };
 
@@ -43,7 +44,7 @@ const FoodDetails = () => {
       payload,
     });
   };
-  
+
   return (
     <View style={styles.container}>
       <Header />
@@ -58,7 +59,14 @@ const FoodDetails = () => {
             }}>
             <Image source={{uri: food.image}} style={styles.image} />
           </View>
-          <View style={{marginBottom: 15,justifyContent:'center',alignItems:'center'}}><Rating rating={food.rating} /></View>
+          <View
+            style={{
+              marginBottom: 15,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Rating rating={food.rating} />
+          </View>
           <Text
             numberOfLines={1}
             style={[styles.description, TextStyle.semiBold]}>
@@ -77,7 +85,6 @@ const FoodDetails = () => {
               size={25}
               color={isFavorite ? red : black}
             /> */}
-            
           </View>
           <View
             style={{
@@ -115,17 +122,17 @@ const FoodDetails = () => {
                 }}
               />
             </View>
-            {food.discount? (
+            {food.discount ? (
               <Text
                 style={[
                   TextStyle.medium,
                   {textDecorationLine: 'line-through', marginHorizontal: 5},
-                ]}>{`₦${food.price}`}</Text>
-            ):null}
-            <Text style={[TextStyle.medium, {fontSize: 22}]}>{`₦${discounter(
+                ]}>{`₦${numberFormatter(Number(food.price))}`}</Text>
+            ) : null}
+            <Text style={[TextStyle.medium, {fontSize: 22}]}>{`₦${numberFormatter(discounter(
               food.price,
               food.discount,
-            )}`}</Text>
+            ))}`}</Text>
           </View>
           <ButtonPrimary
             text="Add to cart"

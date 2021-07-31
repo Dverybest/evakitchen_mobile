@@ -4,6 +4,7 @@ import {Image, Text, TouchableOpacity, View} from 'react-native';
 import {black300, white} from '../../../styles/colors';
 import {TextStyle} from '../../../styles/textStyle';
 import {IFoodListView} from '../../../interfaces/menu';
+import numberFormatter from '../../../utils/numberFormatter';
 
 const FoodListView = ({item, index}: IFoodListView) => {
   const {navigate} = useNavigation();
@@ -50,7 +51,7 @@ const FoodListView = ({item, index}: IFoodListView) => {
             style={[
               TextStyle.regular,
               {color: white, fontSize: 12},
-            ]}>{`₦${item.price}`}</Text>
+            ]}>{`₦${numberFormatter(Number(item.price))}`}</Text>
         </View>
       </View>
     </TouchableOpacity>

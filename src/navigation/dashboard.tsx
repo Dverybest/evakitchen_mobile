@@ -30,7 +30,7 @@ const DashboardStack = () => {
         tabBarIcon: ({color, size = 24}) => {
           if (route.name === 'Home') {
             return <AntDesign name={'home'} size={size} color={color} />;
-          } else if (route.name === 'Orders') {
+          } else if (route.name === 'My Orders') {
             return <Feather name={'check-circle'} size={size} color={color} />;
           } else if (route.name === 'Cart') {
             return <Ionicons name={'cart-outline'} size={size} color={color} />;

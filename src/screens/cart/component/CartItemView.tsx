@@ -5,6 +5,7 @@ import {CartContext} from '../../../context/cartContext';
 import {ActionType} from '../../../context/enums';
 import {black, orange300, white} from '../../../styles/colors';
 import {TextStyle} from '../../../styles/textStyle';
+import numberFormatter from '../../../utils/numberFormatter';
 
 interface ICartItemView {
   index: number;
@@ -29,7 +30,7 @@ const CartItemView = ({quantity, name, amount, index}: ICartItemView) => {
       <Text>{`${quantity} X`}</Text>
       <View style={{flex: 1, marginLeft: 30}}>
         <Text style={[TextStyle.regular]}>{`${name}`}</Text>
-        <Text style={[TextStyle.regular]}>{`₦${amount}`}</Text>
+        <Text style={[TextStyle.regular]}>{`₦${numberFormatter(amount)}`}</Text>
         {/* <Text style={[TextStyle.regular]}>{`-₦${discount}`}</Text> */}
       </View>
       <AntDesign
