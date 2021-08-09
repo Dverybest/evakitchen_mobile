@@ -28,7 +28,7 @@ const FoodDetails = () => {
     const cost = discounter(amount, discount);
     const payload = {
       quantity,
-      _id,
+      _id:_id,
       name,
       favourite: isFavorite,
       rating,

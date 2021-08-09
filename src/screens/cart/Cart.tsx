@@ -33,14 +33,16 @@ const Cart = () => {
             <FlatList
               data={cartState.items}
               keyExtractor={(_, index) => `items${index}`}
-              renderItem={({item, index}) => (
-                <CartItemView
-                  index={index}
-                  quantity={item.quantity}
-                  name={item.name}
-                  amount={item.amount}
-                />
-              )}
+              renderItem={({item, index}) => {
+                return (
+                  <CartItemView
+                    index={index}
+                    quantity={item.quantity}
+                    name={item.name}
+                    amount={item.amount}
+                  />
+                )
+              }}
             />
           </View>
           <View style={[{margin: 25,}]}>

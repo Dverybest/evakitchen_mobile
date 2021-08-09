@@ -117,8 +117,8 @@ export const ButtonFlutterWave = ({
         onRedirect={handleRedirect}
         options={{
           tx_ref: transactionReference ?? '',
-          authorization: 'FLWPUBK_TEST-10ed23d9dd726640e569e3b6c54944f1-X',
-         // authorization: 'FLWPUBK-3c5ee58870fd0b2f7ccd603b36ad0a99-X',
+         // authorization: 'FLWPUBK_TEST-10ed23d9dd726640e569e3b6c54944f1-X',
+          authorization: 'FLWPUBK-3c5ee58870fd0b2f7ccd603b36ad0a99-X',
           customer: {
             email: email ?? '',
           },

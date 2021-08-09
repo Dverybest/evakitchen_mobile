@@ -4,6 +4,7 @@ import {View, Text, StyleSheet, TouchableOpacity, ViewStyle} from 'react-native'
 import {useNavigation} from '@react-navigation/native';
 import { TextStyle } from '../styles/textStyle';
 import { black, white } from '../styles/colors';
+import { heightConverter, widthConverter } from '../utils/pxToDpConvert';
 
 interface IHeader{
 title?:string;
@@ -31,7 +32,7 @@ export const Header = ({
                 ? goBack()
                 : navigate('Home')
             }>
-            <AntDesign color={black} size={18} name="left" />
+            <AntDesign color={black} size={heightConverter(18)} name="left" />
           </TouchableOpacity>
         )}
       </View>
@@ -53,19 +54,19 @@ export const Header = ({
 const styles = StyleSheet.create({
   containerStyle: {
     flexDirection: 'row',
-    paddingVertical: 15,
+    paddingVertical: heightConverter(15),
     width: '100%',
     backgroundColor:white
   },
   backBtn: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginLeft: 5,
+    marginLeft: widthConverter(5),
     justifyContent: 'flex-start',
   },
   title: {
     flex: 5,
-    marginLeft:25
+    marginLeft:widthConverter(25)
   },
   cancle: {
     flex: 1,
