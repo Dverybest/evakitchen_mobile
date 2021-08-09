@@ -189,7 +189,7 @@ const HomeScreen = () => {
             horizontal={true}
             keyExtractor={(_, index) => `special${index}`}
             renderItem={({item, index}) => (
-              <FoodListView item={item} index={index} isSpecial={true}/>
+              <FoodListView item={item} index={index}/>
             )}
           />
         </View>
