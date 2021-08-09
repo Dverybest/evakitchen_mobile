@@ -19,6 +19,7 @@ import {useRequestProcessor} from '../../api/requestProcessor';
 import {HomeScreenContext} from '../../context/homeScreenContext';
 import {ActionType} from '../../context/enums';
 import banner from '../../assets/images/banner.png';
+import { shuffleArray } from '../../utils/shuffleArray';
 
 const HomeScreen = () => {
   const {navigate} = useNavigation();
@@ -183,12 +184,12 @@ const HomeScreen = () => {
             />
           </View>
           <FlatList
-            data={homeScreenState.special}
+            data={shuffleArray(homeScreenState?.special??[])}
             showsHorizontalScrollIndicator={false}
             horizontal={true}
             keyExtractor={(_, index) => `special${index}`}
             renderItem={({item, index}) => (
-              <FoodListView item={item} index={index} />
+              <FoodListView item={item} index={index} isSpecial={true}/>
             )}
           />
         </View>
