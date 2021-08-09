@@ -1,15 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 import FoodCard from '../../../components/foodCard';
 import SearchBar from '../../../components/searchBar';
-import {black, white} from '../../../styles/colors';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import {white} from '../../../styles/colors';
 import {RouteProp, useRoute} from '@react-navigation/core';
 import {useRequestProcessor} from '../../../api/requestProcessor';
 import {IFood} from '../../../interfaces/menu';
-import {useNavigation} from '@react-navigation/native';
 import Empty from '../../../components/empty';
-import {TextStyle} from '../../../styles/textStyle';
 import { Header } from '../../../components/header';
 
 const CategoryDetails = () => {
@@ -22,7 +19,6 @@ const CategoryDetails = () => {
   const {makeRequest} = useRequestProcessor();
   const [searchText, setSearchText] = useState<string>(search ?? '');
   const [foods, setFoods] = useState<IFood[]>([]);
-  const {goBack} = useNavigation();
 
   const generateQuery = (url: string) => {
     return searchText ? `${url}?search=${searchText}` : url;
@@ -76,14 +72,15 @@ const CategoryDetails = () => {
         <FlatList
           data={foods}
           keyExtractor={(_, index) => `favourites${index}`}
-          contentContainerStyle={{paddingBottom: 100}}
+          contentContainerStyle={{paddingBottom: 200}}
           ListEmptyComponent={<Empty text={'No item in this menu category'} />}
           renderItem={({item}) => (
             <FoodCard
               image={item.image}
+              _id={item._id}
               rating={item.rating}
               description={item.description}
-              // setFavourite={item.setFavourite}
+              discount={item.discount}
               name={item.name}
               price={item.price}
             />

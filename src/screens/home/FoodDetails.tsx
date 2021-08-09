@@ -11,6 +11,7 @@ import {ActionType} from '../../context/enums';
 import {IFood} from '../../interfaces/menu';
 import {black, orange300, red, white} from '../../styles/colors';
 import {TextStyle} from '../../styles/textStyle';
+import { discounter } from '../../utils/discounter';
 import numberFormatter from '../../utils/numberFormatter';
 
 const FoodDetails = () => {
@@ -20,11 +21,6 @@ const FoodDetails = () => {
   const [quantity, setQuantity] = useState(1);
   const [isFavorite, setIsFavorite] = useState(false);
   const {dispatchCartState} = useContext(CartContext);
-
-  const discounter = (amount: string, discount: number) => {
-    if (!discount) return Number(amount);
-    return Number(amount) - (Number(discount) / 100) * Number(amount);
-  };
 
   const addToCart = () => {
     const {name, rating, price: amount, description, _id, discount} = food;

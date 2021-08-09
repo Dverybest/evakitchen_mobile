@@ -1,16 +1,17 @@
 import React from 'react';
-import {useNavigation} from '@react-navigation/core';
-import {Image, Text, TouchableOpacity, View} from 'react-native';
-import {black300, white} from '../../../styles/colors';
-import {TextStyle} from '../../../styles/textStyle';
-import {IFoodListView} from '../../../interfaces/menu';
+import { useNavigation } from '@react-navigation/core';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { black300, white } from '../../../styles/colors';
+import { TextStyle } from '../../../styles/textStyle';
+import { IFoodListView } from '../../../interfaces/menu';
 import numberFormatter from '../../../utils/numberFormatter';
+import { discounter } from '../../../utils/discounter';
 
-const FoodListView = ({item, index}: IFoodListView) => {
-  const {navigate} = useNavigation();
+const FoodListView = ({ item, index}: IFoodListView) => {
+  const { navigate } = useNavigation();
   return (
     <TouchableOpacity
-      onPress={() => navigate('FoodDetails', {food: item})}
+      onPress={() => navigate('FoodDetails', { food: item })}
       style={{
         marginRight: 13,
         height: 166,
@@ -25,7 +26,7 @@ const FoodListView = ({item, index}: IFoodListView) => {
           resizeMode: 'cover',
           borderRadius: 8,
         }}
-        source={{uri: item.image}}
+        source={{ uri: item.image }}
       />
       <View
         style={{
@@ -38,20 +39,29 @@ const FoodListView = ({item, index}: IFoodListView) => {
           position: 'absolute',
           paddingBottom: 22,
         }}>
-        <Text numberOfLines={1} style={[TextStyle.medium, {color: white}]}>
+        <Text numberOfLines={1} style={[TextStyle.medium, { color: white, }]}>
           {item.name}
         </Text>
         <Text
           numberOfLines={2}
-          style={[TextStyle.regular, {color: white, fontSize: 8}]}>
+          style={[TextStyle.regular, { color: white, fontSize: 8 ,marginBottom:10}]}>
           {item.description}
         </Text>
-        <View>
+        <View style={{ flexDirection: 'row' }}>
+
+          {item.discount ? (
+            <Text
+              style={[
+                TextStyle.medium,
+                { textDecorationLine: 'line-through', marginHorizontal: 5, color: white, fontSize: 12 },
+              ]}>{`₦${numberFormatter(Number(item.price))}`}</Text>
+          ) : null}
+
           <Text
             style={[
               TextStyle.regular,
-              {color: white, fontSize: 12},
-            ]}>{`₦${numberFormatter(Number(item.price))}`}</Text>
+              { color: white, fontSize: 15 },
+            ]}>{`₦${numberFormatter(discounter(item.price,item.discount))}`}</Text>
         </View>
       </View>
     </TouchableOpacity>
