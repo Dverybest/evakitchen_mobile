@@ -71,9 +71,13 @@ const SignIn = (props: any) => {
     let uri = decodeURI(url);
     if (!/(?=login)/.test(uri)) return;
 
-    const result = JSON.parse(
-      decodeQueryParams(uri.replace('eva-kitchen://login?', '')).data,
-    );
+    uri = uri.replace('eva-kitchen://login?', '');
+
+    if(/#$/.test(uri)){
+      uri = uri.replace(/#$/,'')
+    }
+
+    const result = JSON.parse(decodeQueryParams(uri).data);
     dispatchAuthState({
       type: ActionType.TOKEN,
       payload: result.token,
