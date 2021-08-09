@@ -1,11 +1,12 @@
-import React, {useContext} from 'react';
-import {View, Text} from 'react-native';
+import React, { useContext } from 'react';
+import { View, Text } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {CartContext} from '../../../context/cartContext';
-import {ActionType} from '../../../context/enums';
-import {black, orange300, white} from '../../../styles/colors';
-import {TextStyle} from '../../../styles/textStyle';
+import { CartContext } from '../../../context/cartContext';
+import { ActionType } from '../../../context/enums';
+import { black, orange300, white } from '../../../styles/colors';
+import { TextStyle } from '../../../styles/textStyle';
 import numberFormatter from '../../../utils/numberFormatter';
+import { heightConverter, widthConverter } from '../../../utils/pxToDpConvert';
 
 interface ICartItemView {
   index: number;
@@ -14,32 +15,33 @@ interface ICartItemView {
   amount: number;
 }
 
-const CartItemView = ({quantity, name, amount, index}: ICartItemView) => {
-  const {dispatchCartState} = useContext(CartContext);
+const CartItemView = ({ quantity, name, amount, index }: ICartItemView) => {
+  const { dispatchCartState } = useContext(CartContext);
   return (
     <View
       style={{
         backgroundColor: orange300,
-        padding: 17,
+        paddingHorizontal: widthConverter(25),
+        paddingVertical: heightConverter(25),
         borderRadius: 8,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: 15,
+        marginBottom: heightConverter(15),
       }}>
       <Text>{`${quantity} X`}</Text>
-      <View style={{flex: 1, marginLeft: 30}}>
+      <View style={{ flex: 1, marginLeft: widthConverter(30) }}>
         <Text style={[TextStyle.regular]}>{`${name}`}</Text>
         <Text style={[TextStyle.regular]}>{`₦${numberFormatter(amount)}`}</Text>
         {/* <Text style={[TextStyle.regular]}>{`-₦${discount}`}</Text> */}
       </View>
       <AntDesign
-        style={{backgroundColor: white, borderRadius: 15, padding: 5}}
+        style={{ backgroundColor: white, borderRadius: 15, padding: 5 }}
         name={'close'}
-        size={25}
+        size={heightConverter(25)}
         color={black}
         onPress={() =>
-          dispatchCartState({type: ActionType.REMOVE_FROM_CART, payload: index})
+          dispatchCartState({ type: ActionType.REMOVE_FROM_CART, payload: index })
         }
       />
     </View>

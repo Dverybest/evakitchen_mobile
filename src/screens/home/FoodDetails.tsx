@@ -13,6 +13,7 @@ import {black, orange300, red, white} from '../../styles/colors';
 import {TextStyle} from '../../styles/textStyle';
 import { discounter } from '../../utils/discounter';
 import numberFormatter from '../../utils/numberFormatter';
+import { heightConverter, normalize, widthConverter } from '../../utils/pxToDpConvert';
 
 const FoodDetails = () => {
   const {
@@ -46,18 +47,12 @@ const FoodDetails = () => {
       <Header />
       <ScrollView>
         <View>
-          <View
-            style={{
-              height: 250,
-              overflow: 'hidden',
-              flexDirection: 'row',
-              marginBottom: 15,
-            }}>
+          
             <Image source={{uri: food.image}} style={styles.image} />
-          </View>
+        
           <View
             style={{
-              marginBottom: 15,
+              marginBottom: heightConverter(15),
               justifyContent: 'center',
               alignItems: 'center',
             }}>
@@ -72,7 +67,8 @@ const FoodDetails = () => {
           <View
             style={{
               flexDirection: 'row',
-              margin: 20,
+              marginHorizontal: widthConverter(20),
+              marginVertical: heightConverter(20),
               justifyContent: 'space-between',
             }}>
             {/* <AntDesign
@@ -85,30 +81,31 @@ const FoodDetails = () => {
           <View
             style={{
               flexDirection: 'row',
-              marginHorizontal: 25,
+              marginHorizontal: widthConverter(25),
               justifyContent: 'space-between',
               alignItems: 'center',
             }}>
             <View style={{flexDirection: 'row', alignItems: 'center', flex: 1}}>
               <AntDesign
                 name={'minus'}
-                size={25}
+                size={heightConverter(25)}
                 onPress={() =>
                   setQuantity(prev => (prev > 1 ? prev - 1 : prev))
                 }
                 color={black}
                 style={{
                   backgroundColor: orange300,
-                  padding: 7,
+                  paddingHorizontal:widthConverter(8),
+                  paddingVertical:heightConverter(8),
                   borderRadius: 8,
                 }}
               />
-              <Text style={[TextStyle.medium, {marginHorizontal: 25}]}>
+              <Text style={[TextStyle.medium, {marginHorizontal: widthConverter(25)}]}>
                 {quantity}
               </Text>
               <AntDesign
                 name={'plus'}
-                size={25}
+                size={heightConverter(25)}
                 color={black}
                 onPress={() => setQuantity(prev => prev + 1)}
                 style={{
@@ -122,17 +119,17 @@ const FoodDetails = () => {
               <Text
                 style={[
                   TextStyle.medium,
-                  {textDecorationLine: 'line-through', marginHorizontal: 5},
+                  {textDecorationLine: 'line-through', marginHorizontal: widthConverter(5)},
                 ]}>{`₦${numberFormatter(Number(food.price))}`}</Text>
             ) : null}
-            <Text style={[TextStyle.medium, {fontSize: 22}]}>{`₦${numberFormatter(discounter(
+            <Text style={[TextStyle.medium, {fontSize: normalize(22),lineHeight:normalize(40)}]}>{`₦${numberFormatter(discounter(
               food.price,
               food.discount,
             ))}`}</Text>
           </View>
           <ButtonPrimary
             text="Add to cart"
-            containerStyle={{margin: 25}}
+            containerStyle={{marginHorizontal:widthConverter(25),marginVertical:heightConverter(35) }}
             onPress={addToCart}
           />
         </View>
@@ -147,19 +144,22 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    marginHorizontal: 24,
-    resizeMode: 'contain',
+    height: heightConverter(253.9),
+    width:widthConverter(330),
+    marginBottom: heightConverter(15),
+    marginHorizontal: widthConverter(24),
+    resizeMode:'contain'
   },
   description: {
-    marginHorizontal: 35,
+    marginHorizontal: widthConverter(35),
     textAlign: 'left',
     ...TextStyle.regular,
   },
   rating: {
     ...TextStyle.regular,
     marginLeft: 9,
-    fontSize: 16,
-    lineHeight: 24,
+    fontSize: normalize(16),
+    lineHeight: normalize(24),
     textAlign: 'center',
   },
 });

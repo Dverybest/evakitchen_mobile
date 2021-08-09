@@ -11,6 +11,7 @@ import {
 import {grey, red, black, grey100} from '../styles/colors';
 import {TextStyle as MyTextStyle} from '../styles/textStyle';
 import Feather from 'react-native-vector-icons/Feather';
+import { heightConverter, normalize, widthConverter } from '../utils/pxToDpConvert';
 
 interface ITextFieldProps {
   password?: boolean;
@@ -30,9 +31,9 @@ interface IStyles {
 }
 const styles = StyleSheet.create<IStyles>({
   textInputContainer: {
-    height: 50,
+    height: heightConverter(50),
     borderRadius: 4,
-    paddingHorizontal: 15,
+    paddingHorizontal: widthConverter(15),
     borderWidth: 1,
     justifyContent: 'center',
   },
@@ -67,7 +68,7 @@ export const TextField = ({
           styles.textInputContainer,
           colorStyle,
           containerStyle,
-          errorMessage ? {marginBottom: 6} : {marginBottom: 16},
+          errorMessage ? {marginBottom: heightConverter(6)} : {marginBottom: heightConverter(16)},
         ]}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <TextInput
@@ -85,7 +86,7 @@ export const TextField = ({
             <Feather
               name={show ? 'eye' : 'eye-off'}
               color={black}
-              size={22}
+              size={heightConverter(22)}
               onPress={() => setShow(!show)}
             />
           )}
@@ -95,10 +96,10 @@ export const TextField = ({
         <Text
           style={{
             ...MyTextStyle.regular,
-            lineHeight: 18,
-            marginBottom: 15,
+            lineHeight: normalize(18),
+            marginBottom: heightConverter(15),
             color: red,
-            fontSize: 10,
+            fontSize: normalize(10),
           }}>
           {errorMessage}
         </Text>

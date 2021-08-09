@@ -6,6 +6,7 @@ import Empty from '../../components/empty';
 import {CartContext} from '../../context/cartContext';
 import {orange, white} from '../../styles/colors';
 import {TextStyle} from '../../styles/textStyle';
+import { heightConverter, normalize, widthConverter } from '../../utils/pxToDpConvert';
 import CartItemView from './component/CartItemView';
 
 const Cart = () => {
@@ -13,7 +14,7 @@ const Cart = () => {
   const {navigate} = useNavigation();
   return (
     <View style={styles.container}>
-       <Text style={{...TextStyle.semiBold,marginLeft:25, marginVertical: 20}}>Cart</Text>
+       <Text style={{...TextStyle.semiBold,marginLeft:widthConverter(25), marginVertical: heightConverter(20)}}>Cart</Text>
       {cartState.items.length === 0 ? (
         <View style={{flex: 1}}>
           <Empty
@@ -21,14 +22,14 @@ const Cart = () => {
             containerStyle={{flex: 1, justifyContent: 'center'}}
           />
           <ButtonPrimary
-            containerStyle={{margin: 25}}
+            containerStyle={{marginHorizontal: widthConverter(25),marginVertical:heightConverter(25)}}
             text={'Continue shopping'}
             onPress={() => navigate('Home')}
           />
         </View>
       ) : (
         <View style={styles.container}>
-          <View style={[styles.container, {marginHorizontal: 25}]}>
+          <View style={[styles.container, {marginHorizontal: widthConverter(25)}]}>
             <FlatList
               data={cartState.items}
               keyExtractor={(_, index) => `items${index}`}
@@ -65,24 +66,24 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    marginHorizontal: 24,
+    marginHorizontal: widthConverter(24),
     resizeMode: 'contain',
-    height: 255,
+    height: heightConverter(255),
   },
   description: {
-    marginHorizontal: 35,
+    marginHorizontal: widthConverter(35),
     textAlign: 'left',
     ...TextStyle.regular,
   },
   rating: {
     ...TextStyle.regular,
-    marginLeft: 9,
-    fontSize: 16,
-    lineHeight: 24,
+    marginLeft: widthConverter(9),
+    fontSize: normalize(16),
+    lineHeight: normalize(24),
     textAlign: 'center',
   },
   paymentButton: {
-    height: 50,
+    height: heightConverter(50),
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 25,
@@ -92,12 +93,12 @@ const styles = StyleSheet.create({
   text: {
     ...TextStyle.regular,
     color: white,
-    fontSize: 14,
+    fontSize: normalize(14),
   },
   priceDetails: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 15,
+    marginBottom:heightConverter(15),
   },
 });
 export default Cart;

@@ -13,6 +13,7 @@ import {black, grey100, orange, white} from '../styles/colors';
 import {TextStyle as MyTextStyle} from '../styles/textStyle';
 import googleIcon from '../assets/images/google.png';
 import {PayWithFlutterwave} from 'flutterwave-react-native';
+import { heightConverter, normalize, widthConverter } from '../utils/pxToDpConvert';
 interface IButtonProps {
   text: string;
   containerStyle: ViewStyle;
@@ -35,17 +36,17 @@ interface IStyles {
 
 const styles = StyleSheet.create<IStyles>({
   button: {
-    height: 50,
+    height: heightConverter(50),
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 25,
+    borderRadius: heightConverter(25)>widthConverter(25)?widthConverter(25):heightConverter(25),
     flexDirection: 'row',
     backgroundColor: orange,
   },
   text: {
     ...MyTextStyle.regular,
     color: white,
-    fontSize: 14,
+    fontSize: normalize(14),
   },
   buttonWhite: {
     backgroundColor: white,
@@ -53,8 +54,8 @@ const styles = StyleSheet.create<IStyles>({
     borderWidth: 1,
   },
   image: {
-    height: 20,
-    width: 20,
+    height: heightConverter(20)>widthConverter(20)?widthConverter(20):heightConverter(20),
+    width: heightConverter(20)>widthConverter(20)?widthConverter(20):heightConverter(20),
     resizeMode: 'contain',
   },
 });
@@ -116,7 +117,8 @@ export const ButtonFlutterWave = ({
         onRedirect={handleRedirect}
         options={{
           tx_ref: transactionReference ?? '',
-          authorization: 'FLWPUBK-3c5ee58870fd0b2f7ccd603b36ad0a99-X',
+          authorization: 'FLWPUBK_TEST-10ed23d9dd726640e569e3b6c54944f1-X',
+         // authorization: 'FLWPUBK-3c5ee58870fd0b2f7ccd603b36ad0a99-X',
           customer: {
             email: email ?? '',
           },

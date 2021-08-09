@@ -17,6 +17,7 @@ import Success from '../../components/success';
 import {ActionType} from '../../context/enums';
 import {useNavigation} from '@react-navigation/native';
 import numberFormatter from '../../utils/numberFormatter';
+import { heightConverter, normalize, widthConverter } from '../../utils/pxToDpConvert';
 
 const DeliveryDetails = () => {
   const {authState} = useContext(AuthContext);
@@ -93,10 +94,10 @@ const DeliveryDetails = () => {
   return (
     <View style={styles.container}>
       <Header title={'Delivery detail'} />
-      <Text style={{...TextStyle.regular, fontSize: 16, marginHorizontal: 25}}>
+      <Text style={{...TextStyle.regular, fontSize: normalize(16), marginHorizontal: widthConverter(25)}}>
         Please enter delivery details to proceed to payment
       </Text>
-      <ScrollView style={{flex: 1, marginHorizontal: 25}}>
+      <ScrollView style={{flex: 1, marginHorizontal: widthConverter(25)}}>
         <Error
           text={''}
           visible={showError.show}
@@ -108,7 +109,7 @@ const DeliveryDetails = () => {
           text={showSuccess.message}
         />
         <View>
-          <View style={{flexDirection: 'row', marginTop: 15}}>
+          <View style={{flexDirection: 'row', marginTop: heightConverter(15)}}>
             <TextField
               keyboardType="default"
               onChangeText={text => handleChange('fullName', text)}
@@ -116,7 +117,7 @@ const DeliveryDetails = () => {
               value={details.fullName}
               mainContainerStyle={{flex: 1}}
             />
-            <View style={{width: 10}}></View>
+            <View style={{width: widthConverter(10)}}></View>
             <TextField
               onChangeText={text => handleChange('phoneNumber', text)}
               keyboardType="number-pad"
@@ -131,7 +132,7 @@ const DeliveryDetails = () => {
             containerStyle={{}}
           />
         </View>
-        <View style={{justifyContent: 'flex-end', flex: 1, marginTop: 50}}>
+        <View style={{justifyContent: 'flex-end', flex: 1, marginTop: widthConverter(50)}}>
           <View style={styles.priceDetails}>
             <Text style={[TextStyle.medium]}>Sub Total</Text>
             <Text style={[TextStyle.medium]}>{`₦${numberFormatter(
@@ -163,7 +164,7 @@ const DeliveryDetails = () => {
             handleRedirect={handleRedirect}
             amount={subTotal[0] + details.shippingFee}
             containerStyle={{
-              marginVertical: 20,
+              marginVertical: heightConverter(20),
             }}
             text="Continue to make payment"
           />
@@ -180,7 +181,7 @@ const styles = StyleSheet.create({
   priceDetails: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 15,
+    marginBottom: heightConverter(15),
   },
 });
 export default DeliveryDetails;

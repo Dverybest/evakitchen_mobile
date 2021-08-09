@@ -3,15 +3,15 @@ import {StyleSheet, Text, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {grey, grey100, orange, white} from '../../styles/colors';
 import {TextStyle} from '../../styles/textStyle';
+import { heightConverter, widthConverter } from '../../utils/pxToDpConvert';
 import ActiveOrders from './components/activeOrders';
 import OrderHistory from './components/orderHistory';
-import Empty from '../../components/empty';
 
 const MyOrders = () => {
   const [activeTab, setActiveTab] = useState<number>(1);
   return (
     <View style={styles.container}>
-      <Text style={{...TextStyle.semiBold, marginLeft: 25, marginVertical: 20}}>
+      <Text style={{...TextStyle.semiBold, marginLeft: widthConverter(25), marginVertical: heightConverter(20)}}>
         My Orders
       </Text>
       <View style={{flex: 1}}>
@@ -59,16 +59,16 @@ const styles = StyleSheet.create({
   },
   active: {
     backgroundColor: orange,
-    height: 50,
-    width: 160.68,
+    height: heightConverter(50),
+    width: widthConverter(160.68),
     borderRadius: 25,
     alignItems: 'center',
     justifyContent: 'center',
     elevation: 10,
   },
   inactive: {
-    height: 50,
-    width: 160.68,
+    height: heightConverter(50),
+    width: widthConverter(160.68),
     borderRadius: 25,
     alignItems: 'center',
     justifyContent: 'center',

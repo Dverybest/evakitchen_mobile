@@ -8,6 +8,7 @@ import {useRequestProcessor} from '../../../api/requestProcessor';
 import {IFood} from '../../../interfaces/menu';
 import Empty from '../../../components/empty';
 import { Header } from '../../../components/header';
+import { heightConverter, widthConverter } from '../../../utils/pxToDpConvert';
 
 const CategoryDetails = () => {
   const {
@@ -61,7 +62,7 @@ const CategoryDetails = () => {
       <View style={styles.container}>
         <SearchBar
           containerStyle={{
-            marginBottom: 25,
+            marginBottom: heightConverter(25),
           }}
           onPress={fetchFoods}
           value={searchText}
@@ -72,7 +73,7 @@ const CategoryDetails = () => {
         <FlatList
           data={foods}
           keyExtractor={(_, index) => `favourites${index}`}
-          contentContainerStyle={{paddingBottom: 200}}
+          contentContainerStyle={{paddingBottom: heightConverter(200)}}
           ListEmptyComponent={<Empty text={'No item in this menu category'} />}
           renderItem={({item}) => (
             <FoodCard
@@ -93,8 +94,8 @@ const CategoryDetails = () => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 20,
-    marginBottom: 20,
+    paddingHorizontal: widthConverter(20),
+    marginBottom: heightConverter(20),
   },
 });
 export default CategoryDetails;

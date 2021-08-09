@@ -6,6 +6,7 @@ import { TextStyle } from '../../../styles/textStyle';
 import { IFoodListView } from '../../../interfaces/menu';
 import numberFormatter from '../../../utils/numberFormatter';
 import { discounter } from '../../../utils/discounter';
+import { heightConverter, normalize, widthConverter } from '../../../utils/pxToDpConvert';
 
 const FoodListView = ({ item, index}: IFoodListView) => {
   const { navigate } = useNavigation();
@@ -13,16 +14,16 @@ const FoodListView = ({ item, index}: IFoodListView) => {
     <TouchableOpacity
       onPress={() => navigate('FoodDetails', { food: item })}
       style={{
-        marginRight: 13,
-        height: 166,
+        marginRight: widthConverter(13),
+        height: heightConverter(166),
         borderRadius: 8,
-        width: 151,
+        width: widthConverter(151),
       }}
       key={index}>
       <Image
         style={{
-          height: 166,
-          width: 151,
+          height: heightConverter(166),
+          width: widthConverter(151),
           resizeMode: 'cover',
           borderRadius: 8,
         }}
@@ -30,21 +31,21 @@ const FoodListView = ({ item, index}: IFoodListView) => {
       />
       <View
         style={{
-          height: 166,
+          height: heightConverter(166),
           borderRadius: 8,
-          width: 151,
-          paddingHorizontal: 10,
+          width: widthConverter(151),
+          paddingHorizontal: widthConverter(10),
           justifyContent: 'flex-end',
           backgroundColor: black300,
           position: 'absolute',
-          paddingBottom: 22,
+          paddingBottom: heightConverter(22),
         }}>
         <Text numberOfLines={1} style={[TextStyle.medium, { color: white, }]}>
           {item.name}
         </Text>
         <Text
           numberOfLines={2}
-          style={[TextStyle.regular, { color: white, fontSize: 8 ,marginBottom:10}]}>
+          style={[TextStyle.regular, { color: white, fontSize: normalize(10) ,marginBottom:heightConverter(10)}]}>
           {item.description}
         </Text>
         <View style={{ flexDirection: 'row' }}>
@@ -53,14 +54,14 @@ const FoodListView = ({ item, index}: IFoodListView) => {
             <Text
               style={[
                 TextStyle.medium,
-                { textDecorationLine: 'line-through', marginHorizontal: 5, color: white, fontSize: 12 },
+                { textDecorationLine: 'line-through', marginHorizontal: widthConverter(5), color: white, fontSize: normalize(12) },
               ]}>{`₦${numberFormatter(Number(item.price))}`}</Text>
           ) : null}
 
           <Text
             style={[
               TextStyle.regular,
-              { color: white, fontSize: 15 },
+              { color: white, fontSize: normalize(15) },
             ]}>{`₦${numberFormatter(discounter(item.price,item.discount))}`}</Text>
         </View>
       </View>

@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import {grey100, orange, white} from '../styles/colors';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import { heightConverter, widthConverter } from '../utils/pxToDpConvert';
 
 interface ISearchBar {
   containerStyle?: ViewStyle;
@@ -33,7 +34,7 @@ const SearchBar = ({
         placeholder={placeholder}
       />
       <TouchableOpacity onPress={onPress} style={styles.buttonContainer}>
-        <AntDesign name={'search1'} size={24} color={white} />
+        <AntDesign name={'search1'} size={heightConverter(24)} color={white} />
       </TouchableOpacity>
     </View>
   );
@@ -42,21 +43,21 @@ const SearchBar = ({
 const styles = StyleSheet.create({
   container: {
     backgroundColor: grey100,
-    height: 50,
-    borderRadius: 25,
+    height: heightConverter(50),
+    borderRadius:  heightConverter(25)>widthConverter(25)?widthConverter(25):heightConverter(25),
     flexDirection: 'row',
   },
   textInput: {
     flex: 1,
-    marginLeft: 20,
+    marginLeft: widthConverter(20),
   },
   buttonContainer: {
     backgroundColor: orange,
-    height: 50,
-    borderRadius: 25,
+    height: heightConverter(50),
+    borderRadius:  heightConverter(25)>widthConverter(25)?widthConverter(25):heightConverter(25),
     justifyContent: 'center',
-    paddingVertical: 13,
-    paddingHorizontal:26
+    paddingVertical: heightConverter(13),
+    paddingHorizontal:widthConverter(26)
   },
 });
 export default SearchBar;

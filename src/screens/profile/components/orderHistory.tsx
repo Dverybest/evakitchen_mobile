@@ -6,6 +6,7 @@ import {useState} from 'react';
 import {useRequestProcessor} from '../../../api/requestProcessor';
 import {useEffect} from 'react';
 import { IOrder } from '../../../interfaces/order';
+import { heightConverter, widthConverter } from '../../../utils/pxToDpConvert';
 
 const OrderHistory = () => {
   const [orders, setOrders]: any = useState([]);
@@ -30,7 +31,7 @@ const OrderHistory = () => {
     <FlatList
       data={orders}
       keyExtractor={(_, index) => `history${index}`}
-      contentContainerStyle={{padding: 24}}
+      contentContainerStyle={{paddingVertical: heightConverter(24),paddingHorizontal:widthConverter(24)}}
       ListEmptyComponent={<Empty text={'No orders yet'} />}
       renderItem={({item, index}) => {
         // console.log(item);

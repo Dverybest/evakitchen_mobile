@@ -15,12 +15,14 @@ import {userSchema} from './userSchema';
 import {useRequestProcessor} from '../../api/requestProcessor';
 import {ActionType} from '../../context/enums';
 import Success from '../../components/success';
+import { heightConverter, normalize, widthConverter } from '../../utils/pxToDpConvert';
 
 const Profile = () => {
   const {authState, dispatchAuthState} = useContext(AuthContext);
   const {makeRequest} = useRequestProcessor();
   const [showUploadOption, setShowUploadOption] = useState(false);
   const [showSuccess, setShowSuccess] = useState({show: false, message: ''});
+  
   const handleUpload = async (photo: any, setSelected: any) => {
     const payload = new FormData();
     payload.append('image', {
@@ -81,7 +83,7 @@ const Profile = () => {
             setShow={setShowUploadOption}
             handleUpload={handleUpload}
           />
-          <View style={{alignItems: 'center', marginBottom: 32}}>
+          <View style={{alignItems: 'center', marginBottom: heightConverter(32)}}>
             <View style={styles.profileImageContainer}>
               {authState.user?.image ? (
                 <Image
@@ -92,14 +94,14 @@ const Profile = () => {
                 <View
                   style={{
                     backgroundColor: orange300,
-                    height: 156,
-                    width: 156,
-                    borderRadius: 78,
+                    height:heightConverter(156)>widthConverter(156)?widthConverter(156):heightConverter(156),
+                    width: heightConverter(156)>widthConverter(156)?widthConverter(156):heightConverter(156),
+                    borderRadius: heightConverter(100)>widthConverter(100)?widthConverter(100):heightConverter(100),
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
                   <Text
-                    style={{...TextStyle.semiBold, fontSize: 40, color: white}}>
+                    style={{...TextStyle.semiBold, fontSize: normalize(40), color: white}}>
                     {authState.user
                       ? authState.user?.fullName.split(' ')[0].split('')[0] +
                         authState.user?.fullName.split(' ')[1].split('')[0]
@@ -113,7 +115,7 @@ const Profile = () => {
                   <Feather
                     name="camera"
                     color={white}
-                    size={13}
+                    size={heightConverter(13)}
                     onPress={() => setShowUploadOption(true)}
                   />
                 </TouchableOpacity>
@@ -160,7 +162,7 @@ const Profile = () => {
                   />
                   <TextField
                     placeholder="eg. 2a. Abakaliki Road"
-                    containerStyle={{height: 85}}
+                    containerStyle={{height: heightConverter(85)}}
                     multiline={true}
                     value={props.values.address}
                     onChangeText={props.handleChange('address')}
@@ -168,7 +170,7 @@ const Profile = () => {
                   />
                   <ButtonPrimary
                     text="Save"
-                    containerStyle={{marginBottom: 35, marginTop: 25}}
+                    containerStyle={{marginBottom: heightConverter(35), marginTop: heightConverter(25)}}
                     onPress={props.handleSubmit}
                   />
                 </>
@@ -183,24 +185,24 @@ const Profile = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 33,
-    paddingTop: 44,
+    paddingHorizontal: heightConverter(33),
+    paddingTop: heightConverter(44),
     backgroundColor: white,
   },
   profileImageContainer: {
-    height: 156,
-    width: 156,
-    marginBottom: 10,
+    height:heightConverter(156)>widthConverter(156)?widthConverter(156):heightConverter(156),
+    width: heightConverter(156)>widthConverter(156)?widthConverter(156):heightConverter(156),
+    marginBottom: heightConverter(10),
   },
   image: {
-    height: 156,
-    width: 156,
-    borderRadius: 78,
+    height:heightConverter(156)>widthConverter(156)?widthConverter(156):heightConverter(156),
+    width: heightConverter(156)>widthConverter(156)?widthConverter(156):heightConverter(156),
+    borderRadius: heightConverter(78)>widthConverter(78)?widthConverter(32):heightConverter(78),
   },
   cameraBox: {
-    height: 32,
-    width: 32,
-    borderRadius: 16,
+    height:heightConverter(32)>widthConverter(32)?widthConverter(32):heightConverter(32),
+    width: heightConverter(32)>widthConverter(32)?widthConverter(32):heightConverter(32),
+    borderRadius: heightConverter(16)>widthConverter(16)?widthConverter(16):heightConverter(16),
     backgroundColor: orange,
     position: 'absolute',
     right: 0,
@@ -208,8 +210,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   optionContainer: {
-    height: 54,
-    paddingHorizontal: 16,
+    height: heightConverter(54),
+    paddingHorizontal: widthConverter(16),
     justifyContent: 'space-between',
     alignItems: 'center',
     borderBottomWidth: 1,

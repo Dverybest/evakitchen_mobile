@@ -18,6 +18,8 @@ const ActiveOrders = () => {
     if (error) {
       console.log(error.message);
     } else if (response) {
+      console.log(response.data);
+      
       setOrders(response.data.docs);
     }
   };

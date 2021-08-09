@@ -14,6 +14,7 @@ import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import {FlatList, TextInput} from 'react-native-gesture-handler';
 import {GOOGLE_MAP_API_KEY} from '../../../api/config';
 import { Value } from 'react-native-reanimated';
+import { heightConverter, widthConverter } from '../../../utils/pxToDpConvert';
 
 interface ILocationSearch {
   containerStyle: ViewStyle;
@@ -69,7 +70,7 @@ const LocationSearch = ({
         {searchText.length > 0 ? (
           <AntDesign
             name="close"
-            size={14}
+            size={heightConverter(14)}
             style={{alignSelf: 'center'}}
             color={black}
             onPress={clearField}
@@ -80,8 +81,8 @@ const LocationSearch = ({
         <View
           style={{
             backgroundColor: white100,
-            maxHeight: 175,
-            paddingBottom: 10,
+            maxHeight: heightConverter(175),
+            paddingBottom: heightConverter(10),
           }}>
           <FlatList
             data={places}
@@ -89,14 +90,14 @@ const LocationSearch = ({
             renderItem={({item}) => (
               <TouchableOpacity
                 onPress={() => setLocation(item.name)}
-                style={{flexDirection: 'row', marginTop: 29}}>
+                style={{flexDirection: 'row', marginTop: heightConverter(29)}}>
                 <EvilIcons
                   name="location"
-                  style={{marginTop: 5}}
-                  size={25}
+                  style={{marginTop: heightConverter(5)}}
+                  size={heightConverter(25)}
                   color={black}
                 />
-                <View style={{width: 15}}></View>
+                <View style={{width: widthConverter(15)}}></View>
                 <View>
                   <Text style={{...TextStyle.medium}}>{item.name}</Text>
                   <Text style={{...TextStyle.regular}}>
@@ -113,9 +114,9 @@ const LocationSearch = ({
 };
 const styles = StyleSheet.create({
   textInputContainer: {
-    height: 50,
+    height: heightConverter(50),
     borderRadius: 4,
-    paddingHorizontal: 15,
+    paddingHorizontal: widthConverter(15),
     borderWidth: 1,
     justifyContent: 'center',
     borderColor: grey,

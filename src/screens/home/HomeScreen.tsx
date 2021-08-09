@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   FlatList,
   StyleSheet,
@@ -8,27 +8,28 @@ import {
   Image,
 } from 'react-native';
 import SearchBar from '../../components/searchBar';
-import {orange, white} from '../../styles/colors';
+import { orange, white } from '../../styles/colors';
 import Category from './components/Category';
-import {ButtonWhite} from '../../components/buttons';
-import {TextStyle} from '../../styles/textStyle';
+import { ButtonWhite } from '../../components/buttons';
+import { TextStyle } from '../../styles/textStyle';
 import FoodListView from './components/FoodListView';
-import {useNavigation} from '@react-navigation/core';
-import {IFood} from '../../interfaces/menu';
-import {useRequestProcessor} from '../../api/requestProcessor';
-import {HomeScreenContext} from '../../context/homeScreenContext';
-import {ActionType} from '../../context/enums';
+import { useNavigation } from '@react-navigation/core';
+import { IFood } from '../../interfaces/menu';
+import { useRequestProcessor } from '../../api/requestProcessor';
+import { HomeScreenContext } from '../../context/homeScreenContext';
+import { ActionType } from '../../context/enums';
 import banner from '../../assets/images/banner.png';
 import { shuffleArray } from '../../utils/shuffleArray';
+import { heightConverter, normalize, widthConverter } from '../../utils/pxToDpConvert';
 
 const HomeScreen = () => {
-  const {navigate} = useNavigation();
+  const { navigate } = useNavigation();
   const [searchText, setSearchText] = useState<string>('');
 
-  const {homeScreenState, dispatchHomeScreenState} = useContext(
+  const { homeScreenState, dispatchHomeScreenState } = useContext(
     HomeScreenContext,
   );
-  const {makeRequest} = useRequestProcessor();
+  const { makeRequest } = useRequestProcessor();
   useEffect(() => {
     fetchAllFoods();
   }, []);
@@ -49,7 +50,7 @@ const HomeScreen = () => {
       }),
     ])
       .then(result => {
-        const {response, error} = result[0];
+        const { response, error } = result[0];
         if (error) {
           console.log(error.message, 'Error');
         } else if (response) {
@@ -59,17 +60,17 @@ const HomeScreen = () => {
             type: ActionType.SET_POPULAR_FOOD,
           });
         }
-        const {response: res, error: err} = result[1];
+        const { response: res, error: err } = result[1];
         if (err) {
           console.log(err.message, 'Error');
         } else if (res?.data) {
-          let data = res.data as  IFood[];
-          
+          let data = res.data as IFood[];
+
           dispatchHomeScreenState({
             payload: data,
             type: ActionType.SET_SPECIAL_FOOD,
           });
-          const {response: catResponse, error: catError} = result[2];
+          const { response: catResponse, error: catError } = result[2];
           if (catError) {
             console.log(catError.message, 'Error');
           } else if (catResponse) {
@@ -86,9 +87,9 @@ const HomeScreen = () => {
     <View style={styles.container}>
       <SearchBar
         containerStyle={{
-          marginTop: 19,
+          marginTop: heightConverter(19),
         }}
-        onPress={() => navigate('CategoryDetails', {title: 'Search',search:searchText})}
+        onPress={() => navigate('CategoryDetails', { title: 'Search', search: searchText })}
         value={searchText}
         onChangeText={text => setSearchText(text)}
         placeholder="What are you looking for?"
@@ -98,7 +99,11 @@ const HomeScreen = () => {
           <Text
             style={[
               TextStyle.medium,
-              {marginTop: 12, marginBottom: 8, fontSize: 18},
+              {
+                marginTop: heightConverter(12),
+                marginBottom: heightConverter(8),
+                fontSize: normalize(18)
+              },
             ]}>
             Categories
           </Text>
@@ -106,12 +111,12 @@ const HomeScreen = () => {
             data={homeScreenState.categories}
             horizontal={true}
             showsHorizontalScrollIndicator={false}
-            renderItem={({item, index}) => (
+            renderItem={({ item, index }) => (
               <Category
                 key={index}
                 name={item.name}
                 image={item.image}
-                onPress={() => navigate('CategoryDetails', {title: item.name,id:item._id})}
+                onPress={() => navigate('CategoryDetails', { title: item.name, id: item._id })}
               />
             )}
             keyExtractor={(_, index) => `${index}`}
@@ -119,22 +124,22 @@ const HomeScreen = () => {
         </View>
         <View
           style={{
-            marginVertical: 15,
+            marginVertical: heightConverter(15),
           }}>
           <View
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
               alignItems: 'center',
-              marginBottom: 8,
+              marginBottom: heightConverter(8),
             }}>
-            <Text style={[TextStyle.medium, {fontSize: 18}]}>Popular Food</Text>
+            <Text style={[TextStyle.medium, { fontSize: normalize(18) }]}>Popular Food</Text>
             <ButtonWhite
-              containerStyle={{height: 30}}
-              textStyle={{fontSize: 9, paddingHorizontal: 15, color: orange}}
+              containerStyle={{ height: heightConverter(30) }}
+              textStyle={{ fontSize: normalize(9), paddingHorizontal: widthConverter(15), color: orange }}
               text={'View all'}
               onPress={() =>
-                navigate('CategoryDetails', {title: 'Popular Food'})
+                navigate('CategoryDetails', { title: 'Popular Food' })
               }
             />
           </View>
@@ -143,7 +148,7 @@ const HomeScreen = () => {
             showsHorizontalScrollIndicator={false}
             horizontal={true}
             keyExtractor={(_, index) => `popular${index}`}
-            renderItem={({item, index}) => (
+            renderItem={({ item, index }) => (
               <FoodListView item={item} index={index} />
             )}
           />
@@ -153,43 +158,46 @@ const HomeScreen = () => {
             justifyContent: 'center',
             alignItems: 'center',
             flexDirection: 'row',
+            height: heightConverter(200),
+            overflow: 'hidden'
           }}>
           <Image
             source={banner}
             style={{
               flex: 1,
-              resizeMode:'contain',
-              height: 120,
+              resizeMode: 'contain',
+              width: widthConverter(332),
+              // height: heightConverter(120),
             }}
           />
         </View>
-        <View style={{paddingBottom:15}}>
+        <View style={{ paddingBottom: heightConverter(15) }}>
           <View
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
               alignItems: 'center',
-              marginVertical: 15,
+              marginVertical: heightConverter(15),
             }}>
-            <Text style={[TextStyle.medium, {fontSize: 18}]}>
+            <Text style={[TextStyle.medium, { fontSize: normalize(18) }]}>
               Special Offers
             </Text>
             <ButtonWhite
-              containerStyle={{height: 30}}
-              textStyle={{fontSize: 9, paddingHorizontal: 15, color: orange}}
+              containerStyle={{ height: heightConverter(30) }}
+              textStyle={{ fontSize: normalize(9), paddingHorizontal: widthConverter(15), color: orange }}
               text={'View all'}
               onPress={() =>
-                navigate('CategoryDetails', {title: 'Special Offers'})
+                navigate('CategoryDetails', { title: 'Special Offers' })
               }
             />
           </View>
           <FlatList
-            data={shuffleArray(homeScreenState?.special??[])}
+            data={shuffleArray(homeScreenState?.special ?? [])}
             showsHorizontalScrollIndicator={false}
             horizontal={true}
             keyExtractor={(_, index) => `special${index}`}
-            renderItem={({item, index}) => (
-              <FoodListView item={item} index={index}/>
+            renderItem={({ item, index }) => (
+              <FoodListView item={item} index={index} />
             )}
           />
         </View>
@@ -202,7 +210,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     backgroundColor: white,
-    paddingHorizontal: 20,
+    paddingHorizontal: widthConverter(20),
   },
 });
 export default HomeScreen;
